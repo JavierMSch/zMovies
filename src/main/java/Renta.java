@@ -3,29 +3,40 @@ import java.time.LocalDate;
 public class Renta {
     private int id;
     private Cliente cliente;
-    private int idPelicula;
+    private Pelicula pelicula;
     private int semanasRentadas;
     private LocalDate fecha;
     private LocalDate fechaDevolucion;
     private int monto;
     private boolean peliculaDevuelta;
 
-    public Renta(int id, Cliente cliente, int idPelicula, int semanasRentadas, int monto) {
+    public Renta(int id, Cliente cliente, Pelicula pelicula, int semanasRentadas) {
         this.id = id;
         this.cliente = cliente;
-        this.idPelicula = idPelicula;
+        this.pelicula = pelicula;
         this.semanasRentadas = semanasRentadas;
         this.fecha = LocalDate.now();
         this.fechaDevolucion = fecha.plusDays((long) semanasRentadas * 7);
-        this.monto = monto;
+        this.monto = pelicula.getPrecioSemanal() * semanasRentadas;
         peliculaDevuelta = false;
+    }
+
+    public boolean estaPendiente() {
+        return !peliculaDevuelta;
+    }
+
+    public boolean esCliente(String rut) {
+        return cliente.getRut().equals(rut);
+    }
+
+    public void marcarDevuelta() {
+        setPeliculaDevuelta(true);
     }
 
     @Override
     public String toString() {
-        return "ID: " + id + ", RUT: " + cliente.getRut() + ", Monto Boleta: $" + monto + ", Fecha: " + fecha;
+        return "ID: " + id + ", Película: " + pelicula.getTitulo() + ", RUT: " + cliente.getRut() + ", Monto Boleta: $" + monto + ", Fecha: " + fecha;
     }
-
 
     // Getters y setters
     public int getId() {
@@ -44,12 +55,12 @@ public class Renta {
         this.cliente = cliente;
     }
 
-    public int getIdPelicula() {
-        return idPelicula;
+    public Pelicula getPelicula() {
+        return pelicula;
     }
 
-    public void setIdPelicula(int idPelicula) {
-        this.idPelicula = idPelicula;
+    public void setPelicula(Pelicula pelicula) {
+        this.pelicula = pelicula;
     }
 
     public int getSemanasRentadas() {

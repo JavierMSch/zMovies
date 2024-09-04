@@ -27,6 +27,14 @@ public class Genero {
         return true;
     }
 
+    public String obtenerListaPeliculas() {
+        StringBuilder cadenaPeliculas = new StringBuilder();
+        for (Pelicula pelicula: peliculasTitulo.values()) {
+            cadenaPeliculas.append(pelicula).append("\n");
+        }
+        return cadenaPeliculas.toString();
+    }
+
     public Pelicula eliminarPelicula(int id) {
         peliculasTitulo.remove(peliculasID.get(id).getTitulo());
         return peliculasID.remove(id);
@@ -37,29 +45,7 @@ public class Genero {
         return peliculasTitulo.remove(titulo);
     }
 
-    public int stockDisponiblePelicula(Pelicula pelicula) {
-        if (pelicula == null || !peliculasID.containsKey(pelicula.getId())) {
-            return 0;
-        }
-        return peliculasID.get(pelicula.getId()).getStockDisponible();
-    }
-
-    public boolean rentarPelicula(int id) {
-        Pelicula pelicula = peliculasID.get(id);
-        if (pelicula == null) {
-            return false;
-        }
-        return pelicula.rentar();
-    }
-
-    public boolean rentarPelicula(String titulo) {
-        Pelicula pelicula = peliculasTitulo.get(titulo);
-        if (pelicula == null) {
-            return false;
-        }
-        return pelicula.rentar();
-    }
-
+    // Getter y setters
     public String getNombre() { return nombre; }
 
     public void setNombre(String nombre) { this.nombre = nombre.toUpperCase(); }

@@ -6,17 +6,13 @@ public class GestorClientes {
 
     public GestorClientes() {
         mapaClientes = new HashMap<>();
-        //TODO: Ver si dejar datosTest
         datosTest();
     }
 
     private void datosTest() {
-        Cliente clienteTest = new Cliente("11.111.111-1", "Juan Pérez", "juan@gmail.com", "12345678");
-        agregarCliente(clienteTest);
-        clienteTest = new Cliente("22.222.222-2", "María González", "maria@gmail.com", "87654321");
-        agregarCliente(clienteTest);
-        clienteTest = new Cliente("33.333.333-3", "Pedro Rodríguez", "pedro@gmail.com", "12348765");
-        agregarCliente(clienteTest);
+        agregarCliente("11.111.111-1", "Juan Pérez", "juan@gmail.com", "12345678");
+        agregarCliente("22.222.222-2", "María González", "maria@gmail.com", "87654321");
+        agregarCliente("33.333.333-3", "Pedro Rodríguez", "pedro@gmail.com", "12348765");
     }
 
     public boolean agregarCliente(Cliente cliente) {
@@ -27,23 +23,34 @@ public class GestorClientes {
         return true;
     }
 
+    public boolean agregarCliente(String rut, String nombreApellido, String correo, String telefono) {
+        Cliente cliente = new Cliente(rut, nombreApellido, correo, telefono);
+        if (mapaClientes.containsKey(cliente.getRut())) {
+            return false;
+        }
+        mapaClientes.put(cliente.getRut(), cliente);
+        return true;
+    }
+
     public Cliente obtenerCliente(String rut) {
         return mapaClientes.get(rut);
     }
 
-    public String obtenerGeneroFavorito(String rut) {
-        // TODO
+    public String obtenerNombreGeneroFavorito(String rut) {
         Cliente cliente = mapaClientes.get(rut);
         if (cliente == null) {
             return null;
         }
-        return cliente.generoFavorito();
+        return cliente.nombreGeneroFavorito();
     }
 
     public boolean existeCliente(String rut) {
         return mapaClientes.containsKey(rut);
     }
 
+    public void agregarRenta(String rut, Renta renta) {
+        obtenerCliente(rut).agregarRentaAHistorial(renta);
+    }
 
     // Getter y setters
     public Map<String, Cliente> getMapaClientes() {

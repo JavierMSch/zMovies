@@ -4,25 +4,22 @@ import java.util.ArrayList;
 public class GestorPeliculas {
     private List<Genero> generosPeliculas;
     private List<Pelicula> listaPeliculas;
+    private int idPeliculaSiguiente;
 
     public GestorPeliculas() {
         generosPeliculas = new ArrayList<>();
         listaPeliculas = new ArrayList<>();
+        idPeliculaSiguiente = 1;
         datosTest();
     }
 
     private void datosTest() {
-        Genero generoTest = new Genero("Drama");
-        Genero generoTest2 = new Genero("Romance");
-        agregarGenero(generoTest);
-        agregarGenero(generoTest2);
+        agregarGenero("Drama");
+        agregarGenero("Romance");
 
-        Pelicula peliculaTest = new Pelicula(1, "El Padrino", 100, 10);
-        agregarPelicula(generoTest, peliculaTest);
-        peliculaTest = new Pelicula(2, "El Padrino II", 100, 10);
-        agregarPelicula(generoTest, peliculaTest);
-        peliculaTest = new Pelicula(3, "Titanic", 100, 10);
-        agregarPelicula(generoTest2, peliculaTest);
+        agregarPelicula("El Padrino", "Drama", 10);
+        agregarPelicula("El Padrino II", "Drama", 10);
+        agregarPelicula("Titanic", "Romance", 10);
     }
 
     public String obtenerListaPeliculas() {
@@ -33,9 +30,17 @@ public class GestorPeliculas {
         return cadenaPeliculas.toString();
     }
 
-    private Genero obtenerGenero(String nombre) {
+    public String obtenerListaPeliculas(String nombreGenero) {
+        Genero genero = obtenerGenero(nombreGenero);
+        if (genero == null) {
+            return null;
+        }
+        return genero.obtenerListaPeliculas();
+    }
+
+    public Genero obtenerGenero(String nombre) {
         for (Genero gen : generosPeliculas) {
-            if (gen.getNombre().equals(nombre)) {
+            if (gen.getNombre().equalsIgnoreCase(nombre)) {
                 return gen;
             }
         }
@@ -48,6 +53,14 @@ public class GestorPeliculas {
         }
         generosPeliculas.add(genero);
         return true;
+    }
+
+    public boolean agregarGenero(String nombreGenero) {
+        if (!existeGenero(nombreGenero)) {
+            Genero genero = new Genero(nombreGenero.toUpperCase());
+            generosPeliculas.add(genero);
+        }
+        return false;
     }
 
     public Pelicula obtenerPelicula(String titulo) {
@@ -70,15 +83,51 @@ public class GestorPeliculas {
         return null;
     }
 
+    public boolean existeGenero(String nombreGenero) {
+        if (obtenerGenero(nombreGenero) == null) {
+            return false;
+        }
+        return true;
+    }
+
     public boolean agregarPelicula(Genero genero, Pelicula pelicula) {
         if (pelicula == null || obtenerPelicula(pelicula.getId()) != null) {
             return false;
         }
         genero.agregarPelicula(pelicula);
         listaPeliculas.add(pelicula);
+        idPeliculaSiguiente++;
         return true;
     }
 
+    public boolean agregarPelicula(String titulo, String nombreGenero, int precioSemanal) {
+        Genero genero = obtenerGenero(nombreGenero);
+        if (genero == null) {
+            return false;
+        }
+
+        Pelicula pelicula = new Pelicula(idPeliculaSiguiente, titulo.toUpperCase(),
+                nombreGenero.toUpperCase(), precioSemanal);
+        genero.agregarPelicula(pelicula);
+        listaPeliculas.add(pelicula);
+        idPeliculaSiguiente++;
+        return true;
+    }
+
+    public boolean existePelicula(String titulo) {
+        for (Genero genero: generosPeliculas) {
+            if (genero.obtenerPelicula(titulo) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int precioPelicula(String titulo, int semanas) {
+        return obtenerPelicula(titulo).calcularPrecio(semanas);
+    }
+
+    // Getter y setters
     public List<Genero> getGenerosPeliculas() {
         return generosPeliculas;
     }
