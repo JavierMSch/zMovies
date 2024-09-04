@@ -1,61 +1,32 @@
 public class Pelicula {
     private int id;
     private String titulo;
-    private int precio;
-    private int stockDisponible;
-    private int cantidadTotal;
+    private String genero;
+    private int precioSemanal;
 
-    public Pelicula(int id, String titulo, int precio, int cantidadTotal) {
+    public Pelicula(int id, String titulo, String genero, int precioSemanal) {
         this.id = id;
         this.titulo = titulo;
-        this.precio = precio;
-        this.cantidadTotal = cantidadTotal;
-        this.stockDisponible = cantidadTotal;
-    }
-
-    public boolean rentar() {
-        if (stockDisponible > 0) {
-            stockDisponible--;
-            return true;
-        }
-        return false;
-    }
-
-    public void devolver() {
-        stockDisponible++;
-    }
-
-    public void aumentarCantidadTotal() {
-        cantidadTotal++;
-        stockDisponible++;
-    }
-
-    public void aumentarCantidadTotal(int cantidad) {
-        cantidadTotal += cantidad;
-        stockDisponible += cantidad;
-    }
-
-    public boolean rentarPelicula() {
-        if (this.stockDisponible > 0) {
-            this.stockDisponible--;
-            return true;
-        }
-        return false;
+        this.genero = genero;
+        this.precioSemanal = precioSemanal;
     }
 
     public String obtenerDetalles() {
         return "ID: " + id + "\n" +
                 "Título: " + titulo + "\n" +
-                "Precio semanal: " + precio + "\n" +
-                "Stock disponible: " + stockDisponible + "\n" +
-                "Unidades totales: " + cantidadTotal + "\n";
+                "Precio semanal: " + precioSemanal;
+    }
+
+    public int calcularPrecio(int semanas) {
+        return precioSemanal * semanas;
     }
 
     @Override
     public String toString() {
-        return "ID: " + id + ", Título: " + titulo + ", Precio semanal: $" + precio + ", Stock: " + stockDisponible;
+        return "ID: " + id + ", Título: " + titulo + ", Precio semanal: $" + precioSemanal;
     }
 
+    // Getter y setters
     public int getId() {
         return id;
     }
@@ -72,27 +43,19 @@ public class Pelicula {
         this.titulo = titulo;
     }
 
-    public int getPrecio() {
-        return precio;
+    public String getGenero() {
+        return genero;
     }
 
-    public void setPrecio(int precio) {
-        this.precio = precio;
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
-    public int getStockDisponible() {
-        return stockDisponible;
+    public int getPrecioSemanal() {
+        return precioSemanal;
     }
 
-    public void setStockDisponible(int stockDisponible) {
-        this.stockDisponible = stockDisponible;
-    }
-
-    public int getCantidadTotal() {
-        return cantidadTotal;
-    }
-
-    public void setCantidadTotal(int cantidadTotal) {
-        this.cantidadTotal = cantidadTotal;
+    public void setPrecioSemanal(int precioSemanal) {
+        this.precioSemanal = precioSemanal;
     }
 }

@@ -22,39 +22,29 @@ public class Cliente {
         historialRentas.add(Renta);
     }
 
-    public String generoFavorito() {
-        //TODO
-        /*
-        if (peliculasRentadas.isEmpty()) {
-            return null;
+    public String nombreGeneroFavorito() {
+        Map<String, Integer> contadorGeneros = new HashMap<>();
+        for (Renta renta : historialRentas) {
+            String genero = renta.getPelicula().getGenero();
+            contadorGeneros.put(genero, contadorGeneros.getOrDefault(genero, 0) + 1);
         }
 
-        Map<String, Integer> generos = new HashMap<>();
-        for (LineaRenta linea: peliculasRentadas) {
-            String genero = linea.getPeliculaRentada().getGenero();
-            generos.put(genero, generos.getOrDefault(genero, 0) + 1);
-        }
-
-        String favorito = null;
+        String generoFavorito = null;
         int max = 0;
-
-        for (String key: generos.keySet()) {
-            if (generos.get(key) > max) {
-                favorito = key;
-                max = generos.get(key);
+        for (String key : contadorGeneros.keySet()) {
+            if (generoFavorito == null || contadorGeneros.get(key) > max) {
+                generoFavorito = key;
+                max = contadorGeneros.get(key);
             }
         }
-
-        return favorito;
-        */
-        return null;
+        return generoFavorito;
     }
 
+    // Getter y setters
     public String getRut() {
         return rut;
     }
 
-    // Getter y setters
     public void setRut(String rut) {
         this.rut = rut;
     }
