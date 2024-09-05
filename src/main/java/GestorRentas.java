@@ -40,20 +40,30 @@ public class GestorRentas {
 
     public String obtenerListaRentasPendientes() {
         StringBuilder cadenaRentas = new StringBuilder();
+        boolean hayPendientes = false;
         for (Renta renta : listaRentas) {
             if (renta.estaPendiente()) {
                 cadenaRentas.append(renta).append("\n");
+                hayPendientes = true;
             }
+        }
+        if (!hayPendientes) {
+            return null;
         }
         return cadenaRentas.toString();
     }
 
     public String obtenerListaRentasPendientes(String rut) {
         StringBuilder cadenaRentas = new StringBuilder();
+        boolean hayPendientes = false;
         for (Renta renta : listaRentas) {
             if (renta.esCliente(rut) && renta.estaPendiente()) {
                 cadenaRentas.append(renta).append("\n");
+                hayPendientes = true;
             }
+        }
+        if (!hayPendientes) {
+            return null;
         }
         return cadenaRentas.toString();
     }

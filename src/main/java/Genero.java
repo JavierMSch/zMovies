@@ -29,8 +29,13 @@ public class Genero {
 
     public String obtenerListaPeliculas() {
         StringBuilder cadenaPeliculas = new StringBuilder();
+        boolean hayPeliculas = false;
         for (Pelicula pelicula: peliculasTitulo.values()) {
             cadenaPeliculas.append(pelicula).append("\n");
+            hayPeliculas = true;
+        }
+        if (!hayPeliculas) {
+            return null;
         }
         return cadenaPeliculas.toString();
     }

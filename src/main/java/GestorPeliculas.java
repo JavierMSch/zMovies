@@ -24,8 +24,13 @@ public class GestorPeliculas {
 
     public String obtenerListaPeliculas() {
         StringBuilder cadenaPeliculas = new StringBuilder();
+        boolean hayPeliculas = false;
         for (Pelicula pelicula: listaPeliculas) {
             cadenaPeliculas.append(pelicula).append("\n");
+            hayPeliculas = true;
+        }
+        if (!hayPeliculas) {
+            return null;
         }
         return cadenaPeliculas.toString();
     }
@@ -125,6 +130,17 @@ public class GestorPeliculas {
 
     public int precioPelicula(String titulo, int semanas) {
         return obtenerPelicula(titulo).calcularPrecio(semanas);
+    }
+
+    public int precioPelicula(String titulo) {
+        return obtenerPelicula(titulo).getPrecioSemanal();
+    }
+
+    public String obtenerDetallesPelicula(String titulo) {
+        if (!existePelicula(titulo)) {
+            return null;
+        }
+        return obtenerPelicula(titulo).obtenerDetalles();
     }
 
     // Getter y setters
