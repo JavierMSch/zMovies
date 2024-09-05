@@ -23,8 +23,7 @@ public class InterfazUsuario {
             System.out.println("Menú principal");
             System.out.println("1.- Menú Rentas");
             System.out.println("2.- Menú Administración de Bases de Datos");
-            System.out.println("3.- Menú de Análisis de Datos del VideoClub");
-            System.out.println("4.- Salir\n");
+            System.out.println("3.- Salir\n");
 
             int opcion = Integer.parseInt(input("Seleccione una opción: "));
             System.out.println();
@@ -37,9 +36,6 @@ public class InterfazUsuario {
                     menuBasesDatos();
                     break;
                 case 3:
-                    menuAnalisisDatos();
-                    break;
-                case 4:
                     System.out.println("Hasta luego");
                     return;
                 default:
@@ -52,22 +48,29 @@ public class InterfazUsuario {
     private void menuRentas() {
         while (true) {
             System.out.println("Menú Rentas");
-            System.out.println("1.- Rentar película(s)");
-            System.out.println("2.- Devolución película");
-            System.out.println("3.- Volver al menú principal");
+            System.out.println("1.- Rentar película");
+            System.out.println("2.- Devolver película");
+            System.out.println("3.- Recomendar película");
+            System.out.println("4.- Listar películas pendientes a devolver");
+            System.out.println("5.- Volver al menú principal");
 
             int opcion = Integer.parseInt(input("Seleccione una opción: "));
             System.out.println();
 
             switch (opcion) {
                 case 1:
-                    videoClub.rentarPelicula(input("Ingrese el rut del cliente: "), input("Ingrese el título de la película: "),
-                            Integer.parseInt(input("Ingrese la cantidad de semanas a rentar: ")));
+                    rentarPelicula();
                     break;
                 case 2:
-                    videoClub.devolverPelicula(Integer.parseInt(input("Ingrese el id de la renta a devolver: ")));
+                    devolverPelicula();
                     break;
                 case 3:
+                    recomendarPelicula();
+                    break;
+                case 4:
+                    listarPendientes();
+                    break;
+                case 5:
                     System.out.println("Volviendo al menú principal");
                     return;
                 default:
@@ -107,10 +110,10 @@ public class InterfazUsuario {
     private void administrarPeliculas() {
         while (true) {
             System.out.println("Menú Administrar Películas");
-            System.out.println("1.- Agregar Película");
-            System.out.println("2.- Mostrar Películas");
-            System.out.println("3.- Eliminar Película");
-            System.out.println("4.- Mostrar detalles de una película");
+            System.out.println("1.- Agregar película");
+            System.out.println("2.- Listar películas");
+            System.out.println("3.- Mostrar detalles de una película");
+            System.out.println("4.- Agregar género");
             System.out.println("5.- Volver al menú de Bases de Datos");
 
             int opcion = Integer.parseInt(input("Seleccione una opción: "));
@@ -118,17 +121,16 @@ public class InterfazUsuario {
 
             switch (opcion) {
                 case 1:
-                    videoClub.agregarPelicula(input("Ingrese el título de la película: "), input("Ingrese el género de la película: "),
-                            Integer.parseInt(input("Ingrese el precio semanal de la película: ")));
+                    agregarPelicula();
                     break;
                 case 2:
-                    // TODO: método de retornar el listado en VideoClub;
+                    listarPeliculas();
                     break;
                 case 3:
-                    // TODO eliminarPelicula();
+                    detallesPelicula();
                     break;
                 case 4:
-                    // TODO mostrarDetallePelicula();
+                    agregarGenero();
                     break;
                 case 5:
                     System.out.println("Volviendo al menú de Bases de Datos");
@@ -137,6 +139,7 @@ public class InterfazUsuario {
                     System.out.println("Opción no válida");
                     break;
             }
+            System.out.println();
         }
     }
 
@@ -144,84 +147,34 @@ public class InterfazUsuario {
         while (true) {
             System.out.println("Menú Administrar Clientes");
             System.out.println("1.- Agregar Cliente");
-            System.out.println("2.- Mostrar Clientes");
-            System.out.println("3.- Mostrar detalles de un cliente");
-            System.out.println("4.- Volver al menú de Bases de Datos");
+            System.out.println("2.- Mostrar detalles de cliente");
+            System.out.println("3.- Volver al menú de Bases de Datos");
 
             int opcion = Integer.parseInt(input("Seleccione una opción: "));
             System.out.println();
 
             switch (opcion) {
                 case 1:
-                    // TODO agregarCliente();
+                    agregarCliente();
                     break;
                 case 2:
-                    // TODO mostrarClientes();
+                    detallesCliente();
                     break;
                 case 3:
-                    // TODO mostrarDetalleCliente();
-                    break;
-                case 4:
                     System.out.println("Volviendo al menú de Bases de Datos");
                     return;
                 default:
                     System.out.println("Opción no válida");
                     break;
             }
-        }
-    }
-
-    private void menuAnalisisDatos() {
-        while (true) {
-            System.out.println("Menú de Análisis de Datos");
-            System.out.println("1.- Pelicula mas rentada de los 3 meses");
-            System.out.println("2.- Pelicula mas rentada de los 6 meses");
-            System.out.println("3.- Pelicula menos rentada de los 3 meses");
-            System.out.println("4.- Pelicula menos rentada de los 6 meses");
-            System.out.println("5.- Cliente con mas rentas");
-            System.out.println("6.- Cliente con mas dinero gastado");
-            System.out.println("7.- Mes con mas rentas del ultimo año");
-            System.out.println("8.- Volver al menú principal");
-
-            int opcion = Integer.parseInt(input("Seleccione una opción: "));
-            System.out.println();
-
-            switch (opcion) {
-
-                case 1:
-                    // peliculasMasRentadas(3);
-                    break;
-                case 2:
-                    // peliculasMasRentadas(6);
-                    break;
-                case 3:
-                    // peliculasMenosRentadas(3);
-                    break;
-                case 4:
-                    // peliculasMenosRentadas(6);
-                    break;
-                case 5:
-                    // TODO clienteConMasRentas();
-                    break;
-                case 6:
-                    // TODO clienteConMasDineroGastado();
-                    break;
-                case 7:
-                    // TODO mesConMasRentasUltimoAño();
-                    break;
-                case 8:
-                    System.out.println("Volviendo al menú principal");
-                    return;
-                default:
-                    System.out.println("Opción no válida");
-            }
             System.out.println();
         }
     }
 
-    private void rentarPeliculas() {
+    private void rentarPelicula() {
+        String rut;
         while (true) {
-            String input = input("Ingrese el rut del cliente o salir para salir: ");
+            String input = input("Ingrese el rut del cliente (ej.: 12.345.678-9) o salir para salir: ");
 
             if (input.equalsIgnoreCase("salir")) {
                 return;
@@ -229,173 +182,245 @@ public class InterfazUsuario {
 
             if (!videoClub.existeCliente(input)) {
                 System.out.println("Cliente no encontrado, debe ser agregado");
-                videoClub.agregarCliente(input, input("Ingrese nombre y apellido: "), input("Ingrese correo: "),
-                        input("Ingrese teléfono: "));
-                System.out.println("Rentar películas:");
+                agregarCliente();
+                System.out.println("\nRentar película:");
             } else {
-                // videoClub.iniciarBoletaTemp(input);
+                rut = input;
                 break;
             }
         }
 
+        String titulo;
         while (true) {
-            peliculaABoleta();
-            if (videoClub.cantidadPeliculasTemp() == 0) {
-                System.out.println("No se ha ingresado ninguna película a la venta, volviendo al menú");
-                // videoClub.limpiarBoletaTemp();
+            String input = input("Ingrese nombre de película a rentar: ");
+
+            if (videoClub.existePelicula(input)) {
+                titulo = input;
+                break;
+            } else {
+                System.out.println("Película no encontrada");
+                String opcion = input("Presione enter para reintentar/ingresar otra película o salir para salir: ");
+
+                if (opcion.equalsIgnoreCase("salir")) {
+                    return;
+                }
+            }
+        }
+
+        System.out.println("La película: " + titulo + " tiene un precio semanal de $" + videoClub.precioPelicula(titulo));
+        int semanas = Integer.parseInt(input("Semanas a rentar (número mayor a 0): "));
+
+        System.out.println("Se rentará la película: " + titulo + " por " + semanas +
+                " semana(s) por un precio total de $" + videoClub.precioPelicula(titulo, semanas));
+        String confirmar = input("Confirmar (si/no): ");
+
+        if (confirmar.equalsIgnoreCase("si") || confirmar.equalsIgnoreCase("sí")) {
+            videoClub.rentarPelicula(rut, titulo, semanas);
+            System.out.println("Película fue rentada");
+        } else {
+            System.out.println("Renta cancelada, volviendo al menú");
+        }
+
+        System.out.println("Película agregada a venta");
+    }
+
+    private void devolverPelicula() {
+        String rut = input("Ingrese el rut del cliente (ej.: 12.345.678-9) o salir para salir: ");
+
+        if (rut.equalsIgnoreCase("salir")) {
+            return;
+        }
+        if (!videoClub.existeCliente(rut)) {
+            System.out.println("Cliente no encontrado, volviendo al menú");
+            return;
+        }
+
+        String pendientes = videoClub.obtenerListaRentasPendientes(rut);
+        if (pendientes == null) {
+            System.out.println("Cliente no posee películas pendientes a devolver");
+            return;
+        }
+
+        System.out.println("Películas pendientes a devolver:");
+        System.out.println(pendientes);
+
+        int id = Integer.parseInt(input("Ingrese ID de renta a devolver (valores numéricos dentro de la lista): "));
+
+        videoClub.devolverPelicula(id);
+        System.out.println("Devolución realizada");
+    }
+
+    private void recomendarPelicula() {
+        String rut = input("Ingrese el rut del cliente (ej.: 12.345.678-9) o salir para salir: ");
+
+        if (rut.equalsIgnoreCase("salir")) {
+            return;
+        }
+        if (!videoClub.existeCliente(rut)) {
+            System.out.println("Cliente no encontrado, volviendo al menú");
+            return;
+        }
+
+        String pelicula = videoClub.recomendarPelicula(rut);
+        if (pelicula == null) {
+            System.out.println("No ha sido posible recomendar una película al cliente");
+            return;
+        }
+
+        System.out.println("Película recomendada: " + pelicula);
+    }
+
+    private void listarPendientes() {
+        String input = input("Ingrese el rut del cliente (ej.: 12.345.678-9), 'todas' para listar todas las pendientes o salir para salir: ");
+
+        if (input.equalsIgnoreCase("salir")) {
+            return;
+        }
+
+        if (input.equalsIgnoreCase("todas")) {
+            String pendientes = videoClub.obtenerListaRentasPendientes();
+            if (pendientes == null) {
+                System.out.println("No hay películas pendientes a devolver");
+            } else {
+                System.out.println(pendientes);
+            }
+            return;
+        }
+
+        if (!videoClub.existeCliente(input)) {
+            System.out.println("Cliente no encontrado, volviendo al menú");
+            return;
+        }
+
+        String pendientes = videoClub.obtenerListaRentasPendientes(input);
+        if (pendientes == null) {
+            System.out.println("Cliente no posee películas pendientes a devolver");
+        } else {
+            System.out.println(pendientes);
+        }
+    }
+
+    private void agregarPelicula() {
+        String titulo = input("Ingrese el título de la película: ");
+
+        if (videoClub.existePelicula(titulo)) {
+            System.out.println("Película ya existe en el sistema, volviendo al menú");
+            return;
+        }
+
+        String nombreGenero;
+        while (true) {
+            String input = input("Ingrese el nombre del género o salir para salir: ");
+
+            if (input.equalsIgnoreCase("salir")) {
                 return;
             }
 
-            System.out.println(videoClub.cantidadPeliculasTemp() + " película(s) en la venta actual");
-            String opcion = input("Agregar otra película? (si/no): ");
-            if (opcion.equalsIgnoreCase("no")) {
+            if (!videoClub.existeGenero(input)) {
+                System.out.println("Género no encontrado, debe ser agregado");
+                agregarGenero();
+                System.out.println("\nAgregar película " + titulo + ":");
+            } else {
+                nombreGenero = input;
                 break;
             }
         }
 
-        System.out.println(videoClub.detallesBoletaTemp());
-        String opcion = input("Confirmar renta de película(s)? (si/no): ");
-        if (opcion.equalsIgnoreCase("no")) {
-            System.out.println("Renta de película(s) cancelada, volviendo al menú");
+        int precioSemanal = Integer.parseInt(input("Ingrese precio semanal de la película (valor numérico): "));
+
+        videoClub.agregarPelicula(titulo, nombreGenero, precioSemanal);
+        System.out.println("Película agregada al sistema");
+    }
+
+    private void listarPeliculas() {
+        String input = input("Ingrese género, 'todas' para listar todas las películas o salir para salir: ");
+
+        if (input.equalsIgnoreCase("salir")) {
             return;
         }
-        videoClub.confirmarBoletaTemp();
-        System.out.println("Renta realizada, volvuendo al menú");
+
+        if (input.equalsIgnoreCase("todas")) {
+            String peliculas = videoClub.obtenerListaPeliculas();
+            if (peliculas == null) {
+                System.out.println("No hay películas en el sistema");
+            } else {
+                System.out.println(peliculas);
+            }
+            return;
+        }
+
+        if (!videoClub.existeGenero(input)) {
+            System.out.println("Género no existe en el sistema, volviendo al menú");
+            return;
+        }
+
+        String peliculas = videoClub.obtenerListaPeliculas(input);
+        if (peliculas == null) {
+            System.out.println("No hay películas del género en el sistema");
+        } else {
+            System.out.println(peliculas);
+        }
     }
 
-    private void peliculaABoleta() {
+    private void detallesPelicula() {
+        String titulo = input("Ingrese título: ");
+
+        if (!videoClub.existePelicula(titulo)) {
+            System.out.println("Película no se encuentra en el sistema, volviendo al menú");
+            return;
+        }
+
+        System.out.println(videoClub.detallesPelicula(titulo));
+    }
+
+    private void agregarGenero() {
+        System.out.println("Agregar género:");
+        String nombreGenero = input("Ingrese nombre para el género (sin tildes): ");
+        if (videoClub.existeGenero(nombreGenero)) {
+            System.out.println("Género ya registrado en el sistema, volviendo al menú");
+            return;
+        }
+
+        videoClub.agregarGenero(nombreGenero);
+        System.out.println("Género agregado al sistema");
+    }
+
+    private void detallesCliente() {
+        String rut = input("Ingrese rut (ej.: 12.345.678-9): ");
+
+        if (!videoClub.existeCliente(rut)) {
+            System.out.println("Cliente no encontrado, volviendo al menú");
+            return;
+        }
+
+        System.out.println(videoClub.detallesCliente(rut));
+    }
+
+    private void agregarCliente() {
+        System.out.println("Agregar cliente:");
+        String rut = input("Ingrese rut (ej.: 12.345.678-9): ");
+
+        if (videoClub.existeCliente(rut)) {
+            System.out.println("Cliente ya registrado, volviendo");
+            return;
+        }
+
+        String nombre = input("Ingrese nombre completo: ");
+
+        String correo;
         while (true) {
-            String titulo = input("Ingrese nombre de película a rentar: ");
-
-            if (!videoClub.existePelicula(titulo)) {
-                System.out.println("Película no encontrada");
-                String opcion = input("Presione enter para reintentar/ingresar otra película o ingrese volver para volver: ");
-
-                if (opcion.equalsIgnoreCase("volver")) {
-                    return;
-                }
-            } else if (!videoClub.existePelicula(titulo)) {
-                System.out.println("Película sin stock");
-                String opcion = input("Presione enter para ingresar otra película o ingrese volver para volver: ");
-
-                if (opcion.equalsIgnoreCase("volver")) {
-                    return;
-                }
+            String input = input("Ingrese correo: ");
+            if (input.contains("@")) {
+                correo = input;
+                break;
             } else {
-                //TODO: manejar entrada no válida????
-                int semanas = Integer.parseInt(input("Semanas a rentar (número mayor a 0): "));
-                videoClub.agregarPeliculaTemp(titulo, semanas);
-                System.out.println("Película agregada a venta");
+                System.out.println("Correo no válido, ingrese otro:");
             }
         }
+
+        String telefono = input("Ingrese número de teléfono: ");
+
+        videoClub.agregarCliente(rut, nombre, correo, telefono);
+        System.out.println("Cliente agregado al sistema");
     }
 }
-
-/*
-public void menuClientes() {
-    while (true) {
-        int opcion = 0;
-        System.out.println("1. Mostrar Clientes");
-        System.out.println("2. Mostrar detalles de un cliente");
-        System.out.println("3. Menu Estadisticas Clientes");
-        System.out.println("4. Recomendar peliculas");
-        System.out.println("5. Volver");
-        opcion = scanner.nextInt();
-        scanner.nextLine();
-        switch (opcion) {
-            case 1:
-                videoClub.mostrarClientes();
-                break;
-            case 2:
-                videoClub.mostrarDetalleCliente();
-                break;
-            case 3:
-                menuEstadisticasClientes();
-                break;
-            case 4:
-                videoClub.recomendarPeliculas();
-                break;
-            case 5:
-                start();
-                break;
-        }
-    }
-}
-
-public void menuEstadisticasClientes() {
-    while (true) {
-        int opcion = 0;
-        System.out.println("1. Clientes con mas rentas");
-        System.out.println("2. Clientes con menos rentas");
-        System.out.println("3. Volver");
-        opcion = scanner.nextInt();
-        scanner.nextLine();
-        switch (opcion) {
-            case 1:
-                videoClub.clientesConMasRentas();
-                break;
-            case 2:
-                videoClub.clientesConMenosRentas();
-                break;
-            case 3:
-                menuClientes();
-                break;
-        }
-    }
-}
-
-public void menuEstadisticasPeliculas() {
-    while (true) {
-        int opcion = 0;
-        System.out.println("1. Peliculas mas rentadas");
-        System.out.println("2. Peliculas menos rentadas");
-        System.out.println("3. Peliculas mas populares");
-        System.out.println("4. Peliculas menos populares");
-        System.out.println("5. Volver");
-        opcion = scanner.nextInt();
-        scanner.nextLine();
-        switch (opcion) {
-            case 1:
-                videoClub.peliculasMasRentadas();
-                break;
-            case 2:
-                videoClub.peliculasMenosRentadas();
-                break;
-            case 3:
-                videoClub.peliculasMasPopulares();
-                break;
-            case 4:
-                videoClub.peliculasMenosPopulares();
-                break;
-            case 5:
-                menuPelicula();
-                break;
-        }
-
-public void menuPelicula() {
-    while (true) {
-        int opcion = 0;
-        System.out.println("1. Agregar Pelicula");
-        System.out.println("2. Mostrar Peliculas");
-        System.out.println("3. Mostrar detalles de una pelicula");
-        System.out.println("4. Menu Estadisticas Generales");
-        System.out.println("5. Volver");
-        opcion = scanner.nextInt();
-        scanner.nextLine();
-    }
-}
-
-public void menuRentar() {
-    while (true) {
-        int opcion = 0;
-        System.out.println("1. Rentar Pelicula");
-        System.out.println("2. Devolver Pelicula");
-        System.out.println("3. Volver");
-        opcion = scanner.nextInt();
-        scanner.nextLine();
-    }
-}
-}
-
-
-*/

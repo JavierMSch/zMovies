@@ -52,6 +52,13 @@ public class GestorClientes {
         obtenerCliente(rut).agregarRentaAHistorial(renta);
     }
 
+    public String obtenerDetallesCliente(String rut) {
+        if (obtenerCliente(rut) == null) {
+            return null;
+        }
+        return obtenerCliente(rut).toString();
+    }
+
     // Getter y setters
     public Map<String, Cliente> getMapaClientes() {
         return mapaClientes;

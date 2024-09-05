@@ -35,7 +35,7 @@ public class Renta {
 
     @Override
     public String toString() {
-        return "ID: " + id + ", Película: " + pelicula.getTitulo() + ", RUT: " + cliente.getRut() + ", Monto Boleta: $" + monto + ", Fecha: " + fecha;
+        return "ID: " + id + ", Película: " + pelicula.getTitulo() + ", RUT: " + cliente.getRut() + ", Monto Boleta: $" + monto + ", Fecha devolución: " + fechaDevolucion;
     }
 
     // Getters y setters

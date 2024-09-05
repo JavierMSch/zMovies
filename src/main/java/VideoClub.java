@@ -33,8 +33,8 @@ public class VideoClub {
         return gestorClientes.existeCliente(rut);
     }
 
-    public void agregarCliente(String rut, String nombreApellido, String correo, String telefono) {
-        gestorClientes.agregarCliente(rut, nombreApellido, correo, telefono);
+    public void agregarCliente(String rut, String nombreApellidos, String correo, String telefono) {
+        gestorClientes.agregarCliente(rut, nombreApellidos, correo, telefono);
     }
 
     public void rentarPelicula(String rut, String tituloPelicula, int semanas) {
@@ -46,6 +46,10 @@ public class VideoClub {
 
     public int precioPelicula(String titulo, int semanas) {
         return gestorPeliculas.precioPelicula(titulo, semanas);
+    }
+
+    public int precioPelicula(String titulo) {
+        return gestorPeliculas.precioPelicula(titulo);
     }
 
     public boolean existePelicula(String titulo) {
@@ -76,6 +80,14 @@ public class VideoClub {
         }
 
         return pelicula.toString();
+    }
+
+    public String detallesCliente(String rut) {
+        return gestorClientes.obtenerDetallesCliente(rut);
+    }
+
+    public String detallesPelicula(String titulo) {
+        return gestorPeliculas.obtenerDetallesPelicula(titulo);
     }
 
     // Getter y setters

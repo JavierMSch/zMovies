@@ -40,6 +40,11 @@ public class Cliente {
         return generoFavorito;
     }
 
+    @Override
+    public String toString() {
+        return "RUT: " + rut + ", Nombre y apellido(s): " + nombreApellidos + ", correo: " + correo + ", teléfono: " + telefono;
+    }
+
     // Getter y setters
     public String getRut() {
         return rut;

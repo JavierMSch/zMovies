@@ -23,7 +23,7 @@ public class Pelicula {
 
     @Override
     public String toString() {
-        return "ID: " + id + ", Título: " + titulo + ", Precio semanal: $" + precioSemanal;
+        return "ID: " + id + ", Título: " + titulo + ", Género: " + genero + ", Precio semanal: $" + precioSemanal;
     }
 
     // Getter y setters
