@@ -16,7 +16,7 @@ public class VideoClub {
 
         agregarPelicula("El Padrino", "Drama", 10);
         agregarPelicula("El Padrino II", "Drama", 10);
-        agregarPelicula("Titanic", "Romance", 10);
+        agregarPelicula("Titanic", "Romance", 12);
 
         agregarCliente("11.111.111-1", "Juan Pérez", "juan@gmail.com", "12345678");
         agregarCliente("22.222.222-2", "María González", "maria@gmail.com", "87654321");

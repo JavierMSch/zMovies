@@ -14,7 +14,7 @@ public class Pelicula {
     public String obtenerDetalles() {
         return "ID: " + id + "\n" +
                 "Título: " + titulo + "\n" +
-                "Precio semanal: " + precioSemanal;
+                "Precio semanal: $" + precioSemanal;
     }
 
     public int calcularPrecio(int semanas) {
