@@ -12,7 +12,9 @@ public class Genero {
         peliculasTitulo = new HashMap<>();
     }
 
-    public Pelicula obtenerPelicula(int id) { return peliculasID.get(id); }
+    public Pelicula obtenerPelicula(int id) {
+        return peliculasID.get(id);
+    }
 
     public Pelicula obtenerPelicula(String titulo) {
         return peliculasTitulo.get(titulo.toUpperCase());
