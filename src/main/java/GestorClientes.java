@@ -6,21 +6,6 @@ public class GestorClientes {
 
     public GestorClientes() {
         mapaClientes = new HashMap<>();
-        datosTest();
-    }
-
-    private void datosTest() {
-        agregarCliente("11.111.111-1", "Juan Pérez", "juan@gmail.com", "12345678");
-        agregarCliente("22.222.222-2", "María González", "maria@gmail.com", "87654321");
-        agregarCliente("33.333.333-3", "Pedro Rodríguez", "pedro@gmail.com", "12348765");
-    }
-
-    public boolean agregarCliente(Cliente cliente) {
-        if (cliente == null || mapaClientes.containsKey(cliente.getRut())) {
-            return false;
-        }
-        mapaClientes.put(cliente.getRut(), cliente);
-        return true;
     }
 
     public boolean agregarCliente(String rut, String nombreApellido, String correo, String telefono) {

@@ -7,6 +7,24 @@ public class VideoClub {
         gestorClientes = new GestorClientes();
         gestorPeliculas = new GestorPeliculas();
         gestorRentas = new GestorRentas();
+        datosTest();
+    }
+
+    private void datosTest() {
+        agregarGenero("Drama");
+        agregarGenero("Romance");
+
+        agregarPelicula("El Padrino", "Drama", 10);
+        agregarPelicula("El Padrino II", "Drama", 10);
+        agregarPelicula("Titanic", "Romance", 10);
+
+        agregarCliente("11.111.111-1", "Juan Pérez", "juan@gmail.com", "12345678");
+        agregarCliente("22.222.222-2", "María González", "maria@gmail.com", "87654321");
+        agregarCliente("33.333.333-3", "Pedro Rodríguez", "pedro@gmail.com", "12348765");
+
+        rentarPelicula("11.111.111-1", "El Padrino", 2);
+        rentarPelicula("22.222.222-2", "Titanic", 1);
+        rentarPelicula("33.333.333-3", "El Padrino II", 3);
     }
 
     public boolean existeGenero(String genero) {

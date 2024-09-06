@@ -10,16 +10,6 @@ public class GestorPeliculas {
         generosPeliculas = new ArrayList<>();
         listaPeliculas = new ArrayList<>();
         idPeliculaSiguiente = 1;
-        datosTest();
-    }
-
-    private void datosTest() {
-        agregarGenero("Drama");
-        agregarGenero("Romance");
-
-        agregarPelicula("El Padrino", "Drama", 10);
-        agregarPelicula("El Padrino II", "Drama", 10);
-        agregarPelicula("Titanic", "Romance", 10);
     }
 
     public String obtenerListaPeliculas() {
@@ -50,14 +40,6 @@ public class GestorPeliculas {
             }
         }
         return null;
-    }
-
-    public boolean agregarGenero(Genero genero) {
-        if (genero == null || obtenerGenero(genero.getNombre()) != null) {
-            return false;
-        }
-        generosPeliculas.add(genero);
-        return true;
     }
 
     public boolean agregarGenero(String nombreGenero) {
@@ -92,16 +74,6 @@ public class GestorPeliculas {
         if (obtenerGenero(nombreGenero) == null) {
             return false;
         }
-        return true;
-    }
-
-    public boolean agregarPelicula(Genero genero, Pelicula pelicula) {
-        if (pelicula == null || obtenerPelicula(pelicula.getId()) != null) {
-            return false;
-        }
-        genero.agregarPelicula(pelicula);
-        listaPeliculas.add(pelicula);
-        idPeliculaSiguiente++;
         return true;
     }
 
