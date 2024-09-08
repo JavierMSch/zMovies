@@ -116,19 +116,11 @@ public class GestorPeliculas {
     }
 
     // Getter y setters
-    public List<Genero> getGenerosPeliculas() {
-        return generosPeliculas;
+    public int getIdPeliculaSiguiente() {
+        return idPeliculaSiguiente;
     }
 
-    public void setGenerosPeliculas(List<Genero> generosPeliculas) {
-        this.generosPeliculas = generosPeliculas;
-    }
-
-    public List<Pelicula> getListaPeliculas() {
-        return listaPeliculas;
-    }
-
-    public void setListaPeliculas(List<Pelicula> listaPeliculas) {
-        this.listaPeliculas = listaPeliculas;
+    public void setIdPeliculaSiguiente(int idPeliculaSiguiente) {
+        this.idPeliculaSiguiente = idPeliculaSiguiente;
     }
 }

@@ -43,13 +43,4 @@ public class GestorClientes {
         }
         return obtenerCliente(rut).toString();
     }
-
-    // Getter y setters
-    public Map<String, Cliente> getMapaClientes() {
-        return mapaClientes;
-    }
-
-    public void setMapaClientes(Map<String, Cliente> mapaClientes) {
-        this.mapaClientes = mapaClientes;
-    }
 }

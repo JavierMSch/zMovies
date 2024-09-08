@@ -56,20 +56,4 @@ public class Genero {
     public String getNombre() { return nombre; }
 
     public void setNombre(String nombre) { this.nombre = nombre.toUpperCase(); }
-
-    public Map<Integer, Pelicula> getPeliculasID() {
-        return peliculasID;
-    }
-
-    public void setPeliculasID(Map<Integer, Pelicula> peliculasID) {
-        this.peliculasID = peliculasID;
-    }
-
-    public Map<String, Pelicula> getPeliculasTitulo() {
-        return peliculasTitulo;
-    }
-
-    public void setPeliculasTitulo(Map<String, Pelicula> peliculasTitulo) {
-        this.peliculasTitulo = peliculasTitulo;
-    }
 }

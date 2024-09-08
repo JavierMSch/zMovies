@@ -77,12 +77,4 @@ public class Cliente {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-    public List<Renta> getHistorialRentas() {
-        return historialRentas;
-    }
-
-    public void setHistorialRentas(List<Renta> historialRentas) {
-        this.historialRentas = historialRentas;
-    }
 }

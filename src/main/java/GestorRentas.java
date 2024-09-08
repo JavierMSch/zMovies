@@ -98,14 +98,6 @@ public class GestorRentas {
 
 
     // Getter y setters
-    public List<Renta> getListaRentas() {
-        return listaRentas;
-    }
-
-    public void setListaRentas(List<Renta> listaRentas) {
-        this.listaRentas = listaRentas;
-    }
-
     public int getIdSiguiente() {
         return idSiguiente;
     }
