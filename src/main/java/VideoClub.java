@@ -47,6 +47,10 @@ public class VideoClub {
         return gestorPeliculas.obtenerListaPeliculas(nombreGenero);
     }
 
+    public String obtenerListaGeneros() {
+        return gestorPeliculas.obtenerListaGeneros();
+    }
+
     public boolean existeCliente(String rut) {
         return gestorClientes.existeCliente(rut);
     }

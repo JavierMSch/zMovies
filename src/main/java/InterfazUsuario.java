@@ -114,7 +114,8 @@ public class InterfazUsuario {
             System.out.println("2.- Listar películas");
             System.out.println("3.- Mostrar detalles de una película");
             System.out.println("4.- Agregar género");
-            System.out.println("5.- Volver al menú de Bases de Datos");
+            System.out.println("5.- Listar géneros");
+            System.out.println("6.- Volver al menú de Bases de Datos");
 
             int opcion = Integer.parseInt(input("Seleccione una opción: "));
             System.out.println();
@@ -133,6 +134,9 @@ public class InterfazUsuario {
                     agregarGenero();
                     break;
                 case 5:
+                    listarGeneros();
+                    break;
+                case 6:
                     System.out.println("Volviendo al menú de Bases de Datos");
                     return;
                 default:
@@ -383,6 +387,15 @@ public class InterfazUsuario {
 
         videoClub.agregarGenero(nombreGenero);
         System.out.println("Género agregado al sistema");
+    }
+
+    private void listarGeneros() {
+        String generos = videoClub.obtenerListaGeneros();
+        if (generos == null) {
+            System.out.println("No hay géneros en el sistema");
+        } else {
+            System.out.println(generos);
+        }
     }
 
     private void detallesCliente() {

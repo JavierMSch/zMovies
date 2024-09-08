@@ -33,6 +33,19 @@ public class GestorPeliculas {
         return genero.obtenerListaPeliculas();
     }
 
+    public String obtenerListaGeneros() {
+        StringBuilder cadenaGeneros = new StringBuilder();
+        boolean hayGeneros = false;
+        for (Genero genero: generosPeliculas) {
+            cadenaGeneros.append(genero.getNombre()).append("\n");
+            hayGeneros = true;
+        }
+        if (!hayGeneros) {
+            return null;
+        }
+        return cadenaGeneros.toString();
+    }
+
     public Genero obtenerGenero(String nombre) {
         for (Genero gen : generosPeliculas) {
             if (gen.getNombre().equalsIgnoreCase(nombre)) {
