@@ -128,6 +128,27 @@ public class GestorPeliculas {
         return obtenerPelicula(titulo).obtenerDetalles();
     }
 
+    public boolean editarPelicula(String titulo, String nuevoTitulo, String nuevoGenero, int nuevoPrecio) {
+        Pelicula pelicula = obtenerPelicula(titulo);
+        if (pelicula == null) {
+            return false;
+        }
+
+        if (nuevoTitulo != null && !nuevoTitulo.isEmpty()) {
+            pelicula.setTitulo(nuevoTitulo);
+        }
+        if (nuevoGenero != null && !nuevoGenero.isEmpty()) {
+            if (!existeGenero(nuevoGenero)) {
+                agregarGenero(nuevoGenero);
+            }
+            pelicula.setGenero(nuevoGenero);
+        }
+        if (nuevoPrecio > 0) {
+            pelicula.setPrecioSemanal(nuevoPrecio);
+        }
+        return true;
+    }
+
     // Getter y setters
     public int getIdPeliculaSiguiente() {
         return idPeliculaSiguiente;

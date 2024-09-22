@@ -112,6 +112,10 @@ public class VideoClub {
         return gestorPeliculas.obtenerDetallesPelicula(titulo);
     }
 
+    public void editarPelicula(String titulo, String nuevoTitulo, String nuevoGenero, int nuevoPrecio) {
+        gestorPeliculas.editarPelicula(titulo, nuevoTitulo, nuevoGenero, nuevoPrecio);
+    }
+
     // Getter y setters
     public GestorClientes getGestorClientes() {
         return gestorClientes;
