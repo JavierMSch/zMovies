@@ -96,6 +96,14 @@ public class GestorRentas {
         return masVendida;
     }
 
+    public boolean peliculaTieneRentasActivas(Pelicula pelicula) {
+        for (Renta renta: listaRentas) {
+            if (renta.getPelicula() == pelicula) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     // Getter y setters
     public int getIdSiguiente() {

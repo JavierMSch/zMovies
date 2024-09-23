@@ -116,6 +116,18 @@ public class VideoClub {
         gestorPeliculas.editarPelicula(titulo, nuevoTitulo, nuevoGenero, nuevoPrecio);
     }
 
+    public boolean peliculaTieneRentasActivas(String titulo) {
+        Pelicula pelicula = gestorPeliculas.obtenerPelicula(titulo);
+        if (pelicula != null) {
+            return gestorRentas.peliculaTieneRentasActivas(pelicula);
+        }
+        return false;
+    }
+
+    public void eliminarPelicula(String titulo) {
+
+    }
+
     // Getter y setters
     public GestorClientes getGestorClientes() {
         return gestorClientes;
