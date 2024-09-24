@@ -61,6 +61,13 @@ public class Genero {
         }
     }
 
+    public void moverPeliculas(Genero recibe) {
+        for (Pelicula pelicula: peliculasTitulo.values()) {
+            recibe.agregarPelicula(pelicula);
+            pelicula.setGenero(recibe.getNombre());
+        }
+    }
+
     // Getter y setters
     public String getNombre() { return nombre; }
 

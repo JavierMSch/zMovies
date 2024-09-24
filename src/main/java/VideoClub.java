@@ -11,6 +11,7 @@ public class VideoClub {
     }
 
     private void datosTest() {
+        agregarGenero("Sin Genero");
         agregarGenero("Drama");
         agregarGenero("Romance");
 
@@ -130,6 +131,10 @@ public class VideoClub {
 
     public void editarGenero(String genero, String nuevoNombre) {
         gestorPeliculas.editarGenero(genero, nuevoNombre);
+    }
+
+    public void eliminarGenero(String nombre) {
+        gestorPeliculas.eliminarGenero(nombre);
     }
 
     // Getter y setters
