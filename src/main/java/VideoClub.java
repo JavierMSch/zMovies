@@ -125,7 +125,7 @@ public class VideoClub {
     }
 
     public void eliminarPelicula(String titulo) {
-
+        gestorPeliculas.eliminarPelicula(titulo);
     }
 
     // Getter y setters

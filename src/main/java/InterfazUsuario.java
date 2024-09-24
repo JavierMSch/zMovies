@@ -140,8 +140,10 @@ public class InterfazUsuario {
                     break;
                 case 6:
                     editarPelicula();
+                    break;
                 case 7:
                     eliminarPelicula();
+                    break;
                 case 8:
                     System.out.println("Volviendo al menú de Bases de Datos");
                     return;
@@ -423,7 +425,7 @@ public class InterfazUsuario {
             System.out.println("Ya existe película con ese título, debe ingresar otro");
         }
 
-        String nuevoGenero = input("Ingrese nuevo género o enter para mantener el actual");
+        String nuevoGenero = input("Ingrese nuevo género o enter para mantener el actual: ");
         if (!nuevoGenero.isEmpty() && !videoClub.existeGenero(nuevoGenero)) {
             System.out.println("Género no existe en el sistema, se creará");
         }

@@ -98,7 +98,7 @@ public class GestorRentas {
 
     public boolean peliculaTieneRentasActivas(Pelicula pelicula) {
         for (Renta renta: listaRentas) {
-            if (renta.getPelicula() == pelicula) {
+            if (renta.getPelicula() == pelicula && renta.estaPendiente()) {
                 return true;
             }
         }

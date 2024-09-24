@@ -16,8 +16,10 @@ public class GestorPeliculas {
         StringBuilder cadenaPeliculas = new StringBuilder();
         boolean hayPeliculas = false;
         for (Pelicula pelicula: listaPeliculas) {
-            cadenaPeliculas.append(pelicula).append("\n");
-            hayPeliculas = true;
+            if (pelicula.isActiva()) {
+                cadenaPeliculas.append(pelicula).append("\n");
+                hayPeliculas = true;
+            }
         }
         if (!hayPeliculas) {
             return null;
@@ -141,12 +143,27 @@ public class GestorPeliculas {
             if (!existeGenero(nuevoGenero)) {
                 agregarGenero(nuevoGenero);
             }
-            pelicula.setGenero(nuevoGenero);
+            String antiguoGenero = pelicula.getGenero();
+            Genero genero = obtenerGenero(nuevoGenero);
+            pelicula.setGenero(genero.getNombre());
+            genero.agregarPelicula(pelicula);
+            obtenerGenero(antiguoGenero).eliminarPelicula(pelicula.getTitulo());
         }
-        if (nuevoPrecio > 0) {
+        if (nuevoPrecio >= 0) {
             pelicula.setPrecioSemanal(nuevoPrecio);
         }
         return true;
+    }
+
+    public boolean eliminarPelicula(String titulo) {
+        Pelicula pelicula = obtenerPelicula(titulo);
+        if (pelicula != null) {
+            Genero genero = obtenerGenero(pelicula.getGenero());
+            genero.eliminarPelicula(titulo);
+            pelicula.setActiva(false);
+            return true;
+        }
+        return false;
     }
 
     // Getter y setters

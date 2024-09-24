@@ -3,17 +3,20 @@ public class Pelicula {
     private String titulo;
     private String genero;
     private int precioSemanal;
+    private boolean activa;
 
     public Pelicula(int id, String titulo, String genero, int precioSemanal) {
         this.id = id;
         this.titulo = titulo;
         this.genero = genero;
         this.precioSemanal = precioSemanal;
+        this.activa = true;
     }
 
     public String obtenerDetalles() {
         return "ID: " + id + "\n" +
                 "Título: " + titulo + "\n" +
+                "Género: " + genero + "\n" +
                 "Precio semanal: $" + precioSemanal;
     }
 
@@ -57,5 +60,13 @@ public class Pelicula {
 
     public void setPrecioSemanal(int precioSemanal) {
         this.precioSemanal = precioSemanal;
+    }
+
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
     }
 }
