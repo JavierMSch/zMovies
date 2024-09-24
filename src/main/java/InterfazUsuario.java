@@ -117,7 +117,8 @@ public class InterfazUsuario {
             System.out.println("5.- Listar géneros");
             System.out.println("6.- Editar datos película");
             System.out.println("7.- Eliminar película");
-            System.out.println("8.- Volver al menú de Bases de Datos");
+            System.out.println("8.- Editar género");
+            System.out.println("9.- Volver al menú de Bases de Datos");
 
             int opcion = Integer.parseInt(input("Seleccione una opción: "));
             System.out.println();
@@ -145,6 +146,9 @@ public class InterfazUsuario {
                     eliminarPelicula();
                     break;
                 case 8:
+                    editarGenero();
+                    break;
+                case 9:
                     System.out.println("Volviendo al menú de Bases de Datos");
                     return;
                 default:
@@ -460,6 +464,29 @@ public class InterfazUsuario {
         } else {
             System.out.println("Eliminación cancelada");
         }
+    }
+
+    private void editarGenero() {
+        String genero = input("Ingrese género a editar: ");
+
+        if (!videoClub.existeGenero(genero)) {
+            System.out.println("Género no se encuentra en el sistema, volviendo al menú");
+            return;
+        }
+
+        String nuevo = input("Ingrese nuevo nombre de género: ");
+        if (videoClub.existeGenero(nuevo)) {
+            System.out.println("Género ya existe en el sistema, volviendo al menú");
+            return;
+        }
+
+        if (nuevo == null || nuevo.isEmpty()) {
+            System.out.println("Nombre no válido, volviendo al menú");
+            return;
+        }
+
+        videoClub.editarGenero(genero, nuevo);
+        System.out.println("Género editado exitosamente");
     }
 
     private void detallesCliente() {

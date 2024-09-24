@@ -128,6 +128,10 @@ public class VideoClub {
         gestorPeliculas.eliminarPelicula(titulo);
     }
 
+    public void editarGenero(String genero, String nuevoNombre) {
+        gestorPeliculas.editarGenero(genero, nuevoNombre);
+    }
+
     // Getter y setters
     public GestorClientes getGestorClientes() {
         return gestorClientes;

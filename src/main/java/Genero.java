@@ -52,6 +52,15 @@ public class Genero {
         return peliculasTitulo.remove(obtenerPelicula(titulo).getTitulo());
     }
 
+    public void editarGenero(String nuevoNombre) {
+        String nuevoNombreGenero = nuevoNombre.toUpperCase();
+
+        setNombre(nuevoNombreGenero);
+        for (Pelicula pelicula: peliculasTitulo.values()) {
+            pelicula.setGenero(nuevoNombreGenero);
+        }
+    }
+
     // Getter y setters
     public String getNombre() { return nombre; }
 
