@@ -48,8 +48,8 @@ public class Genero {
     }
 
     public Pelicula eliminarPelicula(String titulo) {
-        peliculasID.remove(peliculasTitulo.get(titulo).getId());
-        return peliculasTitulo.remove(titulo);
+        peliculasID.remove(obtenerPelicula(titulo).getId());
+        return peliculasTitulo.remove(obtenerPelicula(titulo).getTitulo());
     }
 
     // Getter y setters

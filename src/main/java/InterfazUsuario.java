@@ -115,7 +115,9 @@ public class InterfazUsuario {
             System.out.println("3.- Mostrar detalles de una película");
             System.out.println("4.- Agregar género");
             System.out.println("5.- Listar géneros");
-            System.out.println("6.- Volver al menú de Bases de Datos");
+            System.out.println("6.- Editar datos película");
+            System.out.println("7.- Eliminar película");
+            System.out.println("8.- Volver al menú de Bases de Datos");
 
             int opcion = Integer.parseInt(input("Seleccione una opción: "));
             System.out.println();
@@ -137,6 +139,12 @@ public class InterfazUsuario {
                     listarGeneros();
                     break;
                 case 6:
+                    editarPelicula();
+                    break;
+                case 7:
+                    eliminarPelicula();
+                    break;
+                case 8:
                     System.out.println("Volviendo al menú de Bases de Datos");
                     return;
                 default:
@@ -395,6 +403,62 @@ public class InterfazUsuario {
             System.out.println("No hay géneros en el sistema");
         } else {
             System.out.println(generos);
+        }
+    }
+
+    private void editarPelicula() {
+        String titulo = input("Ingrese título: ");
+
+        if (!videoClub.existePelicula(titulo)) {
+            System.out.println("Película no se encuentra en el sistema, volviendo al menú");
+            return;
+        }
+
+        System.out.println(videoClub.detallesPelicula(titulo));
+
+        String nuevoTitulo;
+        while (true) {
+            nuevoTitulo = input("Ingrese nuevo título o enter para mantener el actual: ");
+            if (nuevoTitulo.isEmpty() || !videoClub.existePelicula(nuevoTitulo)) {
+                break;
+            }
+            System.out.println("Ya existe película con ese título, debe ingresar otro");
+        }
+
+        String nuevoGenero = input("Ingrese nuevo género o enter para mantener el actual: ");
+        if (!nuevoGenero.isEmpty() && !videoClub.existeGenero(nuevoGenero)) {
+            System.out.println("Género no existe en el sistema, se creará");
+        }
+
+        String precioStr = input("Ingrese nuevo precio semanal (valor entero mayor a 0) o enter para mantener el actual: ");
+        int nuevoPrecio = -1;
+        if (!precioStr.isEmpty()) {
+            nuevoPrecio = Integer.parseInt(precioStr);
+        }
+
+        videoClub.editarPelicula(titulo, nuevoTitulo, nuevoGenero, nuevoPrecio);
+        System.out.println("Película editada exitosamente");
+    }
+
+    private void eliminarPelicula() {
+        String titulo = input("Ingrese el título de la película a eliminar: ");
+
+        if (!videoClub.existePelicula(titulo)) {
+            System.out.println("Película no se encuentra en el sistema, volviendo al menú");
+            return;
+        }
+
+        if (videoClub.peliculaTieneRentasActivas(titulo)) {
+            System.out.println("Película tiene rentas sin devolver, aún no se puede eliminar, volviendo al menú");
+            return;
+        }
+
+        String confirmacion = input("¿Está seguro de que desea eliminar la película '" + titulo + "'? (si/no): ");
+        if (confirmacion.equalsIgnoreCase("si")) {
+            videoClub.eliminarPelicula(titulo);
+            System.out.println("Película eliminada exitosamente");
+        } else {
+            System.out.println("Eliminación cancelada");
         }
     }
 
