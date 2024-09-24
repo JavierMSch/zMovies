@@ -21,7 +21,7 @@ public class Genero {
     }
 
     public boolean agregarPelicula(Pelicula pelicula) {
-        if (pelicula == null || peliculasID.containsKey(pelicula.getId())) {
+        if (pelicula == null || peliculasTitulo.containsKey(pelicula.getTitulo())) {
             return false;
         }
         peliculasID.put(pelicula.getId(), pelicula);
