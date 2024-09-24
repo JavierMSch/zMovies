@@ -52,7 +52,8 @@ public class InterfazUsuario {
             System.out.println("2.- Devolver película");
             System.out.println("3.- Recomendar película");
             System.out.println("4.- Listar películas pendientes a devolver");
-            System.out.println("5.- Volver al menú principal");
+            System.out.println("5.- Película más rentada por cada género");
+            System.out.println("6.- Volver al menú principal");
 
             int opcion = Integer.parseInt(input("Seleccione una opción: "));
             System.out.println();
@@ -71,6 +72,9 @@ public class InterfazUsuario {
                     listarPendientes();
                     break;
                 case 5:
+                    listarMasRentadasPorGenero();
+                    break;
+                case 6:
                     System.out.println("Volviendo al menú principal");
                     return;
                 default:
@@ -318,6 +322,17 @@ public class InterfazUsuario {
         } else {
             System.out.println(pendientes);
         }
+    }
+
+    private void listarMasRentadasPorGenero() {
+        String listado = videoClub.obtenerListaMasRentadaGenero();
+
+        if (listado == null) {
+            System.out.println("No existen rentas en el sistema, volviendo al menú");
+        }
+
+        System.out.println("Películas más rentadas por cada género:");
+        System.out.println(listado);
     }
 
     private void agregarPelicula() {
