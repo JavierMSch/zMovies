@@ -137,6 +137,10 @@ public class VideoClub {
         gestorPeliculas.eliminarGenero(nombre);
     }
 
+    public String obtenerListaMasRentadaGenero() {
+        return gestorRentas.obtenerListaMasRentadaGenero();
+    }
+
     // Getter y setters
     public GestorClientes getGestorClientes() {
         return gestorClientes;
