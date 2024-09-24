@@ -21,7 +21,7 @@ public class Genero {
     }
 
     public boolean agregarPelicula(Pelicula pelicula) {
-        if (pelicula == null || peliculasID.containsKey(pelicula.getId())) {
+        if (pelicula == null || peliculasTitulo.containsKey(pelicula.getTitulo())) {
             return false;
         }
         peliculasID.put(pelicula.getId(), pelicula);
@@ -50,6 +50,22 @@ public class Genero {
     public Pelicula eliminarPelicula(String titulo) {
         peliculasID.remove(obtenerPelicula(titulo).getId());
         return peliculasTitulo.remove(obtenerPelicula(titulo).getTitulo());
+    }
+
+    public void editarGenero(String nuevoNombre) {
+        String nuevoNombreGenero = nuevoNombre.toUpperCase();
+
+        setNombre(nuevoNombreGenero);
+        for (Pelicula pelicula: peliculasTitulo.values()) {
+            pelicula.setGenero(nuevoNombreGenero);
+        }
+    }
+
+    public void moverPeliculas(Genero recibe) {
+        for (Pelicula pelicula: peliculasTitulo.values()) {
+            recibe.agregarPelicula(pelicula);
+            pelicula.setGenero(recibe.getNombre());
+        }
     }
 
     // Getter y setters

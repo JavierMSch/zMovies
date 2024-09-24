@@ -166,6 +166,27 @@ public class GestorPeliculas {
         return false;
     }
 
+    public boolean editarGenero(String nombreGenero, String nuevoNombre) {
+        Genero genero = obtenerGenero(nombreGenero);
+
+        if (genero != null) {
+            genero.editarGenero(nuevoNombre);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean eliminarGenero(String nombreGenero) {
+        Genero genero = obtenerGenero(nombreGenero);
+        if (genero != null) {
+            Genero generoEspecial = obtenerGenero("SIN GENERO");
+            genero.moverPeliculas(generoEspecial);
+            generosPeliculas.remove(genero);
+            return true;
+        }
+        return false;
+    }
+
     // Getter y setters
     public int getIdPeliculaSiguiente() {
         return idPeliculaSiguiente;
