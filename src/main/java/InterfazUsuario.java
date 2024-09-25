@@ -123,7 +123,8 @@ public class InterfazUsuario {
             System.out.println("7.- Eliminar película");
             System.out.println("8.- Editar género");
             System.out.println("9.- Eliminar género");
-            System.out.println("10.- Volver al menú de Bases de Datos");
+            System.out.println("10.- Generar reporte de películas");
+            System.out.println("11.- Volver al menú de Bases de Datos");
 
             int opcion = Integer.parseInt(input("Seleccione una opción: "));
             System.out.println();
@@ -157,6 +158,9 @@ public class InterfazUsuario {
                     eliminarGenero();
                     break;
                 case 10:
+                    generarReportePeliculas();
+                    break;
+                case 11:
                     System.out.println("Volviendo al menú de Bases de Datos");
                     return;
                 default:
@@ -524,6 +528,13 @@ public class InterfazUsuario {
         } else {
             System.out.println("Eliminación cancelada");
         }
+    }
+
+    private void generarReportePeliculas() {
+        System.out.println("Se generará un archivo txt y un xlsx con los datos de las películas del sistema.");
+        System.out.println("Si no hay películas en el sistema, los archivos no tendrán datos.");
+        videoClub.generarReportePeliculas();
+        System.out.println("Archivos generados.");
     }
 
     private void detallesCliente() {
