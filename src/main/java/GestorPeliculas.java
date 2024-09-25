@@ -1,3 +1,11 @@
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -185,6 +193,72 @@ public class GestorPeliculas {
             return true;
         }
         return false;
+    }
+
+    public String obtenerListaPeliculasParaCSV() {
+        StringBuilder cadena = new StringBuilder();
+        cadena.append("ID,Titulo,Género,Precio Semanal\n");
+        for (Pelicula pelicula: listaPeliculas) {
+            if (pelicula.isActiva()) {
+                cadena.append(pelicula.getId()).append(",")
+                        .append(pelicula.getTitulo()).append(",")
+                        .append(pelicula.getGenero()).append(",")
+                        .append(pelicula.getPrecioSemanal()).append("\n");
+            }
+        }
+        return cadena.toString();
+    }
+
+    public void generarReporteTexto() {
+        String nombreArchivo = "reportePeliculas.txt";
+        try (PrintWriter writer = new PrintWriter(new File(nombreArchivo))) {
+            writer.println("ID,Titulo,Género,Precio Semanal");
+            for (Pelicula pelicula: listaPeliculas) {
+                if (pelicula.isActiva()) {
+                    writer.printf("%d,%s,%s,%d\n", pelicula.getId(),
+                            pelicula.getTitulo(), pelicula.getGenero(),
+                            pelicula.getPrecioSemanal());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void generarReportePlanilla() {
+        try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+            Sheet planilla = workbook.createSheet("Películas");
+
+            Row header = planilla.createRow(0);
+            header.createCell(0).setCellValue("ID");
+            header.createCell(1).setCellValue("Título");
+            header.createCell(2).setCellValue("Género");
+            header.createCell(3).setCellValue("Precio Semanal");
+
+            planilla.setColumnWidth(0, 2000);
+            planilla.setColumnWidth(1, 8000);
+            planilla.setColumnWidth(2, 6000);
+            planilla.setColumnWidth(3, 4000);
+
+            int numeroFila = 1;
+            for (Pelicula pelicula: listaPeliculas) {
+                Row fila = planilla.createRow(numeroFila);
+
+                fila.createCell(0).setCellValue(pelicula.getId());
+                fila.createCell(1).setCellValue(pelicula.getTitulo());
+                fila.createCell(2).setCellValue(pelicula.getGenero());
+                fila.createCell(3).setCellValue(pelicula.getPrecioSemanal());
+                numeroFila++;
+            }
+
+            String nombreArchivo = "planillaPeliculas.xlsx";
+            try (FileOutputStream archivoSalida = new FileOutputStream(nombreArchivo)) {
+                workbook.write(archivoSalida);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Getter y setters

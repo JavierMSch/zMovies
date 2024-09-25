@@ -1,3 +1,11 @@
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.FileOutputStream;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+
 public class VideoClub {
     private GestorClientes gestorClientes;
     private GestorPeliculas gestorPeliculas;
@@ -140,6 +148,47 @@ public class VideoClub {
     public String obtenerListaMasRentadaGenero() {
         return gestorRentas.obtenerListaMasRentadaGenero();
     }
+
+    public void generarReportePeliculas() {
+        // String listaPeliculasParaCSV = gestorPeliculas.obtenerListaPeliculasParaCSV();
+
+        gestorPeliculas.generarReporteTexto();
+        gestorPeliculas.generarReportePlanilla();
+    }
+
+//    private void generarReporteTexto(String listado) {
+//        String nombreArchivo = "reportePeliculas.txt";
+//        try (PrintWriter writer = new PrintWriter(new File(nombreArchivo))) {
+//            writer.println(listado);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    private void generarReportePlanilla(String listado) {
+//        try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+//            Sheet planilla = workbook.createSheet("Películas");
+//
+//            String[] arrayPeliculas = listado.split("\n");
+//            for (int i = 0; i < arrayPeliculas.length; i++) {
+//                Row fila = planilla.createRow(i);
+//                String[] datos = arrayPeliculas[i].split(",");
+//
+//                for (int j = 0; j < datos.length; j++) {
+//                    Cell celda = fila.createCell(j);
+//                    celda.setCellValue(datos[j]);
+//                }
+//            }
+//
+//            String nombreArchivo = "planillaPeliculas.xlsx";
+//            try (FileOutputStream archivoSalida = new FileOutputStream(nombreArchivo)) {
+//                workbook.write(archivoSalida);
+//            }
+//
+//            } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     // Getter y setters
     public GestorClientes getGestorClientes() {
