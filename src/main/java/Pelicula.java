@@ -1,12 +1,10 @@
 public class Pelicula {
-    private int id;
     private String titulo;
     private String genero;
     private int precioSemanal;
     private boolean activa;
 
-    public Pelicula(int id, String titulo, String genero, int precioSemanal) {
-        this.id = id;
+    public Pelicula(String titulo, String genero, int precioSemanal) {
         this.titulo = titulo;
         this.genero = genero;
         this.precioSemanal = precioSemanal;
@@ -14,8 +12,7 @@ public class Pelicula {
     }
 
     public String obtenerDetalles() {
-        return "ID: " + id + "\n" +
-                "Título: " + titulo + "\n" +
+        return "Título: " + titulo + "\n" +
                 "Género: " + genero + "\n" +
                 "Precio semanal: $" + precioSemanal;
     }
@@ -26,18 +23,10 @@ public class Pelicula {
 
     @Override
     public String toString() {
-        return "ID: " + id + ", Título: " + titulo + ", Género: " + genero + ", Precio semanal: $" + precioSemanal;
+        return "Título: " + titulo + ", Género: " + genero + ", Precio semanal: $" + precioSemanal;
     }
 
     // Getter y setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getTitulo() {
         return titulo;
     }

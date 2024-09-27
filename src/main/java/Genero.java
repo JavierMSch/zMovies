@@ -3,17 +3,11 @@ import java.util.HashMap;
 
 public class Genero {
     private String nombre;
-    private Map<Integer, Pelicula> peliculasID;
     private Map<String, Pelicula> peliculasTitulo;
 
     public Genero(String nombre) {
         this.nombre = nombre;
-        peliculasID = new HashMap<>();
         peliculasTitulo = new HashMap<>();
-    }
-
-    public Pelicula obtenerPelicula(int id) {
-        return peliculasID.get(id);
     }
 
     public Pelicula obtenerPelicula(String titulo) {
@@ -24,7 +18,6 @@ public class Genero {
         if (pelicula == null || peliculasTitulo.containsKey(pelicula.getTitulo())) {
             return false;
         }
-        peliculasID.put(pelicula.getId(), pelicula);
         peliculasTitulo.put(pelicula.getTitulo().toUpperCase(), pelicula);
         return true;
     }
@@ -42,13 +35,7 @@ public class Genero {
         return cadenaPeliculas.toString();
     }
 
-    public Pelicula eliminarPelicula(int id) {
-        peliculasTitulo.remove(peliculasID.get(id).getTitulo());
-        return peliculasID.remove(id);
-    }
-
     public Pelicula eliminarPelicula(String titulo) {
-        peliculasID.remove(obtenerPelicula(titulo).getId());
         return peliculasTitulo.remove(obtenerPelicula(titulo).getTitulo());
     }
 

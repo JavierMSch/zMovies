@@ -12,12 +12,10 @@ import java.util.ArrayList;
 public class GestorPeliculas {
     private List<Genero> generosPeliculas;
     private List<Pelicula> listaPeliculas;
-    private int idPeliculaSiguiente;
 
     public GestorPeliculas() {
         generosPeliculas = new ArrayList<>();
         listaPeliculas = new ArrayList<>();
-        idPeliculaSiguiente = 1;
     }
 
     public String obtenerListaPeliculas() {
@@ -83,16 +81,6 @@ public class GestorPeliculas {
         return null;
     }
 
-    public Pelicula obtenerPelicula(int id) {
-        for (Genero gen : generosPeliculas) {
-            Pelicula peliculaBuscada = gen.obtenerPelicula(id);
-            if (peliculaBuscada != null) {
-                return peliculaBuscada;
-            }
-        }
-        return null;
-    }
-
     public boolean existeGenero(String nombreGenero) {
         if (obtenerGenero(nombreGenero) == null) {
             return false;
@@ -106,11 +94,9 @@ public class GestorPeliculas {
             return false;
         }
 
-        Pelicula pelicula = new Pelicula(idPeliculaSiguiente, titulo.toUpperCase(),
-                nombreGenero.toUpperCase(), precioSemanal);
+        Pelicula pelicula = new Pelicula(titulo.toUpperCase(), nombreGenero.toUpperCase(), precioSemanal);
         genero.agregarPelicula(pelicula);
         listaPeliculas.add(pelicula);
-        idPeliculaSiguiente++;
         return true;
     }
 
@@ -197,11 +183,10 @@ public class GestorPeliculas {
 
     public String obtenerListaPeliculasParaCSV() {
         StringBuilder cadena = new StringBuilder();
-        cadena.append("ID,Titulo,Género,Precio Semanal\n");
+        cadena.append("Titulo,Género,Precio Semanal\n");
         for (Pelicula pelicula: listaPeliculas) {
             if (pelicula.isActiva()) {
-                cadena.append(pelicula.getId()).append(",")
-                        .append(pelicula.getTitulo()).append(",")
+                cadena.append(pelicula.getTitulo()).append(",")
                         .append(pelicula.getGenero()).append(",")
                         .append(pelicula.getPrecioSemanal()).append("\n");
             }
@@ -212,12 +197,10 @@ public class GestorPeliculas {
     public void generarReporteTexto() {
         String nombreArchivo = "reportePeliculas.txt";
         try (PrintWriter writer = new PrintWriter(new File(nombreArchivo))) {
-            writer.println("ID,Titulo,Género,Precio Semanal");
+            writer.println("Titulo,Género,Precio Semanal");
             for (Pelicula pelicula: listaPeliculas) {
                 if (pelicula.isActiva()) {
-                    writer.printf("%d,%s,%s,%d\n", pelicula.getId(),
-                            pelicula.getTitulo(), pelicula.getGenero(),
-                            pelicula.getPrecioSemanal());
+                    writer.printf("%s,%s,%d\n", pelicula.getTitulo(), pelicula.getGenero(), pelicula.getPrecioSemanal());
                 }
             }
         } catch (IOException e) {
@@ -230,24 +213,21 @@ public class GestorPeliculas {
             Sheet planilla = workbook.createSheet("Películas");
 
             Row header = planilla.createRow(0);
-            header.createCell(0).setCellValue("ID");
-            header.createCell(1).setCellValue("Título");
-            header.createCell(2).setCellValue("Género");
-            header.createCell(3).setCellValue("Precio Semanal");
+            header.createCell(0).setCellValue("Título");
+            header.createCell(1).setCellValue("Género");
+            header.createCell(2).setCellValue("Precio Semanal");
 
-            planilla.setColumnWidth(0, 2000);
-            planilla.setColumnWidth(1, 8000);
-            planilla.setColumnWidth(2, 6000);
-            planilla.setColumnWidth(3, 4000);
+            planilla.setColumnWidth(0, 8000);
+            planilla.setColumnWidth(1, 6000);
+            planilla.setColumnWidth(2, 4000);
 
             int numeroFila = 1;
             for (Pelicula pelicula: listaPeliculas) {
                 Row fila = planilla.createRow(numeroFila);
 
-                fila.createCell(0).setCellValue(pelicula.getId());
-                fila.createCell(1).setCellValue(pelicula.getTitulo());
-                fila.createCell(2).setCellValue(pelicula.getGenero());
-                fila.createCell(3).setCellValue(pelicula.getPrecioSemanal());
+                fila.createCell(0).setCellValue(pelicula.getTitulo());
+                fila.createCell(1).setCellValue(pelicula.getGenero());
+                fila.createCell(2).setCellValue(pelicula.getPrecioSemanal());
                 numeroFila++;
             }
 
@@ -259,14 +239,5 @@ public class GestorPeliculas {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    // Getter y setters
-    public int getIdPeliculaSiguiente() {
-        return idPeliculaSiguiente;
-    }
-
-    public void setIdPeliculaSiguiente(int idPeliculaSiguiente) {
-        this.idPeliculaSiguiente = idPeliculaSiguiente;
     }
 }
