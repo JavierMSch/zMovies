@@ -197,6 +197,14 @@ public class VideoClub {
         }
     }
 
+    public void cargarDatos() {
+        try {
+            gestorBaseDatos.cargarDatos(gestorPeliculas, gestorClientes, gestorRentas);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     // Getter y setters
     public GestorClientes getGestorClientes() {
         return gestorClientes;

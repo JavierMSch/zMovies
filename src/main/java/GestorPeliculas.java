@@ -100,6 +100,20 @@ public class GestorPeliculas {
         return true;
     }
 
+    public boolean agregarPelicula(String titulo, String nombreGenero, int precioSemanal, boolean activa) {
+        Genero genero = obtenerGenero(nombreGenero);
+        if (genero == null) {
+            return false;
+        }
+
+        Pelicula pelicula = new Pelicula(titulo.toUpperCase(), nombreGenero.toUpperCase(), precioSemanal, activa);
+        if (pelicula.isActiva()) {
+            genero.agregarPelicula(pelicula);
+        }
+        listaPeliculas.add(pelicula);
+        return true;
+    }
+
     public boolean existePelicula(String titulo) {
         for (Genero genero: generosPeliculas) {
             if (genero.obtenerPelicula(titulo) != null) {
@@ -247,5 +261,14 @@ public class GestorPeliculas {
 
     public List<Pelicula> obtenerListaPeliculas() {
         return new ArrayList<>(listaPeliculas);
+    }
+
+    public Pelicula obtenerPeliculaActivaOInactiva(String titulo) {
+        for (Pelicula pelicula: listaPeliculas) {
+            if (pelicula.getTitulo().equalsIgnoreCase(titulo)) {
+                return pelicula;
+            }
+        }
+        return null;
     }
 }

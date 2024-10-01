@@ -1,4 +1,6 @@
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 public class GestorBaseDatos {
@@ -171,5 +173,103 @@ public class GestorBaseDatos {
         }
 
         return true;
+    }
+
+    // TODO: throws custom exception
+    public boolean cargarDatos(GestorPeliculas gestorPeliculas, GestorClientes gestorClientes, GestorRentas gestorRentas) {
+        cargarGeneros(gestorPeliculas);
+        cargarPeliculas(gestorPeliculas);
+        cargarClientes(gestorClientes);
+        cargarRentas(gestorRentas, gestorPeliculas, gestorClientes);
+        return true;
+    }
+
+    private void cargarGeneros(GestorPeliculas gestorPeliculas) {
+        String sql = "SELECT * FROM genero";
+
+        try (Connection conn = getConnection()) {
+            Statement cursor = conn.createStatement();
+            ResultSet set = cursor.executeQuery(sql);
+            while (set.next()) {
+                gestorPeliculas.agregarGenero(set.getString("nombre"));
+            }
+        } catch(SQLException e) {
+            //TODO exception custom
+            System.err.println("Ocurrió un error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarPeliculas(GestorPeliculas gestorPeliculas) {
+        String sql = "SELECT * FROM pelicula";
+
+        try (Connection conn = getConnection()) {
+            Statement cursor = conn.createStatement();
+            ResultSet set = cursor.executeQuery(sql);
+            while (set.next()) {
+                String titulo = set.getString("titulo");
+                String nombreGenero = set.getString("nombre_genero");
+                int precio = set.getInt("precio_semanal");
+                boolean activa = set.getBoolean("activa");
+
+                gestorPeliculas.agregarPelicula(titulo, nombreGenero, precio, activa);
+            }
+        } catch(SQLException e) {
+            //TODO exception custom
+            System.err.println("Ocurrió un error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarClientes(GestorClientes gestorClientes) {
+        String sql = "SELECT * FROM cliente";
+
+        try (Connection conn = getConnection()) {
+            Statement cursor = conn.createStatement();
+            ResultSet set = cursor.executeQuery(sql);
+            while (set.next()) {
+                String rut = set.getString("rut");
+                String nombre = set.getString("nombre");
+                String correo = set.getString("correo");
+                String telefono = set.getString("telefono");
+
+                gestorClientes.agregarCliente(rut, nombre, correo, telefono);
+            }
+        } catch(SQLException e) {
+            //TODO exception custom
+            System.err.println("Ocurrió un error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarRentas(GestorRentas gestorRentas, GestorPeliculas gestorPeliculas, GestorClientes gestorClientes) {
+        String sql = "SELECT * FROM renta";
+
+        try (Connection conn = getConnection()) {
+            Statement cursor = conn.createStatement();
+            ResultSet set = cursor.executeQuery(sql);
+            while (set.next()) {
+                int id = set.getInt("id");
+                String rut = set.getString("rut_cliente");
+                String titulo = set.getString("titulo_pelicula");
+                int semanas = set.getInt("semanas");
+                LocalDate fechaRenta = LocalDate.parse(set.getString("fecha_renta"));
+                LocalDate fechaDev = LocalDate.parse(set.getString("fecha_devolucion"));
+                int monto = set.getInt("monto");
+                boolean devuelta = set.getBoolean("devuelta");
+
+                Cliente cliente = gestorClientes.obtenerCliente(rut);
+                Pelicula pelicula = gestorPeliculas.obtenerPeliculaActivaOInactiva(titulo);
+
+                Renta renta = new Renta(id, cliente, pelicula, semanas, fechaRenta, fechaDev, monto, devuelta);
+
+                gestorRentas.agregarRenta(renta);
+                gestorClientes.agregarRenta(rut, renta);
+            }
+        } catch(SQLException e) {
+            //TODO exception custom
+            System.err.println("Ocurrió un error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
