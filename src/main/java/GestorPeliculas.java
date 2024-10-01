@@ -101,13 +101,14 @@ public class GestorPeliculas {
     }
 
     public boolean agregarPelicula(String titulo, String nombreGenero, int precioSemanal, boolean activa) {
-        Genero genero = obtenerGenero(nombreGenero);
-        if (genero == null) {
-            return false;
-        }
-
         Pelicula pelicula = new Pelicula(titulo.toUpperCase(), nombreGenero.toUpperCase(), precioSemanal, activa);
         if (pelicula.isActiva()) {
+            // Se hace la verificación antes de buscar el género, ya que si la película fué eliminada
+            // puede ocurrir que el género al que pertenecía se eliminó luego.
+            Genero genero = obtenerGenero(nombreGenero);
+            if (genero == null) {
+                return false;
+            }
             genero.agregarPelicula(pelicula);
         }
         listaPeliculas.add(pelicula);

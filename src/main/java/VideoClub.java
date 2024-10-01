@@ -9,8 +9,12 @@ public class VideoClub {
         gestorPeliculas = new GestorPeliculas();
         gestorRentas = new GestorRentas();
         gestorBaseDatos = new GestorBaseDatos("jdbc:sqlite:videoclub.sqlite");
+    }
+
+    public void start() {
         gestorBaseDatos.inicializarTablas();
-        datosTest();
+        cargarDatos();
+        //datosTest();
     }
 
     private void datosTest() {

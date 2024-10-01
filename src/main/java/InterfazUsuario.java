@@ -10,6 +10,7 @@ public class InterfazUsuario {
     }
 
     public void start() {
+        videoClub.start();
         menuPrincipal();
     }
 
