@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GestorClientes {
@@ -42,5 +44,9 @@ public class GestorClientes {
             return null;
         }
         return obtenerCliente(rut).toString();
+    }
+
+    public List<Cliente> obtenerListaClientes() {
+        return new ArrayList<>(mapaClientes.values());
     }
 }

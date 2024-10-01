@@ -18,7 +18,7 @@ public class GestorPeliculas {
         listaPeliculas = new ArrayList<>();
     }
 
-    public String obtenerListaPeliculas() {
+    public String obtenerStringListaPeliculas() {
         StringBuilder cadenaPeliculas = new StringBuilder();
         boolean hayPeliculas = false;
         for (Pelicula pelicula: listaPeliculas) {
@@ -33,7 +33,7 @@ public class GestorPeliculas {
         return cadenaPeliculas.toString();
     }
 
-    public String obtenerListaPeliculas(String nombreGenero) {
+    public String obtenerStringListaPeliculas(String nombreGenero) {
         Genero genero = obtenerGenero(nombreGenero);
         if (genero == null) {
             return null;
@@ -41,7 +41,7 @@ public class GestorPeliculas {
         return genero.obtenerListaPeliculas();
     }
 
-    public String obtenerListaGeneros() {
+    public String obtenerStringListaGeneros() {
         StringBuilder cadenaGeneros = new StringBuilder();
         boolean hayGeneros = false;
         for (Genero genero: generosPeliculas) {
@@ -239,5 +239,13 @@ public class GestorPeliculas {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Genero> obtenerListaGeneros() {
+        return new ArrayList<>(generosPeliculas);
+    }
+
+    public List<Pelicula> obtenerListaPeliculas() {
+        return new ArrayList<>(listaPeliculas);
     }
 }

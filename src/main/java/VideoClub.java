@@ -1,20 +1,15 @@
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.FileOutputStream;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-
 public class VideoClub {
     private GestorClientes gestorClientes;
     private GestorPeliculas gestorPeliculas;
     private GestorRentas gestorRentas;
+    private GestorBaseDatos gestorBaseDatos;
 
     public VideoClub() {
         gestorClientes = new GestorClientes();
         gestorPeliculas = new GestorPeliculas();
         gestorRentas = new GestorRentas();
+        gestorBaseDatos = new GestorBaseDatos("jdbc:sqlite:videoclub.sqlite");
+        gestorBaseDatos.inicializarTablas();
         datosTest();
     }
 
@@ -49,15 +44,15 @@ public class VideoClub {
     }
 
     public String obtenerListaPeliculas() {
-        return gestorPeliculas.obtenerListaPeliculas();
+        return gestorPeliculas.obtenerStringListaPeliculas();
     }
 
     public String obtenerListaPeliculas(String nombreGenero) {
-        return gestorPeliculas.obtenerListaPeliculas(nombreGenero);
+        return gestorPeliculas.obtenerStringListaPeliculas(nombreGenero);
     }
 
     public String obtenerListaGeneros() {
-        return gestorPeliculas.obtenerListaGeneros();
+        return gestorPeliculas.obtenerStringListaGeneros();
     }
 
     public boolean existeCliente(String rut) {
@@ -189,6 +184,18 @@ public class VideoClub {
 //            e.printStackTrace();
 //        }
 //    }
+
+    public void insertarDatos() {
+        try {
+            gestorBaseDatos.eliminarDatos();
+            gestorBaseDatos.insertarGeneros(gestorPeliculas.obtenerListaGeneros());
+            gestorBaseDatos.insertarPeliculas(gestorPeliculas.obtenerListaPeliculas());
+            gestorBaseDatos.insertarClientes(gestorClientes.obtenerListaClientes());
+            gestorBaseDatos.insertarRentas(gestorRentas.obtenerListaRentas());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     // Getter y setters
     public GestorClientes getGestorClientes() {
