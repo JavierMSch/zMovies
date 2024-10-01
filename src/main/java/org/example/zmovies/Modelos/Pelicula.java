@@ -1,3 +1,5 @@
+package org.example.zmovies.Modelos;
+
 public class Pelicula {
     private String titulo;
     private String genero;

@@ -1,3 +1,5 @@
+package org.example.zmovies.Modelos;
+
 public class VideoClub {
     private GestorClientes gestorClientes;
     private GestorPeliculas gestorPeliculas;
