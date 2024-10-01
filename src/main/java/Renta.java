@@ -21,6 +21,18 @@ public class Renta {
         peliculaDevuelta = false;
     }
 
+    public Renta(int id, Cliente cliente, Pelicula pelicula, int semanasRentadas,
+                 LocalDate fecha, LocalDate fechaDevolucion, int monto, boolean peliculaDevuelta) {
+        this.id = id;
+        this.cliente = cliente;
+        this.pelicula = pelicula;
+        this.semanasRentadas = semanasRentadas;
+        this.fecha = fecha;
+        this.fechaDevolucion = fechaDevolucion;
+        this.monto = monto;
+        this.peliculaDevuelta = peliculaDevuelta;
+    }
+
     public boolean estaPendiente() {
         return !peliculaDevuelta;
     }

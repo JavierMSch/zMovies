@@ -11,6 +11,13 @@ public class Pelicula {
         this.activa = true;
     }
 
+    public Pelicula(String titulo, String genero, int precioSemanal, boolean activa) {
+        this.titulo = titulo;
+        this.genero = genero;
+        this.precioSemanal = precioSemanal;
+        this.activa = activa;
+    }
+
     public String obtenerDetalles() {
         return "Título: " + titulo + "\n" +
                 "Género: " + genero + "\n" +

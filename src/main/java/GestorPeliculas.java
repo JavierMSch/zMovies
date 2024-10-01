@@ -18,7 +18,7 @@ public class GestorPeliculas {
         listaPeliculas = new ArrayList<>();
     }
 
-    public String obtenerListaPeliculas() {
+    public String obtenerStringListaPeliculas() {
         StringBuilder cadenaPeliculas = new StringBuilder();
         boolean hayPeliculas = false;
         for (Pelicula pelicula: listaPeliculas) {
@@ -33,7 +33,7 @@ public class GestorPeliculas {
         return cadenaPeliculas.toString();
     }
 
-    public String obtenerListaPeliculas(String nombreGenero) {
+    public String obtenerStringListaPeliculas(String nombreGenero) {
         Genero genero = obtenerGenero(nombreGenero);
         if (genero == null) {
             return null;
@@ -41,7 +41,7 @@ public class GestorPeliculas {
         return genero.obtenerListaPeliculas();
     }
 
-    public String obtenerListaGeneros() {
+    public String obtenerStringListaGeneros() {
         StringBuilder cadenaGeneros = new StringBuilder();
         boolean hayGeneros = false;
         for (Genero genero: generosPeliculas) {
@@ -96,6 +96,21 @@ public class GestorPeliculas {
 
         Pelicula pelicula = new Pelicula(titulo.toUpperCase(), nombreGenero.toUpperCase(), precioSemanal);
         genero.agregarPelicula(pelicula);
+        listaPeliculas.add(pelicula);
+        return true;
+    }
+
+    public boolean agregarPelicula(String titulo, String nombreGenero, int precioSemanal, boolean activa) {
+        Pelicula pelicula = new Pelicula(titulo.toUpperCase(), nombreGenero.toUpperCase(), precioSemanal, activa);
+        if (pelicula.isActiva()) {
+            // Se hace la verificación antes de buscar el género, ya que si la película fué eliminada
+            // puede ocurrir que el género al que pertenecía se eliminó luego.
+            Genero genero = obtenerGenero(nombreGenero);
+            if (genero == null) {
+                return false;
+            }
+            genero.agregarPelicula(pelicula);
+        }
         listaPeliculas.add(pelicula);
         return true;
     }
@@ -239,5 +254,22 @@ public class GestorPeliculas {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Genero> obtenerListaGeneros() {
+        return new ArrayList<>(generosPeliculas);
+    }
+
+    public List<Pelicula> obtenerListaPeliculas() {
+        return new ArrayList<>(listaPeliculas);
+    }
+
+    public Pelicula obtenerPeliculaActivaOInactiva(String titulo) {
+        for (Pelicula pelicula: listaPeliculas) {
+            if (pelicula.getTitulo().equalsIgnoreCase(titulo)) {
+                return pelicula;
+            }
+        }
+        return null;
     }
 }

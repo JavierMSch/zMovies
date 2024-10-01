@@ -10,6 +10,7 @@ public class InterfazUsuario {
     }
 
     public void start() {
+        videoClub.start();
         menuPrincipal();
     }
 
@@ -36,6 +37,7 @@ public class InterfazUsuario {
                     menuBasesDatos();
                     break;
                 case 3:
+                    videoClub.insertarDatos();
                     System.out.println("Hasta luego");
                     return;
                 default:

@@ -30,7 +30,7 @@ public class GestorRentas {
         return null;
     }
 
-    public String obtenerListaRentas() {
+    public String obtenerStringListaRentas() {
         StringBuilder cadenaRentas = new StringBuilder();
         for (Renta renta : listaRentas) {
             cadenaRentas.append(renta).append("\n");
@@ -140,6 +140,14 @@ public class GestorRentas {
             return null;
         }
         return cadena.toString();
+    }
+
+    public void actualizarIdSiguiente() {
+        setIdSiguiente(listaRentas.size() + 1);
+    }
+
+    public List<Renta> obtenerListaRentas() {
+        return new ArrayList<>(listaRentas);
     }
 
     // Getter y setters
