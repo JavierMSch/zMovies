@@ -15,37 +15,45 @@ public class GestorBaseDatos {
     }
 
     public void inicializarTablas() {
-        String sqlClientes = "CREATE TABLE IF NOT EXISTS cliente ("
-                + "rut TEXT NOT NULL PRIMARY KEY,"
-                + "nombre TEXT NOT NULL,"
-                + "correo TEXT NOT NULL,"
-                + "telefono TEXT NOT NULL"
-                + ");";
+        String sqlClientes = """
+                CREATE TABLE IF NOT EXISTS cliente (
+                rut TEXT NOT NULL PRIMARY KEY,
+                nombre TEXT NOT NULL,
+                correo TEXT NOT NULL,
+                telefono TEXT NOT NULL
+                );
+        """;
 
-        String sqlGeneros = "CREATE TABLE IF NOT EXISTS genero ("
-                + "nombre TEXT NOT NULL PRIMARY KEY"
-                + ");";
+        String sqlGeneros = """
+                CREATE TABLE IF NOT EXISTS genero (
+                nombre TEXT NOT NULL PRIMARY KEY
+                );
+        """;
 
-        String sqlPeliculas = "CREATE TABLE IF NOT EXISTS pelicula ("
-                + "titulo TEXT NOT NULL PRIMARY KEY,"
-                + "nombre_genero TEXT NOT NULL,"
-                + "precio_semanal INTEGER NOT NULL,"
-                + "activa INTEGER NOT NULL,"
-                + "FOREIGN KEY (nombre_genero) REFERENCES genero(nombre)"
-                + ");";
+        String sqlPeliculas = """
+                CREATE TABLE IF NOT EXISTS pelicula (
+                titulo TEXT NOT NULL PRIMARY KEY,
+                nombre_genero TEXT NOT NULL,
+                precio_semanal INTEGER NOT NULL,
+                activa INTEGER NOT NULL,
+                FOREIGN KEY (nombre_genero) REFERENCES genero(nombre)
+                );
+        """;
 
-        String sqlRentas = "CREATE TABLE IF NOT EXISTS renta ("
-                + "id INTEGER NOT NULL PRIMARY KEY,"
-                + "rut_cliente TEXT NOT NULL,"
-                + "titulo_pelicula TEXT NOT NULL,"
-                + "semanas INTEGER NOT NULL,"
-                + "fecha_renta TEXT NOT NULL,"
-                + "fecha_devolucion TEXT,"
-                + "monto INTEGER NOT NULL,"
-                + "devuelta INTEGER NOT NULL,"
-                + "FOREIGN KEY (rut_cliente) REFERENCES cliente(rut),"
-                + "FOREIGN KEY (titulo_pelicula) REFERENCES pelicula(titulo)"
-                + ");";
+        String sqlRentas = """
+                CREATE TABLE IF NOT EXISTS renta (
+                id INTEGER NOT NULL PRIMARY KEY,
+                rut_cliente TEXT NOT NULL,
+                titulo_pelicula TEXT NOT NULL,
+                semanas INTEGER NOT NULL,
+                fecha_renta TEXT NOT NULL,
+                fecha_devolucion TEXT,
+                monto INTEGER NOT NULL,
+                devuelta INTEGER NOT NULL,
+                FOREIGN KEY (rut_cliente) REFERENCES cliente(rut),
+                FOREIGN KEY (titulo_pelicula) REFERENCES pelicula(titulo)
+                );
+        """;
 
         try (Connection conn = getConnection()) {
             Statement cursor = conn.createStatement();
