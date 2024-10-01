@@ -142,6 +142,10 @@ public class GestorRentas {
         return cadena.toString();
     }
 
+    public void actualizarIdSiguiente() {
+        setIdSiguiente(listaRentas.size() + 1);
+    }
+
     public List<Renta> obtenerListaRentas() {
         return new ArrayList<>(listaRentas);
     }

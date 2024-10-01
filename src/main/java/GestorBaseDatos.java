@@ -273,6 +273,8 @@ public class GestorBaseDatos {
 
                 gestorRentas.agregarRenta(renta);
                 gestorClientes.agregarRenta(rut, renta);
+
+                gestorRentas.actualizarIdSiguiente();
             }
         } catch(SQLException e) {
             //TODO exception custom
