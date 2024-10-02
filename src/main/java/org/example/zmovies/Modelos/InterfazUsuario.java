@@ -1,3 +1,5 @@
+package org.example.zmovies.Modelos;
+
 import java.util.Scanner;
 
 public class InterfazUsuario {
@@ -176,7 +178,7 @@ public class InterfazUsuario {
     private void administrarClientes() {
         while (true) {
             System.out.println("Menú Administrar Clientes");
-            System.out.println("1.- Agregar Cliente");
+            System.out.println("1.- Agregar org.example.zmovies.Modelos.Cliente");
             System.out.println("2.- Mostrar detalles de cliente");
             System.out.println("3.- Volver al menú de Bases de Datos");
 
@@ -211,7 +213,7 @@ public class InterfazUsuario {
             }
 
             if (!videoClub.existeCliente(input)) {
-                System.out.println("Cliente no encontrado, debe ser agregado");
+                System.out.println("org.example.zmovies.Modelos.Cliente no encontrado, debe ser agregado");
                 agregarCliente();
                 System.out.println("\nRentar película:");
             } else {
@@ -248,7 +250,7 @@ public class InterfazUsuario {
             videoClub.rentarPelicula(rut, titulo, semanas);
             System.out.println("Película fue rentada");
         } else {
-            System.out.println("Renta cancelada, volviendo al menú");
+            System.out.println("org.example.zmovies.Modelos.Renta cancelada, volviendo al menú");
         }
 
         System.out.println("Película agregada a venta");
@@ -261,13 +263,13 @@ public class InterfazUsuario {
             return;
         }
         if (!videoClub.existeCliente(rut)) {
-            System.out.println("Cliente no encontrado, volviendo al menú");
+            System.out.println("org.example.zmovies.Modelos.Cliente no encontrado, volviendo al menú");
             return;
         }
 
         String pendientes = videoClub.obtenerListaRentasPendientes(rut);
         if (pendientes == null) {
-            System.out.println("Cliente no posee películas pendientes a devolver");
+            System.out.println("org.example.zmovies.Modelos.Cliente no posee películas pendientes a devolver");
             return;
         }
 
@@ -287,7 +289,7 @@ public class InterfazUsuario {
             return;
         }
         if (!videoClub.existeCliente(rut)) {
-            System.out.println("Cliente no encontrado, volviendo al menú");
+            System.out.println("org.example.zmovies.Modelos.Cliente no encontrado, volviendo al menú");
             return;
         }
 
@@ -318,13 +320,13 @@ public class InterfazUsuario {
         }
 
         if (!videoClub.existeCliente(input)) {
-            System.out.println("Cliente no encontrado, volviendo al menú");
+            System.out.println("org.example.zmovies.Modelos.Cliente no encontrado, volviendo al menú");
             return;
         }
 
         String pendientes = videoClub.obtenerListaRentasPendientes(input);
         if (pendientes == null) {
-            System.out.println("Cliente no posee películas pendientes a devolver");
+            System.out.println("org.example.zmovies.Modelos.Cliente no posee películas pendientes a devolver");
         } else {
             System.out.println(pendientes);
         }
@@ -526,7 +528,7 @@ public class InterfazUsuario {
         String confirmacion = input("¿Está seguro de que desea eliminar el género '" + nombre + "'? (si/no): ");
         if (confirmacion.equalsIgnoreCase("si")) {
             videoClub.eliminarGenero(nombre);
-            System.out.println("Genero eliminado exitosamente");
+            System.out.println("org.example.zmovies.Modelos.Genero eliminado exitosamente");
         } else {
             System.out.println("Eliminación cancelada");
         }
@@ -543,7 +545,7 @@ public class InterfazUsuario {
         String rut = input("Ingrese rut (ej.: 12.345.678-9): ");
 
         if (!videoClub.existeCliente(rut)) {
-            System.out.println("Cliente no encontrado, volviendo al menú");
+            System.out.println("org.example.zmovies.Modelos.Cliente no encontrado, volviendo al menú");
             return;
         }
 
@@ -555,7 +557,7 @@ public class InterfazUsuario {
         String rut = input("Ingrese rut (ej.: 12.345.678-9): ");
 
         if (videoClub.existeCliente(rut)) {
-            System.out.println("Cliente ya registrado, volviendo");
+            System.out.println("org.example.zmovies.Modelos.Cliente ya registrado, volviendo");
             return;
         }
 
@@ -575,6 +577,6 @@ public class InterfazUsuario {
         String telefono = input("Ingrese número de teléfono: ");
 
         videoClub.agregarCliente(rut, nombre, correo, telefono);
-        System.out.println("Cliente agregado al sistema");
+        System.out.println("org.example.zmovies.Modelos.Cliente agregado al sistema");
     }
 }

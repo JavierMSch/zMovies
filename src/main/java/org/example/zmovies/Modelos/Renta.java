@@ -1,3 +1,5 @@
+package org.example.zmovies.Modelos;
+
 import java.time.LocalDate;
 
 public class Renta {
