@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zmovies.Controladores.Scene3Controller">
+   <children>
+      <Pane layoutX="441.0" layoutY="10.0" prefHeight="720.0" prefWidth="895.0">
+         <children>
+            <ImageView fitHeight="1044.0" fitWidth="242.0" layoutX="83.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="149.5" y="100.0">
+               <image>
+                  <Image url="@../images/film.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="1971.0" fitWidth="456.0" layoutX="277.0" layoutY="-113.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="-20.0">
+               <image>
+                  <Image url="@../images/film.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="1044.0" fitWidth="392.0" layoutX="93.0" layoutY="10.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="150.3" x="700.0" y="-200.0">
+               <image>
+                  <Image url="@../images/film.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane prefHeight="730.0" prefWidth="410.0" styleClass="background-piece" stylesheets="@../styles/style.css">
+         <children>
+            <GridPane alignment="CENTER" layoutX="6.0" layoutY="152.0" prefHeight="400.0" prefWidth="398.0" styleClass="grid-layout">
+              <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="btnAgregarPelicula" mnemonicParsing="false" onAction="#onAgregarPeliculaClick" prefHeight="58.0" prefWidth="317.0" styleClass="btn-list" text="Agregar Película" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Verdana" size="13.0" />
+                     </font></Button>
+                  <Button fx:id="btnVerPeliculas" mnemonicParsing="false" onAction="#onVerPeliculasClick" prefHeight="52.0" prefWidth="320.0" styleClass="btn-list" text="Ver Peliculas" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnEliminarPelicula" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEliminarPelicula" prefHeight="53.0" prefWidth="327.0" styleClass="btn-list" text="Eliminar Película" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnEditarPelicula" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditarPelicula" prefHeight="50.0" prefWidth="323.0" styleClass="btn-list" text="Editar Película" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="39.0" layoutY="629.0" mnemonicParsing="false" onAction="#onVolverClick" prefHeight="54.0" prefWidth="150.0" styleClass="btn-list" text="Volver" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="btnCambiarOpciones" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="66.0" mnemonicParsing="false" onAction="#onGenerosClick" prefHeight="54.0" prefWidth="282.0" styleClass="switch-button" text="Cambiar a Generos" textAlignment="CENTER" wrapText="true" />
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="225.0" layoutY="629.0" mnemonicParsing="false" onAction="#onReporteClick" prefHeight="54.0" prefWidth="150.0" styleClass="btn-list" text="Reporte" textAlignment="CENTER" wrapText="true" />
+         </children>
+      </Pane>
+      <Pane fx:id="contentPane" layoutX="436.0" layoutY="27.0" prefHeight="675.0" prefWidth="811.0" styleClass="content-pane">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="353.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true" styleClass="videoclub-icon">
+               <image>
+                  <Image url="@../images/icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
