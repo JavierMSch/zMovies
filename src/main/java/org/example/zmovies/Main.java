@@ -30,9 +30,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         VideoClub videoClub = new VideoClub();
         videoClub.start();
-        for (String name : videoClub.obtenerListaClientes()) {
-            System.out.println(name);
-        }
+
         SceneManager.setVideoClub(videoClub);
         SceneManager.setStage(stage);
         stage.setTitle("VideoClub Manager");

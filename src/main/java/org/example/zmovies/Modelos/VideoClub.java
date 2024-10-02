@@ -164,6 +164,14 @@ public class VideoClub {
         gestorPeliculas.eliminarGenero(nombre);
     }
 
+    public String obtenerMasRentadaGenero(String genero) {
+        Pelicula masRentada = gestorRentas.peliculaMasVendidaGenero(genero);
+        if (masRentada == null) {
+            return null;
+        }
+        return masRentada.getTitulo() + " - " + masRentada.getPrecioSemanal();
+    }
+
     public String obtenerListaMasRentadaGenero() {
         return gestorRentas.obtenerListaMasRentadaGenero();
     }

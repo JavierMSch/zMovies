@@ -1,12 +1,15 @@
 package org.example.zmovies.Controladores;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class SceneManager {
     private static Stage primaryStage;
@@ -17,6 +20,11 @@ public class SceneManager {
         primaryStage.setMinWidth(1280);
         primaryStage.setMinHeight(720);
         primaryStage.setResizable(false);
+
+        stage.setOnCloseRequest(event -> {
+            event.consume();
+            handleQuit(videoClub);
+        });
     }
 
     public static void setVideoClub(VideoClub videoClub) {
@@ -28,7 +36,9 @@ public class SceneManager {
         Scene scene = new Scene(root.load());
 
         Object controller = root.getController();
-        if (controller instanceof Scene1Controller) {
+        if (controller instanceof Scene0Controller) {
+            ((Scene0Controller) controller).setVideoClub(videoClub);
+        } else if (controller instanceof Scene1Controller) {
             ((Scene1Controller) controller).setVideoClub(videoClub);
         } else if (controller instanceof Scene3Controller) {
             ((Scene3Controller) controller).setVideoClub(videoClub);
@@ -41,7 +51,20 @@ public class SceneManager {
         primaryStage.setScene(scene);
     }
 
-    public static void closeStage() {
+    public static void handleQuit(VideoClub videoClub) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Salir");
+        alert.setHeaderText("¿Estás seguro de que quieres salir?");
+        alert.setContentText("Se guardarán tus cambios antes de salir.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            videoClub.insertarDatos();
+            closeStage();
+        }
+    }
+
+    private static void closeStage() {
         primaryStage.close();
     }
 }

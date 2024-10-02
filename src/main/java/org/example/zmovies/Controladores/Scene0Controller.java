@@ -4,11 +4,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.IOException;
 import java.util.Optional;
 
 public class Scene0Controller {
+    private VideoClub videoClub;
+
+    public void setVideoClub(VideoClub videoClub) {
+        this.videoClub = videoClub;
+    }
 
     @FXML
     private void onVideoClubClick(ActionEvent event) throws IOException {
@@ -22,14 +28,6 @@ public class Scene0Controller {
 
     @FXML
     private void onSalirClick(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Salir");
-        alert.setHeaderText("¿Estás seguro de que quieres salir?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            SceneManager.closeStage();
-        }
+        SceneManager.handleQuit(videoClub);
     }
 }

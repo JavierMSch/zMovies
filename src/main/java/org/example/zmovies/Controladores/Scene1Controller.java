@@ -307,7 +307,7 @@ public class Scene1Controller {
         String rut = formatoRut(formField1.getText());
 
         boolean existeCliente = videoClub.existeCliente(rut);
-        if (!existeCliente) {
+        if (existeCliente) {
             handlePeliculaRenta(rut);
         } else {
             handleNewCliente(rut);
@@ -354,9 +354,10 @@ public class Scene1Controller {
     }
 
     private void handleRenta(String rut) {
-        String movieName = (formField1.getText());
+        String movieName = formField1.getText().toUpperCase();
         int weeks = Integer.parseInt(formField2.getText());
         boolean existePelicula = videoClub.existePelicula(movieName);
+
         if (isFieldEmpty(formField1) || isFieldEmpty(formField2)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Campo vacío");
@@ -383,7 +384,7 @@ public class Scene1Controller {
 
     private void handleClienteDev() {
         String rut = formatoRut(formField1.getText());
-        boolean existeCliente = true; //videoClub.existeCliente(rut);
+        boolean existeCliente = videoClub.existeCliente(rut);
         if (existeCliente) {
             handleDevolucion(rut);
         } else {
@@ -397,7 +398,7 @@ public class Scene1Controller {
     }
 
     private void handleDevolucion(String rut) {
-        String pendientes = "e1\ne2\ne3"; //"videoClub.obtenerListaRentasPendientes(rut)";
+        String pendientes = videoClub.obtenerListaRentasPendientes(rut);
         if (pendientes == null) {
             defaultPane();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -406,7 +407,8 @@ public class Scene1Controller {
             alert.setContentText("El cliente no tiene películas pendientes a devolver.");
             alert.showAndWait();
         } else {
-            updatePane("Cliente" + "Nombre Cliente", "Seleccione la película a devolver:", pendientes);
+            String title = "Cliente: " + videoClub.obtenerNombreCliente(rut);
+            updatePane(title, "Seleccione la película a devolver:", pendientes);
 
             handleDoubleClicked(listView, okButton);
 
@@ -419,18 +421,20 @@ public class Scene1Controller {
                     alert.setContentText("Debe seleccionar una película para devolver.");
                     alert.showAndWait();
                 } else {
+                    String[] items = selectedItem.split(", ");
+                    String movieName = items[1].substring(10);
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmar devolución");
                     alert.setHeaderText(null);
-                    alert.setContentText("¿Está seguro de devolver la película " + selectedItem + "?");
+                    alert.setContentText("¿Está seguro de devolver la película '" + movieName + "'?");
                     alert.showAndWait();
                     if (alert.getResult() == ButtonType.OK) {
-                        //videoClub.devolverPelicula(rut, Integer.parseInt(formField1.getText()));
+                        videoClub.devolverPelicula(Integer.parseInt(items[0].substring(4)));
                         defaultPane();
                         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                         successAlert.setTitle("Operación exitosa");
                         successAlert.setHeaderText(null);
-                        successAlert.setContentText("La película '" + selectedItem + "' fue devuelta con éxito.");
+                        successAlert.setContentText("La película '" + movieName + "' fue devuelta con éxito.");
                         successAlert.showAndWait();
                     }
                 }
@@ -442,9 +446,9 @@ public class Scene1Controller {
 
     private void handleRecomendar() {
         String rut = formatoRut(formField1.getText());
-        String recomendacion = "TITLE";//videoClub.recomendarPelicula(rut);
-        boolean existeCliente = true; //videoClub.existeCliente(rut);
-        if (existeCliente) { // && recomendacion != null
+        String recomendacion = videoClub.recomendarPelicula(rut);
+        boolean existeCliente = videoClub.existeCliente(rut);
+        if (existeCliente && recomendacion != null) {
             defaultPane();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Recomendación");
@@ -462,8 +466,8 @@ public class Scene1Controller {
     }
 
     private void handleNoDevueltas() {
-        String placeholder = videoClub.obtenerListaRentasPendientes();
-        updatePane(null, "Películas no devueltas:", placeholder);
+        String pendientes = videoClub.obtenerListaRentasPendientes();
+        updatePane(null, "Películas no devueltas:", pendientes);
 
         okButton.setOnAction(e -> defaultPane() );
     }
@@ -479,11 +483,13 @@ public class Scene1Controller {
         titleLabel.getStyleClass().add("opt-title");
         titleLabel.paddingProperty().setValue(new javafx.geometry.Insets(20, 0, 20, 0));
 
-        String data = "g1\ng2\ng3"; //videoClub.obtenerListaGeneros();
-        List<String> items = data.lines().toList();
-        listView = new ListView<>();
-        for (String item : items) {
-            listView.getItems().add(item);
+        String data = videoClub.obtenerListaGeneros();
+        if (data != null) {
+            List<String> items = data.lines().toList();
+            listView = new ListView<>();
+            for (String item : items) {
+                listView.getItems().add(item);
+            }
         }
 
         okButton = new Button("OK");
@@ -544,8 +550,8 @@ public class Scene1Controller {
                 alert.setContentText("Debe seleccionar un género para continuar.");
                 alert.showAndWait();
             } else {
-                String movieDetails = selectedItem + "\nTITLE\nCOSTO"; //videoClub.peliculaMasVendidaGenero(selectedItem);
-                String[] items = movieDetails.split("\n");
+                String movieDetails = selectedItem + " - " + videoClub.obtenerMasRentadaGenero(selectedItem);
+                String[] items = movieDetails.split(" - ");
                 labels[0].setText("Género: " + items[0]);
                 labels[1].setText("Título: " + items[1]);
                 labels[2].setText("Costo Semanal: " + items[2]);
