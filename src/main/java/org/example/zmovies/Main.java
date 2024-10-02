@@ -2,8 +2,6 @@ package org.example.zmovies;
 
 import java.util.Scanner;
 import org.example.zmovies.Modelos.*;
-import org.example.zmovies.Vistas.*;
-import org.example.zmovies.Controladores.*;
 
 public class Main {
     public static void main(String[] args) {
