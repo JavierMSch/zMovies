@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zmovies.Controladores.Scene2Controller">
+   <children>
+      <Pane prefHeight="300.0" prefWidth="1280.0" styleClass="background-piece">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="568.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" styleClass="videoclub-icon">
+               <image>
+                  <Image url="@../images/icon-light.png" />
+               </image></ImageView>
+            <Label layoutY="223.0" prefHeight="20.0" prefWidth="1280.0" styleClass="guide-text" text="Seleccione la información que desea gestionar" />
+            <Label layoutY="148.0" prefHeight="20.0" prefWidth="1280.0" styleClass="title" text="zMovies" />
+         </children>
+      </Pane>
+      <ImageView fitHeight="1151.0" fitWidth="910.0" layoutX="388.0" layoutY="105.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="-82.9">
+         <image>
+            <Image url="@../images/film.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="1151.0" fitWidth="910.0" layoutX="39.0" layoutY="-365.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="41.8">
+         <image>
+            <Image url="@../images/film.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="2059.0" fitWidth="424.0" layoutX="519.0" layoutY="-597.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="-73.3">
+         <image>
+            <Image url="@../images/film.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="2059.0" fitWidth="424.0" layoutX="1007.0" layoutY="-776.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="162.3">
+         <image>
+            <Image url="@../images/film.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="219.0" layoutY="416.0" mnemonicParsing="false" onAction="#onPeliculasClick" styleClass="menu-btn" text="Peliculas y Géneros" />
+      <Button layoutX="739.0" layoutY="413.0" mnemonicParsing="false" onAction="#onClientesClick" styleClass="menu-btn" text="Clientes y Rentas" />
+      <Button layoutX="588.0" layoutY="577.0" mnemonicParsing="false" onAction="#onVolverClick" styleClass="menu-btn" text="Volver" />
+
+   </children>
+</AnchorPane>

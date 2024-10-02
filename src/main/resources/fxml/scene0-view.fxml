@@ -7,35 +7,35 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.videoclubscenes.Scene0Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zmovies.Controladores.Scene0Controller">
     <children>
         <Pane prefHeight="300.0" prefWidth="1280.0" styleClass="background-piece" AnchorPane.bottomAnchor="420.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="564.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../images/icon-light.png" />
+                        <Image url="@../images/icon-light.png" />
                     </image></ImageView>
                 <Label layoutX="-3.0" layoutY="195.0" prefHeight="30.0" prefWidth="1280.0" styleClass="title" text="zMovies" />
             </children>
         </Pane>
         <ImageView fitHeight="1151.0" fitWidth="910.0" layoutX="39.0" layoutY="-365.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="41.8">
             <image>
-                <Image url="@../../../images/film.png" />
+                <Image url="@../images/film.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="2059.0" fitWidth="424.0" layoutX="519.0" layoutY="-597.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="-73.3">
             <image>
-                <Image url="@../../../images/film.png" />
+                <Image url="@../images/film.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="1151.0" fitWidth="910.0" layoutX="388.0" layoutY="105.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="-82.9">
             <image>
-                <Image url="@../../../images/film.png" />
+                <Image url="@../images/film.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="2059.0" fitWidth="424.0" layoutX="1007.0" layoutY="-776.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" rotate="162.3">
             <image>
-                <Image url="@../../../images/film.png" />
+                <Image url="@../images/film.png" />
             </image>
         </ImageView>
         <Button fx:id="menuSelector" layoutX="219.0" layoutY="416.0" mnemonicParsing="false" onAction="#onVideoClubClick" styleClass="menu-btn" text="Atender Cliente" />

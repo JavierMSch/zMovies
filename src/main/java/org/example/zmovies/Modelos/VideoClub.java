@@ -1,5 +1,8 @@
 package org.example.zmovies.Modelos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VideoClub {
     private GestorClientes gestorClientes;
     private GestorPeliculas gestorPeliculas;
@@ -114,8 +117,23 @@ public class VideoClub {
         return pelicula.toString();
     }
 
+    public String obtenerNombreCliente(String rut) {
+        if (!gestorClientes.existeCliente(rut)) {
+            return null;
+        }
+        return gestorClientes.obtenerCliente(rut).getNombreApellidos();
+    }
+
     public String detallesCliente(String rut) {
         return gestorClientes.obtenerDetallesCliente(rut);
+    }
+
+    public List<String> obtenerListaClientes() {
+        List<String> listaClientes = new ArrayList<>();
+        for (Cliente cliente : gestorClientes.obtenerListaClientes()) {
+            listaClientes.add(cliente.getNombreApellidos());
+        }
+        return listaClientes;
     }
 
     public String detallesPelicula(String titulo) {
