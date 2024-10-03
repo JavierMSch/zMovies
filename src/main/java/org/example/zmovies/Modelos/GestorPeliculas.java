@@ -193,7 +193,7 @@ public class GestorPeliculas {
 
     public boolean eliminarGenero(String nombreGenero) {
         Genero genero = obtenerGenero(nombreGenero);
-        if (genero != null) {
+        if (genero != null && !genero.getNombre().equalsIgnoreCase("SIN GENERO")) {
             Genero generoEspecial = obtenerGenero("SIN GENERO");
             genero.moverPeliculas(generoEspecial);
             generosPeliculas.remove(genero);
