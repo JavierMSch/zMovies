@@ -48,7 +48,19 @@ public class GestorClientes {
         return obtenerCliente(rut).toString();
     }
 
-    public List<Cliente> obtenerListaClientes() {
-        return new ArrayList<>(mapaClientes.values());
+    public List<String> obtenerListaStringClientes() {
+        List<String> listaStringClientes = new ArrayList<>();
+        for (Cliente cliente : mapaClientes.values()) {
+            listaStringClientes.add(cliente.getRut() + "," + cliente.getNombreApellidos() + "," + cliente.getCorreo() + "," + cliente.getTelefono());
+        }
+        return listaStringClientes;
+    }
+
+    public List<String> obtenerNombresClientes() {
+        List<String> listaNombresClientes = new ArrayList<>();
+        for (Cliente cliente : mapaClientes.values()) {
+            listaNombresClientes.add(cliente.getNombreApellidos());
+        }
+        return listaNombresClientes;
     }
 }

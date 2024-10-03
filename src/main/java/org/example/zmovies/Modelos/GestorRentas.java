@@ -148,8 +148,15 @@ public class GestorRentas {
         setIdSiguiente(listaRentas.size() + 1);
     }
 
-    public List<Renta> obtenerListaRentas() {
-        return new ArrayList<>(listaRentas);
+    public List<String> obtenerListaStringRentas() {
+        List<String> listaStringRentas = new ArrayList<>();
+        for (Renta renta : listaRentas) {
+            listaStringRentas.add(renta.getId() + "," + renta.getCliente().getRut() + ","
+                    + renta.getPelicula().getTitulo() + "," + renta.getSemanasRentadas() + ","
+                    + renta.getFecha().toString() + "," + renta.getFechaDevolucion().toString() + ","
+                    + renta.getMonto() + "," + (renta.isPeliculaDevuelta() ? "1" : "0"));
+        }
+        return listaStringRentas;
     }
 
     // Getter y setters

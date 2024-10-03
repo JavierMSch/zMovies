@@ -13,7 +13,13 @@ public class InterfazUsuario {
     }
 
     public void start() {
-        videoClub.start();
+        try {
+            videoClub.start();
+        } catch (Exception e) {
+            System.out.println("Error al iniciar el sistema");
+            e.printStackTrace();
+            return;
+        }
         menuPrincipal();
     }
 
@@ -40,7 +46,12 @@ public class InterfazUsuario {
                     menuBasesDatos();
                     break;
                 case 3:
-                    videoClub.insertarDatos();
+                    try {
+                        videoClub.insertarDatos();
+                    } catch (Exception e) {
+                        System.out.println("Error al guardar datos");
+                        e.printStackTrace();
+                    }
                     System.out.println("Hasta luego");
                     return;
                 default:
@@ -178,7 +189,7 @@ public class InterfazUsuario {
     private void administrarClientes() {
         while (true) {
             System.out.println("Menú Administrar Clientes");
-            System.out.println("1.- Agregar org.example.zmovies.Modelos.Cliente");
+            System.out.println("1.- Agregar Cliente");
             System.out.println("2.- Mostrar detalles de cliente");
             System.out.println("3.- Volver al menú de Bases de Datos");
 
@@ -213,7 +224,7 @@ public class InterfazUsuario {
             }
 
             if (!videoClub.existeCliente(input)) {
-                System.out.println("org.example.zmovies.Modelos.Cliente no encontrado, debe ser agregado");
+                System.out.println("Cliente no encontrado, debe ser agregado");
                 agregarCliente();
                 System.out.println("\nRentar película:");
             } else {
@@ -519,7 +530,7 @@ public class InterfazUsuario {
     private void generarReportePeliculas() {
         System.out.println("Se generará un archivo txt y un xlsx con los datos de las películas del sistema.");
         System.out.println("Si no hay películas en el sistema, los archivos no tendrán datos.");
-        videoClub.generarReportePeliculas();
+        //videoClub.generarReportePeliculas();
         System.out.println("Archivos generados.");
     }
 

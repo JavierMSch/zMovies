@@ -13,4 +13,5 @@ module org.example.zmovies {
     exports org.example.zmovies.Modelos;
 //    exports org.example.zmovies.Vistas;
     exports org.example.zmovies.Controladores;
+    exports org.example.zmovies.Exceptions;
 }
