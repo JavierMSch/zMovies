@@ -148,6 +148,12 @@ public class VideoClub {
         return gestorPeliculas.obtenerDetallesPelicula(titulo);
     }
 
+    public String detallesRenta(int id) { return gestorRentas.obtenerRenta(id).toString(); }
+
+    public String obtenerPeliculaRenta(int id) {
+        return gestorRentas.obtenerRenta(id).getPelicula().getTitulo();
+    }
+
     public void editarPelicula(String titulo, String nuevoTitulo, String nuevoGenero, int nuevoPrecio) {
         gestorPeliculas.editarPelicula(titulo, nuevoTitulo, nuevoGenero, nuevoPrecio);
     }
@@ -170,6 +176,14 @@ public class VideoClub {
 
     public void eliminarGenero(String nombre) {
         gestorPeliculas.eliminarGenero(nombre);
+    }
+
+    public String obtenerMasRentadaGenero(String genero) {
+        Pelicula masRentada = gestorRentas.peliculaMasVendidaGenero(genero);
+        if (masRentada == null) {
+            return null;
+        }
+        return masRentada.getTitulo() + " - " + masRentada.getPrecioSemanal();
     }
 
     public String obtenerListaMasRentadaGenero() {
