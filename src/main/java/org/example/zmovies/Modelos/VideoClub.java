@@ -3,6 +3,7 @@ package org.example.zmovies.Modelos;
 import org.example.zmovies.Exceptions.ReportePlanillaException;
 import org.example.zmovies.Exceptions.ReporteTextoException;
 
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,7 +17,15 @@ public class VideoClub {
         gestorClientes = new GestorClientes();
         gestorPeliculas = new GestorPeliculas();
         gestorRentas = new GestorRentas();
-        gestorBaseDatos = new GestorBaseDatos("jdbc:sqlite:videoclub.sqlite");
+
+        URL dbUrl = VideoClub.class.getResource("/sql/videoclub.sqlite");
+        if (dbUrl != null) {
+            // Reemplaza "file:" con "jdbc:sqlite:"
+            String jdbcUrl = dbUrl.toString().replace("file:", "jdbc:sqlite:");
+            gestorBaseDatos = new GestorBaseDatos(jdbcUrl);
+        } else {
+            gestorBaseDatos = new GestorBaseDatos("jdbc:sqlite:videoclub.sqlite");
+        }
     }
 
     public void start() throws SQLException {
