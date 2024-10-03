@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -61,7 +62,7 @@ public class SceneManager {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 videoClub.insertarDatos();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setTitle("Error");
                 errorAlert.setHeaderText("Error al guardar datos la base de datos");

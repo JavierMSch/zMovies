@@ -24,6 +24,7 @@ import org.example.zmovies.Controladores.SceneManager;
 import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -32,7 +33,7 @@ public class Main extends Application {
         VideoClub videoClub = new VideoClub();
         try {
             videoClub.start();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error al iniciar la base de datos");
