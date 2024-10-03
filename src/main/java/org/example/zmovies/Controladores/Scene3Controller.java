@@ -5,13 +5,19 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.example.zmovies.Modelos.VideoClub;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -55,7 +61,7 @@ public class Scene3Controller {
 
     @FXML
     private void onVerPeliculasClick(ActionEvent actionEvent) {
-        verPeliculas();
+        verPeliculas("");
     }
 
     @FXML
@@ -74,7 +80,39 @@ public class Scene3Controller {
     }
     @FXML
     private void onReporteClick(ActionEvent actionEvent) {
-        // Lógica para generar reporte
+        /*
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        // Crear un DirectoryChooser para seleccionar la carpeta de destino
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Seleccionar Carpeta para Guardar Reportes");
+
+        File carpetaDestino = directoryChooser.showDialog(stage);
+
+        if (carpetaDestino != null) {
+            // Construir las rutas para los archivos de reporte
+            String ruta = carpetaDestino.getAbsolutePath();
+
+            try {
+
+                videoClub.generarReportePeliculas(ruta);
+
+                // Mostrar mensaje de éxito
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Éxito");
+                alert.setHeaderText(null);
+                alert.setContentText("Reportes generados exitosamente!");
+                alert.showAndWait();
+            } catch (ReporteTextoException | ReportePlanillaException e) {
+                // Manejar excepciones
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error al generar los reportes");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
+        }
+        */
     }
     @FXML
     private void onAgregarPeliculaClick(ActionEvent actionEvent) {
@@ -117,6 +155,8 @@ public class Scene3Controller {
 
         contentPane.getChildren().addAll(formLayout);
 
+        handleEnterKey(formField1, okButton);
+
         okButton.setOnAction(e -> {
             String genero = formField1.getText();
             if (isFieldEmpty(formField1)) {
@@ -127,7 +167,7 @@ public class Scene3Controller {
                 alert.showAndWait();
             }
             else {
-                System.out.println("Género ingresado: " + genero);
+                videoClub.agregarGenero(genero);
                 defaultPane();
             }
         });
@@ -177,7 +217,7 @@ public class Scene3Controller {
         contentPane.getChildren().clear();
         verDetallePeliculaButton = new Button("Editar Género");
         ObservableList<String> generos = FXCollections.observableArrayList(
-                "Acción", "Comedia", "Drama", "Terror", "Ciencia Ficción"
+                videoClub.obtenerListaGeneros()
         );
         ListView<String> listView = new ListView<>(generos);
         listView.getStyleClass().add("movie-list");
@@ -194,6 +234,7 @@ public class Scene3Controller {
 
         contentPane.getChildren().add(vbox);
         handleDoubleClicked(listView, verDetallePeliculaButton);
+
         verDetallePeliculaButton.getStyleClass().add("genre-list-button");
         verDetallePeliculaButton.setOnAction(e -> {
             if (listView.getSelectionModel().getSelectedItem() == null) {
@@ -245,6 +286,8 @@ public class Scene3Controller {
 
         contentPane.getChildren().add(vbox);
 
+        handleEnterKey(formField1, okButton);
+
         okButton.setOnAction(e -> {
             if (isFieldEmpty(formField1)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -253,18 +296,9 @@ public class Scene3Controller {
                 alert.setContentText("El campo Nombre no puede estar vacío.");
                 alert.showAndWait();
             }
-            /*
-            else if (){
-                String nuevoNombre = formField1.getText();
-                System.out.println("Nuevo nombre del género: " + nuevoNombre);
-                defaultPane();
-            }
-
-            */
-
             else{
                 String nuevoNombre = formField1.getText();
-                System.out.println("Nuevo nombre del género: " + nuevoNombre);
+                videoClub.editarGenero(titulo, nuevoNombre);
                 defaultPane();
             }
         });
@@ -276,7 +310,7 @@ public class Scene3Controller {
     private void verGeneros() {
         contentPane.getChildren().clear();
         ObservableList<String> generos = FXCollections.observableArrayList(
-                "Acción", "Comedia", "Drama", "Terror", "Ciencia Ficción"
+                videoClub.obtenerListaGeneros()
         );
         ListView<String> listView = new ListView<>(generos);
         listView.getStyleClass().add("movie-list");
@@ -284,19 +318,32 @@ public class Scene3Controller {
         vbox.getStyleClass().add("movie-list-layout");
         titleLabel = new Label("Generos");
         titleLabel.getStyleClass().add("opt-title");
+        verDetallePeliculaButton = new Button("Ver Películas");
         vbox.getChildren().add(titleLabel);
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(listView);
+        vbox.getChildren().addAll(listView, verDetallePeliculaButton);
         vbox.setPrefWidth(contentPane.getPrefWidth());
         vbox.setPrefHeight(contentPane.getPrefHeight());
         contentPane.getChildren().add(vbox);
+        verDetallePeliculaButton.setOnAction(e -> {
+            if (listView.getSelectionModel().getSelectedItem() == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Campo vacío");
+                alert.setHeaderText(null);
+                alert.setContentText("Necesita seleccionar un género para ver las películas.");
+                alert.showAndWait();
+            }
+            else {
+                verPeliculas(listView.getSelectionModel().getSelectedItem());
+            }
+        });
     }
 
     private void eliminarGenero() {
         contentPane.getChildren().clear();
         verDetallePeliculaButton = new Button("Eliminar Género");
         ObservableList<String> generos = FXCollections.observableArrayList(
-                "Acción", "Comedia", "Drama", "Terror", "Ciencia Ficción"
+                videoClub.obtenerListaGeneros()
         );
         ListView<String> listView = new ListView<>(generos);
         listView.getStyleClass().add("movie-list");
@@ -324,11 +371,22 @@ public class Scene3Controller {
                 alert.setContentText("Necesita seleccionar una pelicula para eliminar.");
                 alert.showAndWait();
             }
+            else if(listView.getSelectionModel().getSelectedItem().equals("SIN GENERO")){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Operación no Permitida");
+                alert.setContentText("No es posible eliminar SIN GENERO ya que es un genero especial");
+                alert.showAndWait();
+            }
             else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Eliminar Género");
                 alert.setHeaderText("¿Estás seguro de que quieres eliminar el género " + listView.getSelectionModel().getSelectedItem() + "?");
                 alert.showAndWait();
+                if (alert.getResult() == ButtonType.OK) {
+                    videoClub.eliminarGenero(listView.getSelectionModel().getSelectedItem());
+                    defaultPane();
+                }
             }
         });
     }
@@ -346,30 +404,6 @@ public class Scene3Controller {
         btnEliminarPelicula.setText("Eliminar Película");
         btnEditarPelicula.setText("Editar Película");
         btnCambiarOpciones.setText("Cambiar a Géneros");
-    }
-        // Método para crear el formulario de "Rentar Película"
-    private GridPane createMoviesForm() {
-        GridPane grid = new GridPane();
-        grid.setVgap(10);
-        grid.setHgap(10);
-
-        // Campos del formulario
-        Label titleLabel = new Label("Titulo de la Película:");
-        TextField titleField = new TextField();
-        Label genreLabel = new Label("Genero:");
-        TextField genreField = new TextField();
-        Label yearLabel = new Label("Año:");
-        TextField yearField = new TextField();
-
-        // Añadir los elementos al grid
-        grid.add(titleLabel, 0, 1);
-        grid.add(titleField, 1, 1);
-        grid.add(genreLabel, 0, 2);
-        grid.add(genreField, 1, 2);
-        grid.add(yearLabel, 0, 3);
-        grid.add(yearField, 1, 3);
-
-        return grid;
     }
 
     private void agregarPelicula(String title, String promptTxt) {
@@ -403,8 +437,12 @@ public class Scene3Controller {
 
         contentPane.getChildren().addAll(formLayout);
 
-        // Variables para el paso actual
-        final String[] currentStep = {"Nombre de la Película"};
+        handleEnterKey(formField1, okButton);
+
+        String[] currentStep = {"Nombre de la Película"};
+        String[] nombre = {""};
+        String[] genero = {""};
+        String[] precio = {""};
 
         okButton.setOnAction(e -> {
             // Obtener el valor actual del campo de texto
@@ -424,6 +462,7 @@ public class Scene3Controller {
                     }
                     else {
                         formField1.setPromptText("Genero");
+                        nombre[0] = formField1.getText();
                         currentStep[0] = "Genero";
                         break;
                     }
@@ -438,6 +477,10 @@ public class Scene3Controller {
                     }
                     else {
                         formField1.setPromptText("Precio Semanal");
+                        genero[0] = formField1.getText();
+                        if (!videoClub.existeGenero(genero[0])) {
+                            videoClub.agregarGenero(genero[0]);
+                        }
                         currentStep[0] = "Precio Semanal";
                         break;
                     }
@@ -452,8 +495,19 @@ public class Scene3Controller {
                     }
                     else {
                         System.out.println("Formulario completado.");
-                        defaultPane(); // Puedes definir esta función para restaurar la vista por defecto.
-                        break;
+                        precio[0] = formField1.getText();
+                        if (precio[0].matches("[0-9]+")) {
+                            videoClub.agregarPelicula(nombre[0], genero[0], Integer.parseInt(precio[0]));
+                            defaultPane();
+                            break;
+                        }
+                        else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Precio no válido");
+                            alert.setContentText("El precio debe ser un número entero.");
+                            alert.showAndWait();
+                        }
                     }
             }
 
@@ -466,29 +520,25 @@ public class Scene3Controller {
 
     }
 
-    private void verPeliculas() {
+    private void verPeliculas(String genero) {
         contentPane.getChildren().clear();
         ListView<String> listView = new ListView<>();
         verDetallePeliculaButton = new Button("Ver Detalle Película");
         titleLabel = new Label("Películas");
+        ObservableList<String> peliculas;
         titleLabel.getStyleClass().add("opt-title");
-        ObservableList<String> peliculas = FXCollections.observableArrayList(
-                "Matrix Titanic", "El Padrino", "Star Wars", "El Señor de los Anillos"
-        );
+        if (genero.isEmpty()) {
+            peliculas = FXCollections.observableArrayList(
+                    videoClub.obtenerListaPeliculas()
+            );
+        }
+        else{
+            peliculas = FXCollections.observableArrayList(
+                    videoClub.obtenerListaPeliculas(genero).lines().toList()
+            );
+        }
         listView.setItems(peliculas);
         handleDoubleClicked(listView, verDetallePeliculaButton);
-
-        /*
-        // Dividir el string en líneas usando el salto de línea como delimitador
-        String[] elementosArray = VideoClub.obtenerListaPeliculas().split("\n");
-
-        // Convertir el array en una ObservableList
-        ObservableList<String> elementosList = FXCollections.observableArrayList(elementosArray);
-
-        // Poblar el ListView con la lista de elementos
-        listView.setItems(elementosList);
-
-        */
 
         listView.getStyleClass().add("movie-list");
         VBox vbox = new VBox(10);
@@ -527,17 +577,13 @@ public class Scene3Controller {
         vbox.setAlignment(Pos.CENTER);  // Alinear contenido dentro del VBox
 
         // Crear los Labels con detalles de la película
-        Label titleLabel = new Label("Título: " + titulo);
+        Label titleLabel = new Label("Detalles de la Película");
         titleLabel.getStyleClass().add("opt-title");
-        Label directorLabel = new Label("Director: [Director de la película]");
-        directorLabel.getStyleClass().add("detail");
-        Label anioLabel = new Label("Año: [Año de la película]");
-        anioLabel.getStyleClass().add("detail");
-        Label generoLabel = new Label("Género: [Género de la película]");
-        generoLabel.getStyleClass().add("detail");
+        Label datos = new Label(videoClub.detallesPelicula(titulo));
+        datos.getStyleClass().add("detail");
 
         // Añadir los Labels al VBox
-        vbox.getChildren().addAll(titleLabel, directorLabel, anioLabel, generoLabel);
+        vbox.getChildren().addAll(titleLabel, datos);
 
         // Usar un StackPane para centrar el VBox dentro del contentPane
         StackPane stackPane = new StackPane(vbox);
@@ -554,7 +600,7 @@ public class Scene3Controller {
         titleLabel = new Label("Editar Película");
         titleLabel.getStyleClass().add("menu-title");
         ObservableList<String> peliculas = FXCollections.observableArrayList(
-                "Matrix", "Titanic", "El Padrino", "Star Wars", "El Señor de los Anillos"
+                videoClub.obtenerListaPeliculas()
         );
         ListView<String> listView = new ListView<>(peliculas);
         listView.getStyleClass().add("movie-list");
@@ -589,7 +635,7 @@ public class Scene3Controller {
                 vbox.getChildren().add(verDetallePeliculaButton);
                 contentPane.getChildren().add(vbox);
                 verDetallePeliculaButton.setOnAction(e2 -> {
-                    editarPeliculaOpciones("Editar Película", "Titulo Actual");
+                    editarPeliculaOpciones(listView.getSelectionModel().getSelectedItem(), "Titulo Actual");
                 });
             }
         });
@@ -608,7 +654,7 @@ public class Scene3Controller {
 
         formField1 = new TextField();
         formField1.getStyleClass().add("form-field");
-        formField1.setPromptText(subtitulo);
+        formField1.setPromptText(titulo);
 
         okButton = new Button("OK");
         okButton.getStyleClass().add("ok-button");
@@ -632,30 +678,45 @@ public class Scene3Controller {
         titleLabel.setPrefWidth(vbox.getPrefWidth());
 
         contentPane.getChildren().add(vbox);
+        handleEnterKey(formField1, okButton);
 
         // Variables para el paso actual
         final String[] currentStep = {"Nuevo Titulo"};
+        String[] nombre = {""};
+        String[] genero = {""};
+        String[] precio = {"-1"};
 
         okButton.setOnAction(e -> {
             // Obtener el valor actual del campo de texto
             String valorActual = formField1.getText();
             System.out.println("Valor ingresado: " + valorActual);
 
+
             // Cambiar el campo según el paso actual
             switch (currentStep[0]) {
                 case "Nuevo Titulo":
                     titleLabel2.setText("Nuevo Genero");
-                    formField1.setPromptText("Genero actual");
+                    formField1.setPromptText(videoClub.obtenerGeneroPelicula(titulo).toUpperCase());
+                    if (!isFieldEmpty(formField1)) {
+                        nombre[0] = formField1.getText().toUpperCase();
+                    }
                     currentStep[0] = "Nuevo Genero";
                     break;
                 case "Nuevo Genero":
                     titleLabel2.setText("Nuevo Precio Semanal");
-                    formField1.setPromptText("Precio Actual");
+                    formField1.setPromptText(videoClub.obtenerPrecioPelicula(titulo));
+                    if (!isFieldEmpty(formField1)) {
+                        genero[0] = formField1.getText().toUpperCase();
+                    }
                     currentStep[0] = "Nuevo Precio Semanal";
                     break;
                 case "Nuevo Precio Semanal":
                     System.out.println("Formulario completado.");
-                    defaultPane(); // Puedes definir esta función para restaurar la vista por defecto.
+                    if (!isFieldEmpty(formField1)) {
+                        precio[0] = formField1.getText();
+                    }
+                    videoClub.editarPelicula(titulo, nombre[0], genero[0], Integer.parseInt(precio[0]));
+                    defaultPane();
                     break;
             }
 
@@ -671,7 +732,7 @@ public class Scene3Controller {
         contentPane.getChildren().clear();
         verDetallePeliculaButton = new Button("Eliminar Película");
         ObservableList<String> peliculas = FXCollections.observableArrayList(
-                "Matrix", "Titanic", "El Padrino", "Star Wars", "El Señor de los Anillos"
+                videoClub.obtenerListaPeliculas()
         );
         ListView<String> listView = new ListView<>(peliculas);
         listView.getStyleClass().add("movie-list");
@@ -712,6 +773,10 @@ public class Scene3Controller {
                     alert.setTitle("Eliminar Película");
                     alert.setHeaderText("¿Estás seguro de que quieres eliminar la película " + listView.getSelectionModel().getSelectedItem() + "?");
                     alert.showAndWait();
+                    if (alert.getResult().getButtonData().isDefaultButton()) {
+                        videoClub.eliminarPelicula(listView.getSelectionModel().getSelectedItem());
+                        defaultPane();
+                    }
                 });
             }
         });
@@ -739,6 +804,18 @@ public class Scene3Controller {
         iconItem.setLayoutX(centerX);
         iconItem.setLayoutY(centerY);
         contentPane.getChildren().add(iconItem);
+    }
+
+    private void handleEnterKey(TextField currentField, Control nextControl) {
+        currentField.setOnKeyPressed(event -> {
+            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
+                if (nextControl instanceof TextField) {
+                    nextControl.requestFocus();
+                } else if (nextControl instanceof Button) {
+                    ((Button) nextControl).fire();
+                }
+            }
+        });
     }
 }
 

@@ -28,7 +28,7 @@ public class Genero {
         StringBuilder cadenaPeliculas = new StringBuilder();
         boolean hayPeliculas = false;
         for (Pelicula pelicula: peliculasTitulo.values()) {
-            cadenaPeliculas.append(pelicula).append("\n");
+            cadenaPeliculas.append(pelicula.getTitulo()).append("\n");
             hayPeliculas = true;
         }
         if (!hayPeliculas) {

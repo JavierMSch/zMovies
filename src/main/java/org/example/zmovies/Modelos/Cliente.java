@@ -44,7 +44,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "RUT: " + rut + ", Nombre y apellido(s): " + nombreApellidos + ", correo: " + correo + ", teléfono: " + telefono;
+        return "RUT: " + rut + "\nNombre y apellido(s): " + nombreApellidos + "\nCorreo: " + correo + "\nTeléfono: " + telefono;
     }
 
     // Getter y setters
