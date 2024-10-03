@@ -452,7 +452,8 @@ public class Scene1Controller {
                     alert.setContentText("Debe seleccionar una película para devolver.");
                     alert.showAndWait();
                 } else {
-                    int id = Integer.parseInt(selectedItem.substring(4, 10).trim());
+                    String selectedId = selectedItem.substring(0, 10).replaceAll("\\D", "").trim();
+                    int id = Integer.parseInt(selectedId);
                     String movieName = videoClub.obtenerPeliculaRenta(id);
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmar devolución");
