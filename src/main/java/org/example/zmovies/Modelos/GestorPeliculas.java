@@ -3,6 +3,8 @@ package org.example.zmovies.Modelos;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.example.zmovies.Exceptions.ReportePlanillaException;
+import org.example.zmovies.Exceptions.ReporteTextoException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -211,7 +213,7 @@ public class GestorPeliculas {
         return cadena.toString();
     }
 
-    public void generarReporteTexto() {
+    public void generarReporteTexto() throws ReporteTextoException {
         String nombreArchivo = "reportePeliculas.txt";
         try (PrintWriter writer = new PrintWriter(new File(nombreArchivo))) {
             writer.println("Titulo,Género,Precio Semanal");
@@ -221,11 +223,11 @@ public class GestorPeliculas {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ReporteTextoException("Error al generar el reporte de películas en formato texto", e);
         }
     }
 
-    public void generarReportePlanilla() {
+    public void generarReportePlanilla() throws ReportePlanillaException {
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
             Sheet planilla = workbook.createSheet("Películas");
 
@@ -254,7 +256,7 @@ public class GestorPeliculas {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ReportePlanillaException("Error al generar el reporte de películas en formato planilla", e);
         }
     }
 

@@ -537,7 +537,7 @@ public class InterfazUsuario {
     private void generarReportePeliculas() {
         System.out.println("Se generará un archivo txt y un xlsx con los datos de las películas del sistema.");
         System.out.println("Si no hay películas en el sistema, los archivos no tendrán datos.");
-        videoClub.generarReportePeliculas();
+        //videoClub.generarReportePeliculas();
         System.out.println("Archivos generados.");
     }
 
