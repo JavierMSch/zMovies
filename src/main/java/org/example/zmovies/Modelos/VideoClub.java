@@ -3,6 +3,7 @@ package org.example.zmovies.Modelos;
 import org.example.zmovies.Exceptions.ReportePlanillaException;
 import org.example.zmovies.Exceptions.ReporteTextoException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class VideoClub {
         gestorBaseDatos = new GestorBaseDatos("jdbc:sqlite:videoclub.sqlite");
     }
 
-    public void start() {
+    public void start() throws SQLException {
         gestorBaseDatos.inicializarTablas();
         cargarDatos();
         //datosTest();
@@ -176,24 +177,16 @@ public class VideoClub {
         gestorPeliculas.generarReportePlanilla();
     }
 
-    public void insertarDatos() {
-        try {
-            gestorBaseDatos.eliminarDatos();
-            gestorBaseDatos.insertarGeneros(gestorPeliculas.obtenerListaGeneros());
-            gestorBaseDatos.insertarPeliculas(gestorPeliculas.obtenerListaPeliculas());
-            gestorBaseDatos.insertarClientes(gestorClientes.obtenerListaClientes());
-            gestorBaseDatos.insertarRentas(gestorRentas.obtenerListaRentas());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void insertarDatos() throws SQLException {
+        gestorBaseDatos.eliminarDatos();
+        gestorBaseDatos.insertarGeneros(gestorPeliculas.obtenerListaGeneros());
+        gestorBaseDatos.insertarPeliculas(gestorPeliculas.obtenerListaPeliculas());
+        gestorBaseDatos.insertarClientes(gestorClientes.obtenerListaClientes());
+        gestorBaseDatos.insertarRentas(gestorRentas.obtenerListaRentas());
     }
 
-    public void cargarDatos() {
-        try {
+    public void cargarDatos() throws SQLException {
             gestorBaseDatos.cargarDatos(gestorPeliculas, gestorClientes, gestorRentas);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     // Getter y setters

@@ -12,7 +12,13 @@ public class InterfazUsuario {
     }
 
     public void start() {
-        videoClub.start();
+        try {
+            videoClub.start();
+        } catch (Exception e) {
+            System.out.println("Error al iniciar el sistema");
+            e.printStackTrace();
+            return;
+        }
         menuPrincipal();
     }
 
@@ -39,7 +45,7 @@ public class InterfazUsuario {
                     menuBasesDatos();
                     break;
                 case 3:
-                    videoClub.insertarDatos();
+                    //videoClub.insertarDatos();
                     System.out.println("Hasta luego");
                     return;
                 default:
