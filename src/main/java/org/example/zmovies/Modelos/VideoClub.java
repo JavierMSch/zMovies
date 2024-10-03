@@ -1,6 +1,10 @@
 package org.example.zmovies.Modelos;
 
-import java.util.ArrayList;
+import org.example.zmovies.Exceptions.ReportePlanillaException;
+import org.example.zmovies.Exceptions.ReporteTextoException;
+
+import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 
 public class VideoClub {
@@ -13,10 +17,18 @@ public class VideoClub {
         gestorClientes = new GestorClientes();
         gestorPeliculas = new GestorPeliculas();
         gestorRentas = new GestorRentas();
-        gestorBaseDatos = new GestorBaseDatos("jdbc:sqlite:videoclub.sqlite");
+
+        URL dbUrl = VideoClub.class.getResource("/sql/videoclub.sqlite");
+        if (dbUrl != null) {
+            // Reemplaza "file:" con "jdbc:sqlite:"
+            String jdbcUrl = dbUrl.toString().replace("file:", "jdbc:sqlite:");
+            gestorBaseDatos = new GestorBaseDatos(jdbcUrl);
+        } else {
+            gestorBaseDatos = new GestorBaseDatos("jdbc:sqlite:videoclub.sqlite");
+        }
     }
 
-    public void start() {
+    public void start() throws SQLException {
         gestorBaseDatos.inicializarTablas();
         cargarDatos();
         //datosTest();
@@ -128,12 +140,8 @@ public class VideoClub {
         return gestorClientes.obtenerDetallesCliente(rut);
     }
 
-    public List<String> obtenerListaClientes() {
-        List<String> listaClientes = new ArrayList<>();
-        for (Cliente cliente : gestorClientes.obtenerListaClientes()) {
-            listaClientes.add(cliente.getNombreApellidos());
-        }
-        return listaClientes;
+    public List<String> obtenerNombresClientes() {
+        return gestorClientes.obtenerNombresClientes();
     }
 
     public String detallesPelicula(String titulo) {
@@ -182,65 +190,21 @@ public class VideoClub {
         return gestorRentas.obtenerListaMasRentadaGenero();
     }
 
-    public void generarReportePeliculas() {
-        // String listaPeliculasParaCSV = gestorPeliculas.obtenerListaPeliculasParaCSV();
-
-        gestorPeliculas.generarReporteTexto();
-        gestorPeliculas.generarReportePlanilla();
+    public void generarReportePeliculas(String ruta) throws ReporteTextoException, ReportePlanillaException {
+        gestorPeliculas.generarReporteTexto(ruta);
+        gestorPeliculas.generarReportePlanilla(ruta);
     }
 
-//    private void generarReporteTexto(String listado) {
-//        String nombreArchivo = "reportePeliculas.txt";
-//        try (PrintWriter writer = new PrintWriter(new File(nombreArchivo))) {
-//            writer.println(listado);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private void generarReportePlanilla(String listado) {
-//        try (XSSFWorkbook workbook = new XSSFWorkbook()) {
-//            Sheet planilla = workbook.createSheet("Películas");
-//
-//            String[] arrayPeliculas = listado.split("\n");
-//            for (int i = 0; i < arrayPeliculas.length; i++) {
-//                Row fila = planilla.createRow(i);
-//                String[] datos = arrayPeliculas[i].split(",");
-//
-//                for (int j = 0; j < datos.length; j++) {
-//                    Cell celda = fila.createCell(j);
-//                    celda.setCellValue(datos[j]);
-//                }
-//            }
-//
-//            String nombreArchivo = "planillaPeliculas.xlsx";
-//            try (FileOutputStream archivoSalida = new FileOutputStream(nombreArchivo)) {
-//                workbook.write(archivoSalida);
-//            }
-//
-//            } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    public void insertarDatos() {
-        try {
-            gestorBaseDatos.eliminarDatos();
-            gestorBaseDatos.insertarGeneros(gestorPeliculas.obtenerListaGeneros());
-            gestorBaseDatos.insertarPeliculas(gestorPeliculas.obtenerListaPeliculas());
-            gestorBaseDatos.insertarClientes(gestorClientes.obtenerListaClientes());
-            gestorBaseDatos.insertarRentas(gestorRentas.obtenerListaRentas());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void insertarDatos() throws SQLException {
+        gestorBaseDatos.eliminarDatos();
+        gestorBaseDatos.insertarGeneros(gestorPeliculas.obtenerListaStringGeneros());
+        gestorBaseDatos.insertarPeliculas(gestorPeliculas.obtenerListaStringPeliculas());
+        gestorBaseDatos.insertarClientes(gestorClientes.obtenerListaStringClientes());
+        gestorBaseDatos.insertarRentas(gestorRentas.obtenerListaStringRentas());
     }
 
-    public void cargarDatos() {
-        try {
+    public void cargarDatos() throws SQLException {
             gestorBaseDatos.cargarDatos(gestorPeliculas, gestorClientes, gestorRentas);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     // Getter y setters

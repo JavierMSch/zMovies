@@ -3,6 +3,8 @@ package org.example.zmovies.Modelos;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.example.zmovies.Exceptions.ReportePlanillaException;
+import org.example.zmovies.Exceptions.ReporteTextoException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -148,7 +150,9 @@ public class GestorPeliculas {
         }
 
         if (nuevoTitulo != null && !nuevoTitulo.isEmpty()) {
-            pelicula.setTitulo(nuevoTitulo);
+            obtenerGenero(pelicula.getGenero()).eliminarPelicula(pelicula.getTitulo());
+            pelicula.setTitulo(nuevoTitulo.toUpperCase());
+            obtenerGenero(pelicula.getGenero()).agregarPelicula(pelicula);
         }
         if (nuevoGenero != null && !nuevoGenero.isEmpty()) {
             if (!existeGenero(nuevoGenero)) {
@@ -189,7 +193,7 @@ public class GestorPeliculas {
 
     public boolean eliminarGenero(String nombreGenero) {
         Genero genero = obtenerGenero(nombreGenero);
-        if (genero != null) {
+        if (genero != null && !genero.getNombre().equalsIgnoreCase("SIN GENERO")) {
             Genero generoEspecial = obtenerGenero("SIN GENERO");
             genero.moverPeliculas(generoEspecial);
             generosPeliculas.remove(genero);
@@ -211,8 +215,8 @@ public class GestorPeliculas {
         return cadena.toString();
     }
 
-    public void generarReporteTexto() {
-        String nombreArchivo = "reportePeliculas.txt";
+    public void generarReporteTexto(String ruta) throws ReporteTextoException {
+        String nombreArchivo = ruta + File.separator + "reportePeliculas.txt";
         try (PrintWriter writer = new PrintWriter(new File(nombreArchivo))) {
             writer.println("Titulo,Género,Precio Semanal");
             for (Pelicula pelicula: listaPeliculas) {
@@ -221,11 +225,11 @@ public class GestorPeliculas {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ReporteTextoException("Error al generar el reporte de películas en formato texto", e);
         }
     }
 
-    public void generarReportePlanilla() {
+    public void generarReportePlanilla(String ruta) throws ReportePlanillaException {
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
             Sheet planilla = workbook.createSheet("Películas");
 
@@ -248,22 +252,31 @@ public class GestorPeliculas {
                 numeroFila++;
             }
 
-            String nombreArchivo = "planillaPeliculas.xlsx";
+            String nombreArchivo = ruta + File.separator + "reportePeliculas.xlsx";
             try (FileOutputStream archivoSalida = new FileOutputStream(nombreArchivo)) {
                 workbook.write(archivoSalida);
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ReportePlanillaException("Error al generar el reporte de películas en formato planilla", e);
         }
     }
 
-    public List<Genero> obtenerListaGeneros() {
-        return new ArrayList<>(generosPeliculas);
+    public List<String> obtenerListaStringGeneros() {
+        List<String> listaStringGeneros = new ArrayList<>();
+        for (Genero genero: generosPeliculas) {
+            listaStringGeneros.add(genero.getNombre());
+        }
+        return listaStringGeneros;
     }
 
-    public List<Pelicula> obtenerListaPeliculas() {
-        return new ArrayList<>(listaPeliculas);
+    public List<String> obtenerListaStringPeliculas() {
+        List<String> listaStringPeliculas = new ArrayList<>();
+        for (Pelicula pelicula: listaPeliculas) {
+            listaStringPeliculas.add(pelicula.getTitulo() + "," + pelicula.getGenero()
+                    + "," + pelicula.getPrecioSemanal() + "," + (pelicula.isActiva() ? "1" : "0"));
+        }
+        return listaStringPeliculas;
     }
 
     public Pelicula obtenerPeliculaActivaOInactiva(String titulo) {
