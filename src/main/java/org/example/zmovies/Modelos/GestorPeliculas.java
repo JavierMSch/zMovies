@@ -150,7 +150,9 @@ public class GestorPeliculas {
         }
 
         if (nuevoTitulo != null && !nuevoTitulo.isEmpty()) {
-            pelicula.setTitulo(nuevoTitulo);
+            obtenerGenero(pelicula.getGenero()).eliminarPelicula(pelicula.getTitulo());
+            pelicula.setTitulo(nuevoTitulo.toUpperCase());
+            obtenerGenero(pelicula.getGenero()).agregarPelicula(pelicula);
         }
         if (nuevoGenero != null && !nuevoGenero.isEmpty()) {
             if (!existeGenero(nuevoGenero)) {
@@ -260,12 +262,21 @@ public class GestorPeliculas {
         }
     }
 
-    public List<Genero> obtenerListaGeneros() {
-        return new ArrayList<>(generosPeliculas);
+    public List<String> obtenerListaStringGeneros() {
+        List<String> listaStringGeneros = new ArrayList<>();
+        for (Genero genero: generosPeliculas) {
+            listaStringGeneros.add(genero.getNombre());
+        }
+        return listaStringGeneros;
     }
 
-    public List<Pelicula> obtenerListaPeliculas() {
-        return new ArrayList<>(listaPeliculas);
+    public List<String> obtenerListaStringPeliculas() {
+        List<String> listaStringPeliculas = new ArrayList<>();
+        for (Pelicula pelicula: listaPeliculas) {
+            listaStringPeliculas.add(pelicula.getTitulo() + "," + pelicula.getGenero()
+                    + "," + pelicula.getPrecioSemanal() + "," + (pelicula.isActiva() ? "1" : "0"));
+        }
+        return listaStringPeliculas;
     }
 
     public Pelicula obtenerPeliculaActivaOInactiva(String titulo) {
