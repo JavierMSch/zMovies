@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import org.example.zmovies.Modelos.VideoClub;
@@ -80,15 +81,20 @@ public class Scene4Controller {
         confirmLayout.setPrefWidth(formLayout.getPrefWidth());
         spacer.setMinWidth(confirmLayout.getMinWidth() * 0.6);
 
+        handleEnterKey(formField1, okButton);
+
         contentPane.getChildren().addAll(formLayout);
 
         // Variables para el paso actual
-        final String[] currentStep = {"Rut del cliente"};
+        String[] currentStep = {"Rut del cliente"};
+        String[] rut = {""};
+        String[] nombre = {""};
+        String[] correo = {""};
+        String[] telefono = {""};
 
         okButton.setOnAction(e -> {
             // Obtener el valor actual del campo de texto
             String valorActual = formField1.getText();
-            System.out.println("Valor ingresado: " + valorActual);
 
             // Cambiar el campo según el paso actual
             switch (currentStep[0]) {
@@ -100,9 +106,9 @@ public class Scene4Controller {
                         alert.setContentText("El campo Rut no puede estar vacío.");
                         alert.showAndWait();
                         break;
-                    }
-                    else {
+                    } else {
                         formField1.setPromptText("Nombre completo");
+                        rut[0] = formatoRut(valorActual);  // Se usa el array
                         currentStep[0] = "Nombre completo";
                         break;
                     }
@@ -114,9 +120,9 @@ public class Scene4Controller {
                         alert.setContentText("El campo Nombre no puede estar vacío.");
                         alert.showAndWait();
                         break;
-                    }
-                    else {
+                    } else {
                         formField1.setPromptText("Correo electronico");
+                        nombre[0] = valorActual;  // Se usa el array
                         currentStep[0] = "Correo electronico";
                         break;
                     }
@@ -128,9 +134,9 @@ public class Scene4Controller {
                         alert.setContentText("El campo Correo no puede estar vacío.");
                         alert.showAndWait();
                         break;
-                    }
-                    else {
+                    } else {
                         formField1.setPromptText("Numero telefonico");
+                        correo[0] = valorActual;  // Se usa el array
                         currentStep[0] = "Numero telefonico";
                         break;
                     }
@@ -142,9 +148,9 @@ public class Scene4Controller {
                         alert.setContentText("El campo Numero no puede estar vacío.");
                         alert.showAndWait();
                         break;
-                    }
-                    else {
-                        System.out.println("Formulario completado.");
+                    } else {
+                        telefono[0] = valorActual;  // Se usa el array
+                        videoClub.agregarCliente(rut[0], nombre[0], correo[0], telefono[0]);
                         defaultPane(); // Puedes definir esta función para restaurar la vista por defecto.
                         break;
                     }
@@ -186,42 +192,39 @@ public class Scene4Controller {
                 alert.showAndWait();
             }
             else {
+                String input = listView.getSelectionModel().getSelectedItem();
+                String[] partes = input.split("-");
+                String rutSinGuion = partes[0].trim();
+                String digitoVerificador = partes[1].split(" ")[0].trim(); // Separar con espacio y tomar el primer elemento
+                String rutCompleto = rutSinGuion + "-" + digitoVerificador;
+                System.out.println("Rut sin guion: " + rutCompleto);
                 contentPane.getChildren().clear();
                 vbox.getChildren().clear();
-                vbox.getChildren().add(verDetallesCLiente(listView.getSelectionModel().getSelectedItem()));
+                vbox.getChildren().add(verDetallesCLiente(rutCompleto));
                 contentPane.getChildren().add(vbox);
             }
         });
         contentPane.getChildren().add(vbox);
     }
 
-    private StackPane verDetallesCLiente(String nombre){
-        contentPane.getChildren().clear();  // Limpiar el contentPane
-
-        // Crear VBox con detalles de la película
+    private StackPane verDetallesCLiente(String rut){
+        contentPane.getChildren().clear();
+        String detalles = videoClub.detallesCliente(rut);
         VBox vbox = new VBox(10);
         vbox.getStyleClass().add("movie-detail-layout");
-        vbox.setAlignment(Pos.CENTER);  // Alinear contenido dentro del VBox
+        vbox.setAlignment(Pos.CENTER);
 
-        // Crear los Labels con detalles de la película
-        Label titleLabel = new Label("Nombre: " + nombre);
+        Label titleLabel = new Label("Detalles del cliente");
         titleLabel.getStyleClass().add("opt-title");
-        Label directorLabel = new Label("Rut: [rut del cliente]");
-        directorLabel.getStyleClass().add("detail");
-        Label anioLabel = new Label("Correo Electronico : [Correo del cliente]");
-        anioLabel.getStyleClass().add("detail");
-        Label generoLabel = new Label("Numero Telefonico: [Numero de telefono]");
-        generoLabel.getStyleClass().add("detail");
+        Label detallesC = new Label(detalles);
+        detallesC.getStyleClass().add("detail");
 
-        // Añadir los Labels al VBox
-        vbox.getChildren().addAll(titleLabel, directorLabel, anioLabel, generoLabel);
+        vbox.getChildren().addAll(titleLabel, detallesC);
 
-        // Usar un StackPane para centrar el VBox dentro del contentPane
         StackPane stackPane = new StackPane(vbox);
         stackPane.setPrefSize(contentPane.getWidth(), contentPane.getHeight());
-        StackPane.setAlignment(vbox, Pos.CENTER);  // Asegurar que el VBox esté centrado
+        StackPane.setAlignment(vbox, Pos.CENTER);
 
-        // Añadir StackPane al contentPane
         return stackPane;
     }
 
@@ -255,5 +258,33 @@ public class Scene4Controller {
     @FXML
     protected void onVolverClick(ActionEvent event) throws IOException {
         SceneManager.switchScene("/fxml/scene2-view.fxml");
+    }
+
+    private String formatoRut(String input) {
+        input = input.replaceAll("\\D", "");
+
+        if (input.length() < 8 || input.length() > 10) {
+            return input;
+        }
+
+        int offset = input.length() - 8;
+
+        String part1 = input.substring(0, 1 + offset);
+        String part2 = input.substring(1 + offset, 4 + offset);
+        String part3 = input.substring(4 + offset, 7 + offset);
+        String part4 = input.substring(7 + offset);
+        return part1 + "." + part2 + "." + part3 + "-" + part4;
+    }
+
+    private void handleEnterKey(TextField currentField, Control nextControl) {
+        currentField.setOnKeyPressed(event -> {
+            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
+                if (nextControl instanceof TextField) {
+                    nextControl.requestFocus();
+                } else if (nextControl instanceof Button) {
+                    ((Button) nextControl).fire();
+                }
+            }
+        });
     }
 }

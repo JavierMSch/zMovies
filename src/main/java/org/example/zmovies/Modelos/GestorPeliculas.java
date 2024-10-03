@@ -20,19 +20,19 @@ public class GestorPeliculas {
         listaPeliculas = new ArrayList<>();
     }
 
-    public String obtenerStringListaPeliculas() {
-        StringBuilder cadenaPeliculas = new StringBuilder();
+    public List<String> obtenerStringListaPeliculas() {
+        List<String> cadenaPeliculas = new ArrayList<>();
         boolean hayPeliculas = false;
         for (Pelicula pelicula: listaPeliculas) {
             if (pelicula.isActiva()) {
-                cadenaPeliculas.append(pelicula).append("\n");
+                cadenaPeliculas.add(pelicula.getTitulo());
                 hayPeliculas = true;
             }
         }
         if (!hayPeliculas) {
             return null;
         }
-        return cadenaPeliculas.toString();
+        return cadenaPeliculas;
     }
 
     public String obtenerStringListaPeliculas(String nombreGenero) {
@@ -43,23 +43,33 @@ public class GestorPeliculas {
         return genero.obtenerListaPeliculas();
     }
 
-    public String obtenerStringListaGeneros() {
-        StringBuilder cadenaGeneros = new StringBuilder();
+    public List<String> obtenerStringListaGeneros() {
+        List<String> cadenaGeneros = new ArrayList<>();
         boolean hayGeneros = false;
         for (Genero genero: generosPeliculas) {
-            cadenaGeneros.append(genero.getNombre()).append("\n");
+            cadenaGeneros.add(genero.getNombre());
             hayGeneros = true;
         }
         if (!hayGeneros) {
             return null;
         }
-        return cadenaGeneros.toString();
+        return cadenaGeneros;
     }
 
     public Genero obtenerGenero(String nombre) {
         for (Genero gen : generosPeliculas) {
             if (gen.getNombre().equalsIgnoreCase(nombre)) {
                 return gen;
+            }
+        }
+        return null;
+    }
+
+    public String obtenerGeneroPelicula(String titulo) {
+        for (Genero gen : generosPeliculas) {
+            Pelicula pelicula = gen.obtenerPelicula(titulo);
+            if (pelicula != null) {
+                return gen.getNombre();
             }
         }
         return null;
@@ -146,9 +156,10 @@ public class GestorPeliculas {
         if (pelicula == null) {
             return false;
         }
-
         if (nuevoTitulo != null && !nuevoTitulo.isEmpty()) {
+            obtenerGenero(pelicula.getGenero()).eliminarPelicula(titulo);
             pelicula.setTitulo(nuevoTitulo);
+            obtenerGenero(pelicula.getGenero()).agregarPelicula(pelicula);
         }
         if (nuevoGenero != null && !nuevoGenero.isEmpty()) {
             if (!existeGenero(nuevoGenero)) {
@@ -271,6 +282,14 @@ public class GestorPeliculas {
             if (pelicula.getTitulo().equalsIgnoreCase(titulo)) {
                 return pelicula;
             }
+        }
+        return null;
+    }
+
+    public String obtenerPrecioPelicula(String titulo) {
+        Pelicula pelicula = obtenerPelicula(titulo);
+        if (pelicula != null) {
+            return String.valueOf(pelicula.getPrecioSemanal());
         }
         return null;
     }

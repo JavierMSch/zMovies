@@ -5,7 +5,7 @@ import java.util.List;
 
 public class VideoClub {
     private GestorClientes gestorClientes;
-    private GestorPeliculas gestorPeliculas;
+    private static GestorPeliculas gestorPeliculas;
     private GestorRentas gestorRentas;
     private GestorBaseDatos gestorBaseDatos;
 
@@ -52,7 +52,7 @@ public class VideoClub {
         gestorPeliculas.agregarPelicula(titulo, genero, precioSemanal);
     }
 
-    public String obtenerListaPeliculas() {
+    public List<String> obtenerListaPeliculas() {
         return gestorPeliculas.obtenerStringListaPeliculas();
     }
 
@@ -60,7 +60,7 @@ public class VideoClub {
         return gestorPeliculas.obtenerStringListaPeliculas(nombreGenero);
     }
 
-    public String obtenerListaGeneros() {
+    public  List<String> obtenerListaGeneros() {
         return gestorPeliculas.obtenerStringListaGeneros();
     }
 
@@ -77,6 +77,10 @@ public class VideoClub {
                 gestorPeliculas.obtenerPelicula(tituloPelicula), semanas);
         gestorRentas.agregarRenta(renta);
         gestorClientes.agregarRenta(rut, renta);
+    }
+
+    public String obtenerGeneroPelicula(String titulo) {
+        return gestorPeliculas.obtenerGeneroPelicula(titulo);
     }
 
     public int precioPelicula(String titulo, int semanas) {
@@ -131,7 +135,7 @@ public class VideoClub {
     public List<String> obtenerListaClientes() {
         List<String> listaClientes = new ArrayList<>();
         for (Cliente cliente : gestorClientes.obtenerListaClientes()) {
-            listaClientes.add(cliente.getNombreApellidos());
+            listaClientes.add(cliente.getRut()  + " - " + cliente.getNombreApellidos());
         }
         return listaClientes;
     }
@@ -156,7 +160,7 @@ public class VideoClub {
         gestorPeliculas.eliminarPelicula(titulo);
     }
 
-    public void editarGenero(String genero, String nuevoNombre) {
+    public  void editarGenero(String genero, String nuevoNombre) {
         gestorPeliculas.editarGenero(genero, nuevoNombre);
     }
 
@@ -252,5 +256,9 @@ public class VideoClub {
 
     public void setGestorRentas(GestorRentas gestorRentas) {
         this.gestorRentas = gestorRentas;
+    }
+
+    public String obtenerPrecioPelicula(String titulo) {
+        return gestorPeliculas.obtenerPrecioPelicula(titulo);
     }
 }

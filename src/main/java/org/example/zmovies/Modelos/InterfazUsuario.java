@@ -1,5 +1,6 @@
 package org.example.zmovies.Modelos;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class InterfazUsuario {
@@ -147,7 +148,6 @@ public class InterfazUsuario {
                     agregarGenero();
                     break;
                 case 5:
-                    listarGeneros();
                     break;
                 case 6:
                     editarPelicula();
@@ -381,27 +381,9 @@ public class InterfazUsuario {
         if (input.equalsIgnoreCase("salir")) {
             return;
         }
-
-        if (input.equalsIgnoreCase("todas")) {
-            String peliculas = videoClub.obtenerListaPeliculas();
-            if (peliculas == null) {
-                System.out.println("No hay películas en el sistema");
-            } else {
-                System.out.println(peliculas);
-            }
-            return;
-        }
-
         if (!videoClub.existeGenero(input)) {
             System.out.println("Género no existe en el sistema, volviendo al menú");
             return;
-        }
-
-        String peliculas = videoClub.obtenerListaPeliculas(input);
-        if (peliculas == null) {
-            System.out.println("No hay películas del género en el sistema");
-        } else {
-            System.out.println(peliculas);
         }
     }
 
@@ -429,7 +411,7 @@ public class InterfazUsuario {
     }
 
     private void listarGeneros() {
-        String generos = videoClub.obtenerListaGeneros();
+        List<String> generos = videoClub.obtenerListaGeneros();
         if (generos == null) {
             System.out.println("No hay géneros en el sistema");
         } else {
