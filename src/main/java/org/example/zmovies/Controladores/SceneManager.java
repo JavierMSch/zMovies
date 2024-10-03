@@ -59,7 +59,16 @@ public class SceneManager {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            videoClub.insertarDatos();
+            try {
+                videoClub.insertarDatos();
+            } catch (Exception e) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText("Error al guardar datos la base de datos");
+                errorAlert.setContentText("Se cerrará el programa y se perderán los cambios realizados. Por favor, consulte con los desarrolladores.");
+                errorAlert.showAndWait();
+                e.printStackTrace();
+            }
             closeStage();
         }
     }

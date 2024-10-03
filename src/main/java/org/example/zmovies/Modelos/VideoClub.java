@@ -140,6 +140,12 @@ public class VideoClub {
         return gestorPeliculas.obtenerDetallesPelicula(titulo);
     }
 
+    public String detallesRenta(int id) { return gestorRentas.obtenerRenta(id).toString(); }
+
+    public String obtenerPeliculaRenta(int id) {
+        return gestorRentas.obtenerRenta(id).getPelicula().getTitulo();
+    }
+
     public void editarPelicula(String titulo, String nuevoTitulo, String nuevoGenero, int nuevoPrecio) {
         gestorPeliculas.editarPelicula(titulo, nuevoTitulo, nuevoGenero, nuevoPrecio);
     }

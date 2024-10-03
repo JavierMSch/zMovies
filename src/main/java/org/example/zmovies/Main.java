@@ -17,6 +17,7 @@ public class Main {
 */
 
 import javafx.application.Application;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.example.zmovies.Controladores.SceneManager;
@@ -29,7 +30,17 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         VideoClub videoClub = new VideoClub();
-        videoClub.start();
+        try {
+            videoClub.start();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al iniciar la base de datos");
+            alert.setContentText("No se pudo iniciar la base de datos y se cerrará el programa. Por favor, consulte con los desarrolladores.");
+            alert.showAndWait();
+            e.printStackTrace();
+            return;
+        }
 
         SceneManager.setVideoClub(videoClub);
         SceneManager.setStage(stage);

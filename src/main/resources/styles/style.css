@@ -126,6 +126,12 @@ Button:hover {
     -fx-font-size: 20px;
     -fx-text-fill: black; /* Color del texto */
 }
+.waiting-movies .list-cell {
+    -fx-alignment: center-left;
+    -fx-text-alignment: left;
+    -fx-font-size: 20px;
+    -fx-text-fill: black;
+}
 
 .movie-details-layout {
     -fx-padding: 20;

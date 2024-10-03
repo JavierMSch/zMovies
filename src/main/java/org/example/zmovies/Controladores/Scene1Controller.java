@@ -8,10 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.IOException;
@@ -25,8 +22,10 @@ public class Scene1Controller {
     private Label titleLabel;
     private Label formLabel1;
     private Label formLabel2;
+    private Label formLabel3;
     private TextField formField1;
     private TextField formField2;
+    private TextField formField3;
     private ListView<String> listView;
     private Button okButton;
     private Button cancelButton;
@@ -148,23 +147,28 @@ public class Scene1Controller {
         contentPane.getChildren().add(iconItem);
     }
 
-    private void updatePane(String title, String lbl1, String prompTxt1, String lbl2, String prompTxt2) {
+    private void updatePane(String title, String[] labels) {
         contentPane.getChildren().clear();
+
+        formLayout = new VBox(10);
+        formLayout.getStyleClass().add("form-layout");
 
         titleLabel = new Label(title);
         titleLabel.getStyleClass().add("opt-title");
 
-        formLabel1 = new Label(lbl1);
+        formLabel1 = new Label(labels[0]);
         formLabel1.getStyleClass().add("form-title");
         formField1 = new TextField();
-        formField1.setPromptText(prompTxt1);
+        formField1.setPromptText(labels[1]);
         formField1.getStyleClass().add("form-field");
 
-        formLabel2 = new Label(lbl2);
+        formLabel2 = new Label(labels[2]);
         formLabel2.getStyleClass().add("form-title");
         formField2 = new TextField();
-        formField2.setPromptText(prompTxt2);
+        formField2.setPromptText(labels[3]);
         formField2.getStyleClass().add("form-field");
+
+        formLayout.getChildren().addAll(titleLabel, formLabel1, formField1, formLabel2, formField2);
 
         okButton = new Button("OK");
         okButton.getStyleClass().add("ok-button");
@@ -173,17 +177,29 @@ public class Scene1Controller {
         Region spacer = new Region();
         HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
 
-        handleEnterKey(formField1, formField2);
-        handleEnterKey(formField2, okButton);
+        if (labels.length > 4) {
+            formLabel3 = new Label(labels[4]);
+            formLabel3.getStyleClass().add("form-title");
+            formField3 = new TextField();
+            formField3.setPromptText(labels[5]);
+            formField3.getStyleClass().add("form-field");
+            formLayout.getChildren().addAll(formLabel3, formField3);
+
+            handleEnterKey(formField1, formField2);
+            handleEnterKey(formField2, formField3);
+            handleEnterKey(formField3, okButton);
+        } else {
+            handleEnterKey(formField1, formField2);
+            handleEnterKey(formField2, okButton);
+        }
 
         HBox confirmLayout = new HBox(10);
         confirmLayout.getStyleClass().add("confirm-layout");
         confirmLayout.setAlignment(Pos.CENTER);
         confirmLayout.getChildren().addAll(cancelButton, spacer, okButton);
 
-        VBox formLayout = new VBox(10);
-        formLayout.getStyleClass().add("form-layout");
-        formLayout.getChildren().addAll(titleLabel, formLabel1, formField1, formLabel2, formField2, confirmLayout);
+        formLayout.getChildren().add(confirmLayout);
+        formLayout.setAlignment(Pos.CENTER);
 
         formLayout.setPrefWidth(contentPane.getPrefWidth());
         titleLabel.setPrefWidth(formLayout.getPrefWidth());
@@ -236,15 +252,9 @@ public class Scene1Controller {
     private void updatePane(String cliente, String title, String data) {
         contentPane.getChildren().clear();
         listView = new ListView<>();
+        listView.getStyleClass().add("waiting-movies");
         List<String> pendientesList;
 
-        if (data != null) {
-            pendientesList = data.lines().toList();
-            for (String pendiente : pendientesList) {
-                listView.getItems().add(pendiente);
-            }
-
-        }
         okButton = new Button("OK");
         okButton.getStyleClass().add("ok-button");
 
@@ -252,6 +262,15 @@ public class Scene1Controller {
         formLayout.getStyleClass().add("form-layout");
         formLayout.setAlignment(Pos.CENTER);
         if (cliente != null) {
+            if (data != null) {
+                pendientesList = data.lines().toList();
+                String[] rentDetails;
+                for (String pendiente : pendientesList) {
+                    rentDetails = pendiente.split(" - ");
+                    String formattedItem = String.format("%-10s %-85s %s", rentDetails[0], rentDetails[2], rentDetails[5]);
+                    listView.getItems().add(formattedItem);
+                }
+            }
             titleLabel = new Label(cliente);
             formLabel1 = new Label(title);
             formLabel1.getStyleClass().add("form-title");
@@ -269,6 +288,15 @@ public class Scene1Controller {
 
             formLayout.getChildren().addAll(titleLabel, formLabel1, listView, confirmLayout);
         } else {
+            if (data != null) {
+                pendientesList = data.lines().toList();
+                String[] rentDetails;
+                for (String pendiente : pendientesList) {
+                    rentDetails = pendiente.split(" - ");
+                    String formattedItem = String.format("%-10s %5s %-21s %5s %s", rentDetails[0], "", rentDetails[1], "", rentDetails[2]);
+                    listView.getItems().add(formattedItem);
+                }
+            }
             titleLabel = new Label(title);
             formLayout.getChildren().addAll(titleLabel, listView, okButton);
         }
@@ -316,7 +344,8 @@ public class Scene1Controller {
 
     private void handleNewCliente(String rut) {
         String title = "El cliente no existe. Se agregarán los datos del cliente.";
-        updatePane(title, "Nombre cliente:", "ej.: Juan Pérez", "Teléfono:", "ej.: 958646803");
+        String[] labels = {"Nombre cliente:", "ej.: Juan Pérez", "Teléfono:", "ej.: 958646803", "Correo:", "ej.: mail@mail.com"};
+        updatePane(title, labels);
 
         okButton.setOnAction(e -> {
             if (isFieldEmpty(formField1) || isFieldEmpty(formField2)) {
@@ -326,7 +355,7 @@ public class Scene1Controller {
                 alert.setContentText("Los campos no pueden estar vacíos.");
                 alert.showAndWait();
             } else {
-                videoClub.agregarCliente(rut, formField1.getText(), "UBUNTU", formField2.getText());
+                videoClub.agregarCliente(rut, formField1.getText(), formField3.getText(), formField2.getText());
                 handlePeliculaRenta(rut);
             }
         });
@@ -336,7 +365,8 @@ public class Scene1Controller {
 
     private void handlePeliculaRenta(String rut) {
         String title = "Cliente: " + videoClub.obtenerNombreCliente(rut);
-        updatePane(title, "Nombre pelicula:", "ej.: El Padrino", "Semanas renta:", "ej.: 2");
+        String[] labels = {"Nombre pelicula:", "ej.: El Padrino", "Semanas renta:", "ej.: 2"};
+        updatePane(title, labels);
 
         okButton.setOnAction(e -> {
             if (isFieldEmpty(formField1) || isFieldEmpty(formField2)) {
@@ -365,7 +395,6 @@ public class Scene1Controller {
             alert.setContentText("Los campos no pueden estar vacíos.");
             alert.showAndWait();
         } else {
-            defaultPane();
             if (existePelicula) {
                 videoClub.rentarPelicula(rut, movieName, weeks);
                 Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -373,11 +402,13 @@ public class Scene1Controller {
                 successAlert.setHeaderText(null);
                 successAlert.setContentText("La película '" + movieName + "' fue rentada con éxito.");
                 successAlert.showAndWait();
+                defaultPane();
             } else {
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setTitle("Operación fallida");
                 errorAlert.setHeaderText(null);
                 errorAlert.setContentText("La película " + movieName + " no se encuentra en el sistema.");
+                errorAlert.showAndWait();
             }
         }
     }
@@ -421,15 +452,15 @@ public class Scene1Controller {
                     alert.setContentText("Debe seleccionar una película para devolver.");
                     alert.showAndWait();
                 } else {
-                    String[] items = selectedItem.split(", ");
-                    String movieName = items[1].substring(10);
+                    int id = Integer.parseInt(selectedItem.substring(4, 10).trim());
+                    String movieName = videoClub.obtenerPeliculaRenta(id);
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmar devolución");
                     alert.setHeaderText(null);
                     alert.setContentText("¿Está seguro de devolver la película '" + movieName + "'?");
                     alert.showAndWait();
                     if (alert.getResult() == ButtonType.OK) {
-                        videoClub.devolverPelicula(Integer.parseInt(items[0].substring(4)));
+                        videoClub.devolverPelicula(id);
                         defaultPane();
                         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                         successAlert.setTitle("Operación exitosa");
@@ -465,11 +496,69 @@ public class Scene1Controller {
         }
     }
 
+    private void updatePane(Label[] labels) {
+        contentPane.getChildren().clear();
+
+        formLayout = new VBox(10);
+        formLayout.getStyleClass().add("form-layout");
+        formLayout.setAlignment(Pos.CENTER);
+        labels[0].getStyleClass().add("opt-title");
+        labels[1].getStyleClass().add("detail");
+        labels[2].getStyleClass().add("detail");
+        labels[3].getStyleClass().add("detail");
+        labels[4].getStyleClass().add("detail");
+        labels[5].getStyleClass().add("detail");
+
+        okButton = new Button("Volver");
+        okButton.getStyleClass().add("back-button");
+
+        formLayout.getChildren().addAll(labels);
+
+        formLayout.setAlignment(Pos.CENTER);
+
+        VBox container = new VBox(10);
+        container.getStyleClass().add("form-layout");
+        container.setAlignment(Pos.CENTER);
+        container.getChildren().addAll(formLayout, okButton);
+
+        StackPane stackPane = new StackPane(container);
+        stackPane.setPrefSize(contentPane.getPrefWidth(), contentPane.getPrefHeight());
+
+        contentPane.getChildren().add(stackPane);
+    }
+
     private void handleNoDevueltas() {
         String pendientes = videoClub.obtenerListaRentasPendientes();
         updatePane(null, "Películas no devueltas:", pendientes);
 
-        okButton.setOnAction(e -> defaultPane() );
+        handleDoubleClicked(listView, okButton);
+
+        okButton.setOnAction(e -> {
+            String selectedItem = listView.getSelectionModel().getSelectedItem();
+            if (selectedItem == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Operación fallida");
+                alert.setHeaderText(null);
+                alert.setContentText("Debe seleccionar una renta para ver sus detalles.");
+                alert.showAndWait();
+            } else {
+                int id = Integer.parseInt(selectedItem.substring(4, 10).trim());
+                String[] items = videoClub.detallesRenta(id).split(" - ");
+
+                Label title = new Label("Detalles de renta " + items[0]);
+                Label rut = new Label(items[1]);
+                Label movie = new Label(items[2]);
+                Label cost = new Label(items[3]);
+                Label date = new Label(items[4]);
+                Label date2 = new Label(items[5]);
+
+                Label[] labels = {title, rut, movie, cost, date, date2};
+
+                updatePane(labels);
+
+                okButton.setOnAction(e1 -> handleNoDevueltas() );
+            }
+        });
     }
 
     private boolean isFieldEmpty(TextField textField) {
@@ -550,11 +639,15 @@ public class Scene1Controller {
                 alert.setContentText("Debe seleccionar un género para continuar.");
                 alert.showAndWait();
             } else {
-                String movieDetails = selectedItem + " - " + videoClub.obtenerMasRentadaGenero(selectedItem);
+                String pelicula = videoClub.obtenerMasRentadaGenero(selectedItem);
+                if (pelicula == null) {
+                    pelicula = "N/A - N/A";
+                }
+                String movieDetails = selectedItem + " - " + pelicula;
                 String[] items = movieDetails.split(" - ");
                 labels[0].setText("Género: " + items[0]);
                 labels[1].setText("Título: " + items[1]);
-                labels[2].setText("Costo Semanal: " + items[2]);
+                labels[2].setText("Costo Semanal: " + items[2] + "$");
             }
         } );
     }
