@@ -215,8 +215,8 @@ public class GestorPeliculas {
         return cadena.toString();
     }
 
-    public void generarReporteTexto() throws ReporteTextoException {
-        String nombreArchivo = "reportePeliculas.txt";
+    public void generarReporteTexto(String ruta) throws ReporteTextoException {
+        String nombreArchivo = ruta + File.separator + "reportePeliculas.txt";
         try (PrintWriter writer = new PrintWriter(new File(nombreArchivo))) {
             writer.println("Titulo,Género,Precio Semanal");
             for (Pelicula pelicula: listaPeliculas) {
@@ -229,7 +229,7 @@ public class GestorPeliculas {
         }
     }
 
-    public void generarReportePlanilla() throws ReportePlanillaException {
+    public void generarReportePlanilla(String ruta) throws ReportePlanillaException {
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
             Sheet planilla = workbook.createSheet("Películas");
 
@@ -252,7 +252,7 @@ public class GestorPeliculas {
                 numeroFila++;
             }
 
-            String nombreArchivo = "planillaPeliculas.xlsx";
+            String nombreArchivo = ruta + File.separator + "reportePeliculas.xlsx";
             try (FileOutputStream archivoSalida = new FileOutputStream(nombreArchivo)) {
                 workbook.write(archivoSalida);
             }

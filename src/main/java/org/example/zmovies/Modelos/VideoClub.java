@@ -4,7 +4,6 @@ import org.example.zmovies.Exceptions.ReportePlanillaException;
 import org.example.zmovies.Exceptions.ReporteTextoException;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class VideoClub {
@@ -168,9 +167,9 @@ public class VideoClub {
         return gestorRentas.obtenerListaMasRentadaGenero();
     }
 
-    public void generarReportePeliculas() throws ReporteTextoException, ReportePlanillaException {
-        gestorPeliculas.generarReporteTexto();
-        gestorPeliculas.generarReportePlanilla();
+    public void generarReportePeliculas(String ruta) throws ReporteTextoException, ReportePlanillaException {
+        gestorPeliculas.generarReporteTexto(ruta);
+        gestorPeliculas.generarReportePlanilla(ruta);
     }
 
     public void insertarDatos() throws SQLException {
