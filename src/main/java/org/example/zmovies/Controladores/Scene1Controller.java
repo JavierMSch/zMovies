@@ -572,7 +572,7 @@ public class Scene1Controller {
         titleLabel.getStyleClass().add("opt-title");
         titleLabel.paddingProperty().setValue(new javafx.geometry.Insets(20, 0, 20, 0));
 
-        String data = videoClub.obtenerListaGeneros();
+        String data = videoClub.obtenerNombresGeneros();
         if (data != null) {
             List<String> items = data.lines().toList();
             listView = new ListView<>();

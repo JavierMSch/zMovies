@@ -15,6 +15,8 @@ import javafx.scene.layout.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.example.zmovies.Exceptions.ReportePlanillaException;
+import org.example.zmovies.Exceptions.ReporteTextoException;
 import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.File;
@@ -80,7 +82,7 @@ public class Scene3Controller {
     }
     @FXML
     private void onReporteClick(ActionEvent actionEvent) {
-        /*
+
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
         // Crear un DirectoryChooser para seleccionar la carpeta de destino
@@ -112,7 +114,7 @@ public class Scene3Controller {
                 alert.showAndWait();
             }
         }
-        */
+
     }
     @FXML
     private void onAgregarPeliculaClick(ActionEvent actionEvent) {

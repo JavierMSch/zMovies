@@ -63,4 +63,12 @@ public class GestorClientes {
         }
         return listaNombresClientes;
     }
+
+    public List<String> obtenerListaRutNombreClientes() {
+        List<String> listaClientes = new ArrayList<>();
+        for (Cliente cliente : mapaClientes.values()) {
+            listaClientes.add(cliente.getRut()  + " - " + cliente.getNombreApellidos());
+        }
+        return listaClientes;
+    }
 }

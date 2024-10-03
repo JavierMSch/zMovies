@@ -169,7 +169,7 @@ public class Scene4Controller {
         contentPane.getChildren().clear();
         verDetalleClienteButton = new Button("Ver Detalle Cliente");
         ObservableList<String> peliculas = FXCollections.observableArrayList(
-                videoClub.obtenerNombresClientes()
+                videoClub.obtenerListaRutNombreClientes()
         );
 
         ListView<String> listView = new ListView<>(peliculas);

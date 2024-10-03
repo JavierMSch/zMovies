@@ -145,12 +145,8 @@ public class VideoClub {
     }
 
 
-    public List<String> obtenerListaClientes() {
-        List<String> listaClientes = new ArrayList<>();
-        for (Cliente cliente : gestorClientes.obtenerListaClientes()) {
-            listaClientes.add(cliente.getRut()  + " - " + cliente.getNombreApellidos());
-        }
-        return listaClientes;
+    public List<String> obtenerListaRutNombreClientes() {
+        return gestorClientes.obtenerListaRutNombreClientes();
     }
 
     public List<String> obtenerNombresClientes() {
@@ -190,6 +186,10 @@ public class VideoClub {
 
     public void eliminarGenero(String nombre) {
         gestorPeliculas.eliminarGenero(nombre);
+    }
+
+    public String obtenerNombresGeneros() {
+        return gestorPeliculas.obtenerNombresGeneros();
     }
 
     public String obtenerMasRentadaGenero(String genero) {

@@ -304,4 +304,12 @@ public class GestorPeliculas {
         }
         return null;
     }
+
+    public String obtenerNombresGeneros() {
+        StringBuilder cadena = new StringBuilder();
+        for (Genero genero: generosPeliculas) {
+            cadena.append(genero.getNombre()).append("\n");
+        }
+        return cadena.toString();
+    }
 }
