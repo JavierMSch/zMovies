@@ -1,5 +1,9 @@
 package org.example.zmovies.Modelos;
 
+import org.example.zmovies.Exceptions.ReportePlanillaException;
+import org.example.zmovies.Exceptions.ReporteTextoException;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +20,7 @@ public class VideoClub {
         gestorBaseDatos = new GestorBaseDatos("jdbc:sqlite:videoclub.sqlite");
     }
 
-    public void start() {
+    public void start() throws SQLException {
         gestorBaseDatos.inicializarTablas();
         cargarDatos();
         //datosTest();
@@ -168,65 +172,21 @@ public class VideoClub {
         return gestorRentas.obtenerListaMasRentadaGenero();
     }
 
-    public void generarReportePeliculas() {
-        // String listaPeliculasParaCSV = gestorPeliculas.obtenerListaPeliculasParaCSV();
-
+    public void generarReportePeliculas() throws ReporteTextoException, ReportePlanillaException {
         gestorPeliculas.generarReporteTexto();
         gestorPeliculas.generarReportePlanilla();
     }
 
-//    private void generarReporteTexto(String listado) {
-//        String nombreArchivo = "reportePeliculas.txt";
-//        try (PrintWriter writer = new PrintWriter(new File(nombreArchivo))) {
-//            writer.println(listado);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private void generarReportePlanilla(String listado) {
-//        try (XSSFWorkbook workbook = new XSSFWorkbook()) {
-//            Sheet planilla = workbook.createSheet("Películas");
-//
-//            String[] arrayPeliculas = listado.split("\n");
-//            for (int i = 0; i < arrayPeliculas.length; i++) {
-//                Row fila = planilla.createRow(i);
-//                String[] datos = arrayPeliculas[i].split(",");
-//
-//                for (int j = 0; j < datos.length; j++) {
-//                    Cell celda = fila.createCell(j);
-//                    celda.setCellValue(datos[j]);
-//                }
-//            }
-//
-//            String nombreArchivo = "planillaPeliculas.xlsx";
-//            try (FileOutputStream archivoSalida = new FileOutputStream(nombreArchivo)) {
-//                workbook.write(archivoSalida);
-//            }
-//
-//            } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    public void insertarDatos() {
-        try {
-            gestorBaseDatos.eliminarDatos();
-            gestorBaseDatos.insertarGeneros(gestorPeliculas.obtenerListaGeneros());
-            gestorBaseDatos.insertarPeliculas(gestorPeliculas.obtenerListaPeliculas());
-            gestorBaseDatos.insertarClientes(gestorClientes.obtenerListaClientes());
-            gestorBaseDatos.insertarRentas(gestorRentas.obtenerListaRentas());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void insertarDatos() throws SQLException {
+        gestorBaseDatos.eliminarDatos();
+        gestorBaseDatos.insertarGeneros(gestorPeliculas.obtenerListaGeneros());
+        gestorBaseDatos.insertarPeliculas(gestorPeliculas.obtenerListaPeliculas());
+        gestorBaseDatos.insertarClientes(gestorClientes.obtenerListaClientes());
+        gestorBaseDatos.insertarRentas(gestorRentas.obtenerListaRentas());
     }
 
-    public void cargarDatos() {
-        try {
+    public void cargarDatos() throws SQLException {
             gestorBaseDatos.cargarDatos(gestorPeliculas, gestorClientes, gestorRentas);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     // Getter y setters

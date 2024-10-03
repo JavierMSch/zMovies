@@ -12,7 +12,13 @@ public class InterfazUsuario {
     }
 
     public void start() {
-        videoClub.start();
+        try {
+            videoClub.start();
+        } catch (Exception e) {
+            System.out.println("Error al iniciar el sistema");
+            e.printStackTrace();
+            return;
+        }
         menuPrincipal();
     }
 
@@ -39,7 +45,7 @@ public class InterfazUsuario {
                     menuBasesDatos();
                     break;
                 case 3:
-                    videoClub.insertarDatos();
+                    //videoClub.insertarDatos();
                     System.out.println("Hasta luego");
                     return;
                 default:
@@ -537,7 +543,7 @@ public class InterfazUsuario {
     private void generarReportePeliculas() {
         System.out.println("Se generará un archivo txt y un xlsx con los datos de las películas del sistema.");
         System.out.println("Si no hay películas en el sistema, los archivos no tendrán datos.");
-        videoClub.generarReportePeliculas();
+        //videoClub.generarReportePeliculas();
         System.out.println("Archivos generados.");
     }
 
