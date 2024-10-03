@@ -1,20 +1,20 @@
 package org.example.zmovies;
-/*
-import java.util.Scanner;
-import org.example.zmovies.Modelos.*;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        VideoClub videoClub = new VideoClub();
-        InterfazUsuario ui = new InterfazUsuario(scanner, videoClub);
+//import java.util.Scanner;
+//import org.example.zmovies.Modelos.*;
+//
+//public class Main {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        VideoClub videoClub = new VideoClub();
+//        InterfazUsuario ui = new InterfazUsuario(scanner, videoClub);
+//
+//        ui.start();
+//
+//        scanner.close();
+//    }
+//}
 
-        ui.start();
-
-        scanner.close();
-    }
-}
-*/
 
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -30,7 +30,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         VideoClub videoClub = new VideoClub();
         videoClub.start();
-        for (String name : videoClub.obtenerListaClientes()) {
+        for (String name : videoClub.obtenerNombresClientes()) {
             System.out.println(name);
         }
         SceneManager.setVideoClub(videoClub);

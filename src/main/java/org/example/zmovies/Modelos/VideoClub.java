@@ -132,12 +132,8 @@ public class VideoClub {
         return gestorClientes.obtenerDetallesCliente(rut);
     }
 
-    public List<String> obtenerListaClientes() {
-        List<String> listaClientes = new ArrayList<>();
-        for (Cliente cliente : gestorClientes.obtenerListaClientes()) {
-            listaClientes.add(cliente.getNombreApellidos());
-        }
-        return listaClientes;
+    public List<String> obtenerNombresClientes() {
+        return gestorClientes.obtenerNombresClientes();
     }
 
     public String detallesPelicula(String titulo) {
@@ -179,10 +175,10 @@ public class VideoClub {
 
     public void insertarDatos() throws SQLException {
         gestorBaseDatos.eliminarDatos();
-        gestorBaseDatos.insertarGeneros(gestorPeliculas.obtenerListaGeneros());
-        gestorBaseDatos.insertarPeliculas(gestorPeliculas.obtenerListaPeliculas());
-        gestorBaseDatos.insertarClientes(gestorClientes.obtenerListaClientes());
-        gestorBaseDatos.insertarRentas(gestorRentas.obtenerListaRentas());
+        gestorBaseDatos.insertarGeneros(gestorPeliculas.obtenerListaStringGeneros());
+        gestorBaseDatos.insertarPeliculas(gestorPeliculas.obtenerListaStringPeliculas());
+        gestorBaseDatos.insertarClientes(gestorClientes.obtenerListaStringClientes());
+        gestorBaseDatos.insertarRentas(gestorRentas.obtenerListaStringRentas());
     }
 
     public void cargarDatos() throws SQLException {

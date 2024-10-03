@@ -65,13 +65,13 @@ public class GestorBaseDatos {
         cursor.execute(sqlRentas);
     }
 
-    public boolean insertarGeneros(List<Genero> generos) throws SQLException {
+    public boolean insertarGeneros(List<String> generos) throws SQLException {
         String sql = "INSERT INTO genero (nombre) VALUES (?)";
 
         Connection conn = getConnection();
         PreparedStatement cursor = conn.prepareStatement(sql);
-        for (Genero genero : generos) {
-            cursor.setString(1, genero.getNombre());
+        for (String genero : generos) {
+            cursor.setString(1, genero);
             cursor.addBatch();
         }
         cursor.executeBatch();
@@ -79,16 +79,17 @@ public class GestorBaseDatos {
         return true;
     }
 
-    public boolean insertarPeliculas(List<Pelicula> peliculas) throws SQLException {
+    public boolean insertarPeliculas(List<String> peliculas) throws SQLException {
         String sql = "INSERT INTO pelicula (titulo, nombre_genero, precio_semanal, activa) VALUES (?, ?, ?, ?)";
 
         Connection conn = getConnection();
         PreparedStatement cursor = conn.prepareStatement(sql);
-        for (Pelicula pelicula : peliculas) {
-            cursor.setString(1, pelicula.getTitulo());
-            cursor.setString(2, pelicula.getGenero());
-            cursor.setInt(3, pelicula.getPrecioSemanal());
-            cursor.setInt(4, pelicula.isActiva() ? 1 : 0);
+        for (String pelicula : peliculas) {
+            String[] datos = pelicula.split(",");
+            cursor.setString(1, datos[0]);
+            cursor.setString(2, datos[1]);
+            cursor.setInt(3, Integer.parseInt(datos[2]));
+            cursor.setInt(4, Integer.parseInt(datos[3]));
             cursor.addBatch();
         }
         cursor.executeBatch();
@@ -96,16 +97,17 @@ public class GestorBaseDatos {
         return true;
     }
 
-    public boolean insertarClientes(List<Cliente> clientes) throws SQLException {
+    public boolean insertarClientes(List<String> clientes) throws SQLException {
         String sql = "INSERT INTO cliente (rut, nombre, correo, telefono) VALUES (?, ?, ?, ?)";
 
         Connection conn = getConnection();
         PreparedStatement cursor = conn.prepareStatement(sql);
-        for (Cliente cliente : clientes) {
-            cursor.setString(1, cliente.getRut());
-            cursor.setString(2, cliente.getNombreApellidos());
-            cursor.setString(3, cliente.getCorreo());
-            cursor.setString(4, cliente.getTelefono());
+        for (String cliente : clientes) {
+            String[] datos = cliente.split(",");
+            cursor.setString(1, datos[0]);
+            cursor.setString(2, datos[1]);
+            cursor.setString(3, datos[2]);
+            cursor.setString(4, datos[3]);
             cursor.addBatch();
         }
         cursor.executeBatch();
@@ -113,20 +115,21 @@ public class GestorBaseDatos {
         return true;
     }
 
-    public boolean insertarRentas(List<Renta> rentas) throws SQLException {
+    public boolean insertarRentas(List<String> rentas) throws SQLException {
         String sql = "INSERT INTO renta (id, rut_cliente, titulo_pelicula, semanas, fecha_renta, fecha_devolucion, monto, devuelta) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = getConnection();
         PreparedStatement cursor = conn.prepareStatement(sql);
-        for (Renta renta : rentas) {
-            cursor.setInt(1, renta.getId());
-            cursor.setString(2, renta.getCliente().getRut());
-            cursor.setString(3, renta.getPelicula().getTitulo());
-            cursor.setInt(4, renta.getSemanasRentadas());
-            cursor.setString(5, renta.getFecha().toString());
-            cursor.setString(6, renta.getFechaDevolucion().toString());
-            cursor.setInt(7, renta.getMonto());
-            cursor.setInt(8, renta.isPeliculaDevuelta() ? 1 : 0);
+        for (String renta : rentas) {
+            String[] datos = renta.split(",");
+            cursor.setInt(1, Integer.parseInt(datos[0]));
+            cursor.setString(2, datos[1]);
+            cursor.setString(3, datos[2]);
+            cursor.setInt(4, Integer.parseInt(datos[3]));
+            cursor.setString(5, datos[4]);
+            cursor.setString(6, datos[5]);
+            cursor.setInt(7, Integer.parseInt(datos[6]));
+            cursor.setInt(8, Integer.parseInt(datos[7]));
             cursor.addBatch();
         }
         cursor.executeBatch();
