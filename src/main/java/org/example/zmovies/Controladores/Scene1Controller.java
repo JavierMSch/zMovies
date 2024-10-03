@@ -267,7 +267,7 @@ public class Scene1Controller {
                 String[] rentDetails;
                 for (String pendiente : pendientesList) {
                     rentDetails = pendiente.split(" - ");
-                    String formattedItem = String.format("%-10s %-85s %s", rentDetails[0], rentDetails[2], rentDetails[5]);
+                    String formattedItem = String.format("%10s %-80s\t%s", rentDetails[0], rentDetails[2], rentDetails[5]);
                     listView.getItems().add(formattedItem);
                 }
             }
@@ -293,7 +293,7 @@ public class Scene1Controller {
                 String[] rentDetails;
                 for (String pendiente : pendientesList) {
                     rentDetails = pendiente.split(" - ");
-                    String formattedItem = String.format("%-10s %5s %-21s %5s %s", rentDetails[0], "", rentDetails[1], "", rentDetails[2]);
+                    String formattedItem = String.format("%10s %-24s\t%s", rentDetails[0], rentDetails[1], rentDetails[2]);
                     listView.getItems().add(formattedItem);
                 }
             }
@@ -542,9 +542,9 @@ public class Scene1Controller {
                 alert.setContentText("Debe seleccionar una renta para ver sus detalles.");
                 alert.showAndWait();
             } else {
-                int id = Integer.parseInt(selectedItem.substring(4, 10).trim());
+                String selectedId = selectedItem.substring(0, 10).replaceAll("\\D", "").trim();
+                int id = Integer.parseInt(selectedId);
                 String[] items = videoClub.detallesRenta(id).split(" - ");
-
                 Label title = new Label("Detalles de renta " + items[0]);
                 Label rut = new Label(items[1]);
                 Label movie = new Label(items[2]);
