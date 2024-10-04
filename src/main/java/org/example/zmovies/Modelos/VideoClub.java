@@ -292,19 +292,6 @@ public class VideoClub {
     }
 
     /**
-     * Verifica si una película tiene rentas activas.
-     * @param titulo Título de la película.
-     * @return true si hay rentas activas, false en caso contrario.
-     */
-    public boolean peliculaTieneRentasActivas(String titulo) {
-        Pelicula pelicula = gestorPeliculas.obtenerPelicula(titulo);
-        if (pelicula != null) {
-            return gestorRentas.peliculaTieneRentasActivas(pelicula);
-        }
-        return false;
-    }
-
-    /**
      * Elimina una película del gestor de películas.
      * @param titulo Título de la película a eliminar.
      */
