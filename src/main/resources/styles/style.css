@@ -155,6 +155,7 @@ Button:hover {
     -fx-text-alignment: left;
     -fx-font-size: 20;
     -fx-text-fill: black;
+    -fx-padding: 30;
 }
 
 .grid-layout {
