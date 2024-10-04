@@ -14,10 +14,11 @@ import java.util.List;
  * Tiene métodos para administrar datos del videoclub.
  */
 public class VideoClub {
-    private GestorClientes gestorClientes;
-    private GestorPeliculas gestorPeliculas;
-    private GestorRentas gestorRentas;
-    private GestorBaseDatos gestorBaseDatos;
+    private final GestorClientes gestorClientes;
+    private final GestorPeliculas gestorPeliculas;
+    private final GestorRentas gestorRentas;
+    private final GestorBaseDatos gestorBaseDatos;
+    // No se deben cambiar los gestores, por lo que no hay setters o getters para ellos.
 
     /**
      * Constructor de la clase VideoClub.
@@ -377,70 +378,5 @@ public class VideoClub {
      */
     public void cargarDatos() throws SQLException {
             gestorBaseDatos.cargarDatos(gestorPeliculas, gestorClientes, gestorRentas);
-    }
-
-    // Getters y setters
-    /**
-     * Obtiene el gestor de clientes.
-     * @return Gestor de clientes.
-     */
-    public GestorClientes getGestorClientes() {
-        return gestorClientes;
-    }
-
-    /**
-     * Establece el gestor de clientes.
-     * @param gestorClientes Gestor de clientes.
-     */
-    public void setGestorClientes(GestorClientes gestorClientes) {
-        this.gestorClientes = gestorClientes;
-    }
-
-    /**
-     * Obtiene el gestor de películas.
-     * @return Gestor de películas.
-     */
-    public GestorPeliculas getGestorPeliculas() {
-        return gestorPeliculas;
-    }
-
-    /**
-     * Establece el gestor de películas.
-     * @param gestorPeliculas Gestor de películas.
-     */
-    public void setGestorPeliculas(GestorPeliculas gestorPeliculas) {
-        this.gestorPeliculas = gestorPeliculas;
-    }
-
-    /**
-     * Obtiene el gestor de rentas.
-     * @return Gestor de rentas.
-     */
-    public GestorRentas getGestorRentas() {
-        return gestorRentas;
-    }
-
-    /**
-     * Establece el gestor de rentas.
-     * @param gestorRentas Gestor de rentas.
-     */
-    public void setGestorRentas(GestorRentas gestorRentas) {
-        this.gestorRentas = gestorRentas;
-    }
-
-    /**
-     * Obtiene el gestor de base de datos.
-     * @return Gestor de base de datos.
-     */
-    public GestorBaseDatos getGestorBaseDatos() {
-        return gestorBaseDatos;
-    }
-
-    /**
-     * Establece el gestor de base de datos.
-     * @param gestorBaseDatos Gestor de base de datos.
-     */
-    public void setGestorBaseDatos(GestorBaseDatos gestorBaseDatos) {
-        this.gestorBaseDatos = gestorBaseDatos;
     }
 }

@@ -364,16 +364,16 @@ public class Scene1Controller {
         String rut = formatoRut(formField1.getText());
         String recomendacion = videoClub.recomendarPelicula(rut);
         boolean existeCliente = videoClub.existeCliente(rut);
+        Alert alert;
+        mostrarDefault();
         if (existeCliente && recomendacion != null) {
-            mostrarDefault();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Recomendación");
             alert.setHeaderText(null);
             alert.setContentText("Se recomienda la película '" + recomendacion + "' de acuerdo a las rentas previas del cliente.");
             alert.showAndWait();
         } else {
-            mostrarDefault();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Operación fallida");
             alert.setHeaderText(null);
             alert.setContentText("No se pudo recomendar una película para el cliente.");
@@ -388,40 +388,49 @@ public class Scene1Controller {
      */
     private void handleNoDevueltas() {
         String pendientes = videoClub.obtenerListaRentasPendientes();
-        mostrarNoDevueltas(null, "Películas no devueltas:", pendientes);
-        
-        handleDoubleClicked(listView, okButton);
-        
-        okButton.setOnAction(e -> {
-            // Obtiene el ítem seleccionado de la lista
-            String selectedItem = listView.getSelectionModel().getSelectedItem();
-            if (selectedItem == null) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Operación fallida");
-                alert.setHeaderText(null);
-                alert.setContentText("Debe seleccionar una renta para ver sus detalles.");
-                alert.showAndWait();
-            } else {
-                // Obtiene el ID de la renta seleccionada
-                String selectedId = selectedItem.substring(0, 10).replaceAll("\\D", "").trim();
-                int id = Integer.parseInt(selectedId);
-                // Obtiene los detalles de la renta seleccionada
-                String[] items = videoClub.detallesRenta(id).split(" - ");
-                Label title = new Label("Detalles de renta " + items[0]);
-                Label rut = new Label(items[1]);
-                Label movie = new Label(items[2]);
-                Label cost = new Label(items[3]);
-                Label date = new Label(items[4]);
-                Label date2 = new Label(items[5]);
+        if (pendientes == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Operación fallida");
+            alert.setHeaderText(null);
+            alert.setContentText("No hay películas no devueltas en el sistema.");
+            alert.showAndWait();
+            mostrarDefault();
+        } else {
+            mostrarNoDevueltas(null, "Películas no devueltas:", pendientes);
 
-                Label[] labels = {title, rut, movie, cost, date, date2};
+            handleDoubleClicked(listView, okButton);
 
-                // Actualiza el panel con los detalles de la renta seleccionada
-                mostrarDetalleRenta(labels);
-                
-                okButton.setOnAction(e1 -> handleNoDevueltas());
-            }
-        });
+            okButton.setOnAction(e -> {
+                // Obtiene el ítem seleccionado de la lista
+                String selectedItem = listView.getSelectionModel().getSelectedItem();
+                if (selectedItem == null) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Operación fallida");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Debe seleccionar una renta para ver sus detalles.");
+                    alert.showAndWait();
+                } else {
+                    // Obtiene el ID de la renta seleccionada
+                    String selectedId = selectedItem.substring(0, 10).replaceAll("\\D", "").trim();
+                    int id = Integer.parseInt(selectedId);
+                    // Obtiene los detalles de la renta seleccionada
+                    String[] items = videoClub.detallesRenta(id).split(" - ");
+                    Label title = new Label("Detalles de renta " + items[0]);
+                    Label rut = new Label(items[1]);
+                    Label movie = new Label(items[2]);
+                    Label cost = new Label(items[3]);
+                    Label date = new Label(items[4]);
+                    Label date2 = new Label(items[5]);
+
+                    Label[] labels = {title, rut, movie, cost, date, date2};
+
+                    // Actualiza el panel con los detalles de la renta seleccionada
+                    mostrarDetalleRenta(labels);
+
+                    okButton.setOnAction(e1 -> handleNoDevueltas());
+                }
+            });
+        }
     }
 
     /**
@@ -434,7 +443,7 @@ public class Scene1Controller {
         Label titleLabel = new Label("Título: N/A");
         Label costLabel = new Label("Costo Semanal: N/A");
         Label[] labels = {genreLabel, titleLabel, costLabel};
-        mostrarMasRentada("Película más rentada para género: ", labels);
+        mostrarMasRentada(labels);
 
         handleDoubleClicked(listView, okButton);
 
@@ -707,15 +716,14 @@ public class Scene1Controller {
      * Muestra la película más rentada por género en el panel de contenido.
      * Limpia el contenido actual del panel y lo actualiza con la lista de géneros y los detalles de la película más rentada.
      *
-     * @param title Título a mostrar en el panel
      * @param detailLabels Arreglo de etiquetas que contienen los detalles de la película más rentada
      */
-    private void mostrarMasRentada(String title, Label[] detailLabels) {
+    private void mostrarMasRentada(Label[] detailLabels) {
         // Limpia el contenido actual del panel
         contentPane.getChildren().clear();
 
         // Configura el título del panel
-        titleLabel = new Label(title);
+        titleLabel = new Label("Película más rentada para género: ");
         titleLabel.getStyleClass().add("opt-title");
         titleLabel.paddingProperty().setValue(new javafx.geometry.Insets(20, 0, 20, 0));
 

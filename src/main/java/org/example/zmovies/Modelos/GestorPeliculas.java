@@ -18,8 +18,8 @@ import java.util.ArrayList;
  * Permite agregar, editar, eliminar y generar reportes.
  */
 public class GestorPeliculas {
-    private List<Genero> generosPeliculas; // Lista de géneros de películas.
-    private List<Pelicula> listaPeliculas; // Lista de películas.
+    private final List<Genero> generosPeliculas; // Lista de géneros de películas.
+    private final List<Pelicula> listaPeliculas; // Lista de películas.
 
     /**
      * Constructor de la clase GestorPeliculas.
