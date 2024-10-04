@@ -139,43 +139,6 @@ public class GestorRentas {
         return false;
     }
 
-    public String obtenerListaMasRentadaGenero() {
-        Map<Pelicula, Integer> contadorPeliculas = new HashMap<>();
-        Map<String, Pelicula> mapaGeneroPelicula = new HashMap<>();
-        for (Renta renta: listaRentas) {
-            Pelicula pelicula = renta.getPelicula();
-            String genero = pelicula.getGenero();
-
-            contadorPeliculas.put(pelicula, contadorPeliculas.getOrDefault(pelicula, 0) + 1);
-
-            if (!mapaGeneroPelicula.containsKey(genero) ||
-            contadorPeliculas.get(pelicula) > contadorPeliculas.get(mapaGeneroPelicula.get(genero))) {
-                mapaGeneroPelicula.put(genero, pelicula);
-            }
-        }
-
-        if (mapaGeneroPelicula.isEmpty()) {
-            return null;
-        }
-
-        StringBuilder cadena = new StringBuilder();
-        for (String genero: mapaGeneroPelicula.keySet()) {
-            Pelicula pelicula = mapaGeneroPelicula.get(genero);
-            cadena.append(genero).append(": ")
-                    .append(pelicula.getTitulo()).append(", ")
-                    .append(contadorPeliculas.get(pelicula));
-            if (contadorPeliculas.get(pelicula) == 1) {
-                cadena.append(" vez rentada.\n");
-            } else {
-                cadena.append(" veces rentada.\n");
-            }
-        }
-        if (cadena.isEmpty()) {
-            return null;
-        }
-        return cadena.toString();
-    }
-
     /**
      * Actualiza el ID siguiente para la próxima renta en base a las rentas en el sistema.
      */

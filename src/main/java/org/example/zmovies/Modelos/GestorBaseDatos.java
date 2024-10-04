@@ -298,8 +298,25 @@ public class GestorBaseDatos {
             // Agrega la renta al historial del cliente
             gestorClientes.agregarRenta(rut, renta);
 
-            // Actualiza el id siguiente del gestor de rentas
+            // Actualiza el ID siguiente del gestor de rentas
             gestorRentas.actualizarIdSiguiente();
         }
+    }
+
+    // Getters y Setters
+    /**
+     * Devuelve la URL de la base de datos.
+     * @return La URL de la base de datos.
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Establece la URL de la base de datos.
+     * @param url La URL de la base de datos.
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

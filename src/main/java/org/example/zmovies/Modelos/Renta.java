@@ -30,7 +30,7 @@ public class Renta {
         this.semanasRentadas = semanasRentadas;
         this.fecha = LocalDate.now();
         this.fechaDevolucion = fecha.plusDays((long) semanasRentadas * 7);
-        this.monto = pelicula.getPrecioSemanal() * semanasRentadas;
+        this.monto = pelicula.calcularPrecio(semanasRentadas);
         peliculaDevuelta = false;
     }
 

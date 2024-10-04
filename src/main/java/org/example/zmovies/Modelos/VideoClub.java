@@ -46,35 +46,6 @@ public class VideoClub {
     public void start() throws SQLException {
         gestorBaseDatos.inicializarTablas();
         cargarDatos();
-        //datosTest();
-    }
-
-    private void datosTest() {
-        agregarGenero("Sin Genero");
-        agregarGenero("Drama");
-        agregarGenero("Romance");
-
-        agregarPelicula("El Padrino", "Drama", 10);
-        agregarPelicula("El Padrino II", "Drama", 10);
-        agregarPelicula("Titanic", "Romance", 12);
-
-        agregarCliente("11.111.111-1", "Juan Pérez", "juan@gmail.com", "12345678");
-        agregarCliente("22.222.222-2", "María González", "maria@gmail.com", "87654321");
-        agregarCliente("33.333.333-3", "Pedro Rodríguez", "pedro@gmail.com", "12348765");
-
-        rentarPelicula("11.111.111-1", "El Padrino", 2);
-        rentarPelicula("22.222.222-2", "Titanic", 1);
-        rentarPelicula("33.333.333-3", "El Padrino II", 3);
-    }
-
-    /**
-     * Verifica si un género existe.
-     *
-     * @param genero Nombre del género a verificar.
-     * @return true si el género existe, false en caso contrario.
-     */
-    public boolean existeGenero(String genero) {
-        return gestorPeliculas.existeGenero(genero);
     }
 
     /**
@@ -169,17 +140,6 @@ public class VideoClub {
      */
     public String obtenerGeneroPelicula(String titulo) {
         return gestorPeliculas.obtenerGeneroPelicula(titulo);
-    }
-
-    /**
-     * Calcula el precio de una película por un número de semanas.
-     *
-     * @param titulo Título de la película.
-     * @param semanas Número de semanas.
-     * @return Precio total.
-     */
-    public int precioPelicula(String titulo, int semanas) {
-        return gestorPeliculas.precioPelicula(titulo, semanas);
     }
 
     /**
@@ -386,10 +346,6 @@ public class VideoClub {
             return null;
         }
         return masRentada.getTitulo() + " - $" + masRentada.getPrecioSemanal();
-    }
-
-    public String obtenerListaMasRentadaGenero() {
-        return gestorRentas.obtenerListaMasRentadaGenero();
     }
 
     /**

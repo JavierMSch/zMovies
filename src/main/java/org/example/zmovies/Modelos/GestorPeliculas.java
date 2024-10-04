@@ -165,6 +165,7 @@ public class GestorPeliculas {
 
     /**
      * Agrega una película a la lista de películas.
+     * Si la película ya existe, se activa y se actualizan los datos.
      * Si el género no existe, se crea.
      *
      * @param titulo El título de la película.
@@ -173,19 +174,24 @@ public class GestorPeliculas {
      * @return true si se agregó, false si no.
      */
     public boolean agregarPelicula(String titulo, String nombreGenero, int precioSemanal) {
-        // Si el género no existe, se crea.
-        if (!existeGenero(nombreGenero)) {
-            agregarGenero(nombreGenero);
+        Pelicula pelicula = obtenerPeliculaActivaOInactiva(titulo);
+        if (pelicula != null) {
+            pelicula.setActiva(true);
+            pelicula.setGenero(nombreGenero);
+            pelicula.setPrecioSemanal(precioSemanal);
+        } else {
+            pelicula = new Pelicula(titulo.toUpperCase(), nombreGenero.toUpperCase(), precioSemanal);
+            listaPeliculas.add(pelicula);
         }
 
+        // Se agrega el género (verificación de existencia dentro del metodo)
+        agregarGenero(nombreGenero);
         Genero genero = obtenerGenero(nombreGenero);
         if (genero == null) {
             return false;
         }
 
-        Pelicula pelicula = new Pelicula(titulo.toUpperCase(), nombreGenero.toUpperCase(), precioSemanal);
         genero.agregarPelicula(pelicula);
-        listaPeliculas.add(pelicula);
         return true;
     }
 
@@ -229,17 +235,6 @@ public class GestorPeliculas {
     }
 
     /**
-     * Calcula el precio de una película según el número de semanas a rentar.
-     *
-     * @param titulo   El título de la película.
-     * @param semanas  La cantidad de semanas.
-     * @return El precio total.
-     */
-    public int precioPelicula(String titulo, int semanas) {
-        return obtenerPelicula(titulo).calcularPrecio(semanas);
-    }
-
-    /**
      * Obtiene el precio semanal de una película.
      *
      * @param titulo El título de la película.
@@ -274,7 +269,7 @@ public class GestorPeliculas {
      * @return true si se editó; false si no.
      */
     public boolean editarPelicula(String titulo, String nuevoTitulo, String nuevoGenero, int nuevoPrecio) {
-        Pelicula pelicula = obtenerPelicula(titulo);
+        Pelicula pelicula = obtenerPeliculaActivaOInactiva(titulo);
 
         // Si la película no existe, retorna false.
         if (pelicula == null) {
