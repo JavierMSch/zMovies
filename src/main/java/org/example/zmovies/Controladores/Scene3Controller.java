@@ -41,6 +41,7 @@ public class Scene3Controller {
     private Label titleLabel;
     private Label titleLabel2;
     private Label textLabel;
+    private Label formLabel1;
     private TextField formField1;
     private HBox confirmLayout;
     private VBox formLayout;
@@ -92,7 +93,7 @@ public class Scene3Controller {
      * @param actionEvent El evento de acción.
      */
     @FXML
-    private void onEliminarPelicula(ActionEvent actionEvent) {
+    private void onEliminarPeliculaClick(ActionEvent actionEvent) {
         eliminarPelicula();
 
     }

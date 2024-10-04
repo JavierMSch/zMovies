@@ -25,6 +25,7 @@ public class Scene4Controller {
     @FXML
     private Label titleLabel;
     private Button verDetalleClienteButton;
+    private Label formLabel1;
     private TextField formField1;
     private HBox confirmLayout;
     private VBox formLayout;
