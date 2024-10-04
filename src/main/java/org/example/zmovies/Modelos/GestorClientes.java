@@ -113,21 +113,6 @@ public class GestorClientes {
     }
 
     /**
-     * Obtiene una lista de Strings con los nombres de todos los clientes.
-     *
-     * @return Una lista de Strings con los nombres de cada cliente.
-     */
-    public List<String> obtenerNombresClientes() {
-        List<String> listaNombresClientes = new ArrayList<>();
-
-        // Se recorren los clientes, que son los valores del mapa
-        for (Cliente cliente : mapaClientes.values()) {
-            listaNombresClientes.add(cliente.getNombreApellidos());
-        }
-        return listaNombresClientes;
-    }
-
-    /**
      * Obtiene una lista de Strings con los ruts y nombres de todos los clientes.
      *
      * @return Una lista de Strings con los ruts y nombres de cada cliente.
