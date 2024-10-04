@@ -25,28 +25,47 @@ public class Scene4Controller {
     @FXML
     private Label titleLabel;
     private Button verDetalleClienteButton;
-    private Label formLabel1;
-    private Label formLabel2;
     private TextField formField1;
-    private TextField formField2;
     private HBox confirmLayout;
     private VBox formLayout;
-    private boolean isGeneroMode = false;
 
     public void setVideoClub(VideoClub videoClub) {
         this.videoClub = videoClub;
     }
 
+    /**
+     * Llama a la función para agregar un cliente en respuesta a un clic en el botón.
+     * @param event
+     */
     @FXML
     protected void onAgregarClienteClick(ActionEvent event) {
         agregarCliente("Agregar Cliente", "Rut del cliente");
     }
 
+    /**
+     * Llama a la función para mostrar la lista de clientes en respuesta a un clic en el botón.
+     * @param event
+     */
     @FXML
     protected void onVerClienteClick(ActionEvent event) {
         verClientes();
     }
 
+    /**
+     * Maneja el evento de clic en el botón de volver.
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    protected void onVolverClick(ActionEvent event) throws IOException {
+        SceneManager.switchScene("/fxml/scene2-view.fxml");
+    }
+
+    /**
+     * Muestra un formulario para agregar un cliente.
+     * @param title
+     * @param promptTxt
+     */
     private void agregarCliente(String title, String promptTxt) {
         contentPane.getChildren().clear();
 
@@ -169,6 +188,10 @@ public class Scene4Controller {
 
     }
 
+    /**
+     * Muestra una lista de clientes en un ListView.
+     * Permite al usuario seleccionar un cliente y ver sus detalles.
+     */
     private void verClientes(){
         contentPane.getChildren().clear();
         verDetalleClienteButton = new Button("Ver Detalle Cliente");
@@ -178,6 +201,7 @@ public class Scene4Controller {
 
         ListView<String> listView = new ListView<>(peliculas);
         listView.getStyleClass().add("movie-list");
+
         VBox vbox = new VBox(10);
         vbox.getStyleClass().add("movie-list-layout");
         vbox.setAlignment(Pos.CENTER);
@@ -185,8 +209,10 @@ public class Scene4Controller {
         vbox.getChildren().add(verDetalleClienteButton);
         vbox.setPrefWidth(contentPane.getPrefWidth());
         vbox.setPrefHeight(contentPane.getPrefHeight());
-        verDetalleClienteButton.getStyleClass().add("movie-list-button");
+
         handleDoubleClicked(listView, verDetalleClienteButton);
+
+        verDetalleClienteButton.getStyleClass().add("movie-list-button");
         verDetalleClienteButton.setOnAction(e -> {
             if (listView.getSelectionModel().getSelectedItem() == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -207,9 +233,15 @@ public class Scene4Controller {
                 contentPane.getChildren().add(vbox);
             }
         });
+
         contentPane.getChildren().add(vbox);
     }
 
+    /**
+     * Muestra los detalles de un cliente en un StackPane.
+     * @param rut
+     * @return
+     */
     private StackPane verDetallesCLiente(String rut){
         contentPane.getChildren().clear();
         String detalles = videoClub.detallesCliente(rut);
@@ -231,25 +263,11 @@ public class Scene4Controller {
         return stackPane;
     }
 
-    private boolean isFieldEmpty(TextField textField) {
-        return textField.getText() == null || textField.getText().trim().isEmpty();
-    }
-
-    private void defaultPane() {
-        contentPane.getChildren().clear();
-
-        Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResourceAsStream("/images/icon.png")));
-        ImageView iconItem = new ImageView(icon);
-        iconItem.setFitWidth(75);
-        iconItem.setFitHeight(75);
-        iconItem.setPreserveRatio(true);
-        double centerX = (contentPane.getWidth() - iconItem.getFitWidth()) / 2;
-        double centerY = (contentPane.getHeight() - iconItem.getFitHeight()) / 2;
-        iconItem.setLayoutX(centerX);
-        iconItem.setLayoutY(centerY);
-        contentPane.getChildren().add(iconItem);
-    }
-
+    /**
+     * Maneja el evento de doble clic en un ListView.
+     * @param listView
+     * @param submitButton
+     */
     private void handleDoubleClicked(ListView<String> listView, Button submitButton) {
         listView.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
@@ -258,11 +276,28 @@ public class Scene4Controller {
         });
     }
 
-    @FXML
-    protected void onVolverClick(ActionEvent event) throws IOException {
-        SceneManager.switchScene("/fxml/scene2-view.fxml");
+    /**
+     * Maneja el evento de presionar la tecla Enter en un campo de texto.
+     * @param currentField
+     * @param nextControl
+     */
+    private void handleEnterKey(TextField currentField, Control nextControl) {
+        currentField.setOnKeyPressed(event -> {
+            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
+                if (nextControl instanceof TextField) {
+                    nextControl.requestFocus();
+                } else if (nextControl instanceof Button) {
+                    ((Button) nextControl).fire();
+                }
+            }
+        });
     }
 
+    /**
+     * Formatea un RUT en el formato XXX.XXX.XXX-X.
+     * @param input
+     * @return
+     */
     private String formatoRut(String input) {
         input = input.replaceAll("\\D", "");
 
@@ -279,15 +314,30 @@ public class Scene4Controller {
         return part1 + "." + part2 + "." + part3 + "-" + part4;
     }
 
-    private void handleEnterKey(TextField currentField, Control nextControl) {
-        currentField.setOnKeyPressed(event -> {
-            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
-                if (nextControl instanceof TextField) {
-                    nextControl.requestFocus();
-                } else if (nextControl instanceof Button) {
-                    ((Button) nextControl).fire();
-                }
-            }
-        });
+    /**
+     * Verifica si un campo de texto está vacío.
+     * @param textField
+     * @return
+     */
+    private boolean isFieldEmpty(TextField textField) {
+        return textField.getText() == null || textField.getText().trim().isEmpty();
+    }
+
+    /**
+     * Restaura la vista por defecto.
+     */
+    private void defaultPane() {
+        contentPane.getChildren().clear();
+
+        Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResourceAsStream("/images/icon.png")));
+        ImageView iconItem = new ImageView(icon);
+        iconItem.setFitWidth(75);
+        iconItem.setFitHeight(75);
+        iconItem.setPreserveRatio(true);
+        double centerX = (contentPane.getWidth() - iconItem.getFitWidth()) / 2;
+        double centerY = (contentPane.getHeight() - iconItem.getFitHeight()) / 2;
+        iconItem.setLayoutX(centerX);
+        iconItem.setLayoutY(centerY);
+        contentPane.getChildren().add(iconItem);
     }
 }

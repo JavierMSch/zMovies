@@ -50,8 +50,8 @@
                         <Font name="Verdana" size="13.0" />
                      </font></Button>
                   <Button fx:id="btnVerPeliculas" mnemonicParsing="false" onAction="#onVerPeliculasClick" prefHeight="52.0" prefWidth="320.0" styleClass="btn-list" text="Ver Peliculas" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="btnEliminarPelicula" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEliminarPelicula" prefHeight="53.0" prefWidth="327.0" styleClass="btn-list" text="Eliminar Película" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <Button fx:id="btnEditarPelicula" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditarPelicula" prefHeight="50.0" prefWidth="323.0" styleClass="btn-list" text="Editar Película" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnEliminarPelicula" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEliminarPeliculaClick" prefHeight="53.0" prefWidth="327.0" styleClass="btn-list" text="Eliminar Película" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnEditarPelicula" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditarPeliculaClick" prefHeight="50.0" prefWidth="323.0" styleClass="btn-list" text="Editar Película" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             <Button alignment="CENTER" contentDisplay="CENTER" layoutX="39.0" layoutY="629.0" mnemonicParsing="false" onAction="#onVolverClick" prefHeight="54.0" prefWidth="150.0" styleClass="btn-list" text="Volver" textAlignment="CENTER" wrapText="true" />

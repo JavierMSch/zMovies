@@ -1,21 +1,37 @@
 package org.example.zmovies.Modelos;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Clase que se encarga de la gestión de la base de datos.
+ * Se encarga de crear las tablas, insertar datos, eliminar datos y cargar datos.
+ */
 public class GestorBaseDatos {
-    private String url;
+    private String url; // URL de la base de datos
 
+    /**
+     * Constructor de la clase.
+     * @param url URL de la base de datos.
+     */
     public GestorBaseDatos(String url) {
         this.url = url;
     }
 
+    /**
+     * Establece una conexión a la base de datos.
+     * @return La conexión a la base de datos.
+     * @throws SQLException Si ocurre un error al conectar.
+     */
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url);
     }
 
+    /**
+     * Inicializa las tablas en la base de datos.
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
     public void inicializarTablas() throws SQLException {
         String sqlClientes = """
                 CREATE TABLE IF NOT EXISTS cliente (
@@ -59,27 +75,39 @@ public class GestorBaseDatos {
 
         Connection conn = getConnection();
         Statement cursor = conn.createStatement();
+
+        // Se ejecutan las instrucciones SQL
         cursor.execute(sqlClientes);
         cursor.execute(sqlGeneros);
         cursor.execute(sqlPeliculas);
         cursor.execute(sqlRentas);
     }
 
-    public boolean insertarGeneros(List<String> generos) throws SQLException {
+    /**
+     * Inserta los géneros en la base de datos.
+     * @param generos Lista de géneros a insertar.
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
+    public void insertarGeneros(List<String> generos) throws SQLException {
         String sql = "INSERT INTO genero (nombre) VALUES (?)";
 
         Connection conn = getConnection();
         PreparedStatement cursor = conn.prepareStatement(sql);
         for (String genero : generos) {
             cursor.setString(1, genero);
+            // Se añade la instrucción a la lista de instrucciones
             cursor.addBatch();
         }
+        // Se ejecutan las instrucciones
         cursor.executeBatch();
-
-        return true;
     }
 
-    public boolean insertarPeliculas(List<String> peliculas) throws SQLException {
+    /**
+     * Inserta las películas en la base de datos.
+     * @param peliculas Lista de películas a insertar con sus datos en formato csv (titulo,nombre_genero,precio_semanal,activa).
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
+    public void insertarPeliculas(List<String> peliculas) throws SQLException {
         String sql = "INSERT INTO pelicula (titulo, nombre_genero, precio_semanal, activa) VALUES (?, ?, ?, ?)";
 
         Connection conn = getConnection();
@@ -90,14 +118,19 @@ public class GestorBaseDatos {
             cursor.setString(2, datos[1]);
             cursor.setInt(3, Integer.parseInt(datos[2]));
             cursor.setInt(4, Integer.parseInt(datos[3]));
+            // Se añade la instrucción a la lista de instrucciones
             cursor.addBatch();
         }
+        // Se ejecutan las instrucciones
         cursor.executeBatch();
-
-        return true;
     }
 
-    public boolean insertarClientes(List<String> clientes) throws SQLException {
+    /**
+     * Inserta los clientes en la base de datos.
+     * @param clientes Lista de clientes a insertar con sus datos en formato csv (rut,nombre,correo,telefono).
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
+    public void insertarClientes(List<String> clientes) throws SQLException {
         String sql = "INSERT INTO cliente (rut, nombre, correo, telefono) VALUES (?, ?, ?, ?)";
 
         Connection conn = getConnection();
@@ -108,14 +141,19 @@ public class GestorBaseDatos {
             cursor.setString(2, datos[1]);
             cursor.setString(3, datos[2]);
             cursor.setString(4, datos[3]);
+            // Se añade la instrucción a la lista de instrucciones
             cursor.addBatch();
         }
+        // Se ejecutan las instrucciones
         cursor.executeBatch();
-
-        return true;
     }
 
-    public boolean insertarRentas(List<String> rentas) throws SQLException {
+    /**
+     * Inserta las rentas en la base de datos.
+     * @param rentas Lista de rentas a insertar con sus datos en formato csv (id,rut_cliente,titulo_pelicula,semanas,fecha_renta,fecha_devolucion,monto,devuelta).
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
+    public void insertarRentas(List<String> rentas) throws SQLException {
         String sql = "INSERT INTO renta (id, rut_cliente, titulo_pelicula, semanas, fecha_renta, fecha_devolucion, monto, devuelta) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = getConnection();
@@ -130,14 +168,18 @@ public class GestorBaseDatos {
             cursor.setString(6, datos[5]);
             cursor.setInt(7, Integer.parseInt(datos[6]));
             cursor.setInt(8, Integer.parseInt(datos[7]));
+            // Se añade la instrucción a la lista de instrucciones
             cursor.addBatch();
         }
+        // Se ejecutan las instrucciones
         cursor.executeBatch();
-
-        return true;
     }
 
-    public boolean eliminarDatos() throws SQLException {
+    /**
+     * Elimina los datos de las tablas de la base de datos.
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
+    public void eliminarDatos() throws SQLException {
         String sqlClientes = "DELETE FROM cliente";
         String sqlGeneros = "DELETE FROM genero";
         String sqlPeliculas = "DELETE FROM pelicula";
@@ -149,17 +191,27 @@ public class GestorBaseDatos {
         cursor.execute(sqlGeneros);
         cursor.execute(sqlPeliculas);
         cursor.execute(sqlRentas);
-        return true;
     }
 
-    public boolean cargarDatos(GestorPeliculas gestorPeliculas, GestorClientes gestorClientes, GestorRentas gestorRentas) throws SQLException {
+    /**
+     * Carga los datos de las tablas de la base de datos en los gestores.
+     * @param gestorPeliculas Gestor de películas.
+     * @param gestorClientes Gestor de clientes.
+     * @param gestorRentas Gestor de rentas.
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
+    public void cargarDatos(GestorPeliculas gestorPeliculas, GestorClientes gestorClientes, GestorRentas gestorRentas) throws SQLException {
         cargarGeneros(gestorPeliculas);
         cargarPeliculas(gestorPeliculas);
         cargarClientes(gestorClientes);
         cargarRentas(gestorRentas, gestorPeliculas, gestorClientes);
-        return true;
     }
 
+    /**
+     * Carga los géneros de la base de datos en el gestor de películas.
+     * @param gestorPeliculas Gestor de películas.
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
     private void cargarGeneros(GestorPeliculas gestorPeliculas) throws SQLException {
         String sql = "SELECT * FROM genero";
 
@@ -171,6 +223,11 @@ public class GestorBaseDatos {
         }
     }
 
+    /**
+     * Carga las películas de la base de datos en el gestor de películas.
+     * @param gestorPeliculas Gestor de películas.
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
     private void cargarPeliculas(GestorPeliculas gestorPeliculas) throws SQLException {
         String sql = "SELECT * FROM pelicula";
 
@@ -187,6 +244,11 @@ public class GestorBaseDatos {
         }
     }
 
+    /**
+     * Carga los clientes desde la base de datos al gestor de clientes.
+     * @param gestorClientes Gestor de clientes.
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
     private void cargarClientes(GestorClientes gestorClientes) throws SQLException {
         String sql = "SELECT * FROM cliente";
 
@@ -203,6 +265,13 @@ public class GestorBaseDatos {
         }
     }
 
+    /**
+     * Carga las rentas desde la base de datos al gestor de rentas.
+     * @param gestorRentas Gestor de rentas.
+     * @param gestorPeliculas Gestor de películas.
+     * @param gestorClientes Gestor de clientes.
+     * @throws SQLException Si ocurre un error al ejecutar la instrucción SQL.
+     */
     private void cargarRentas(GestorRentas gestorRentas, GestorPeliculas gestorPeliculas, GestorClientes gestorClientes) throws SQLException {
         String sql = "SELECT * FROM renta";
 
@@ -224,10 +293,30 @@ public class GestorBaseDatos {
 
             Renta renta = new Renta(id, cliente, pelicula, semanas, fechaRenta, fechaDev, monto, devuelta);
 
+            // Agrega la renta al gestor de rentas
             gestorRentas.agregarRenta(renta);
+            // Agrega la renta al historial del cliente
             gestorClientes.agregarRenta(rut, renta);
 
+            // Actualiza el ID siguiente del gestor de rentas
             gestorRentas.actualizarIdSiguiente();
         }
+    }
+
+    // Getters y Setters
+    /**
+     * Devuelve la URL de la base de datos.
+     * @return La URL de la base de datos.
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Establece la URL de la base de datos.
+     * @param url La URL de la base de datos.
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
