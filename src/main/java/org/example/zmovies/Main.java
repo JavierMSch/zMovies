@@ -1,21 +1,5 @@
 package org.example.zmovies;
 
-//import java.util.Scanner;
-//import org.example.zmovies.Modelos.*;
-//
-//public class Main {
-//    public static void main(String[] args) {
-//        Scanner scanner = new Scanner(System.in);
-//        VideoClub videoClub = new VideoClub();
-//        InterfazUsuario ui = new InterfazUsuario(scanner, videoClub);
-//
-//        ui.start();
-//
-//        scanner.close();
-//    }
-//}
-
-
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -28,6 +12,13 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class Main extends Application {
+    /**
+     * Inicia la aplicación JavaFX.
+     * Configura el `VideoClub`, maneja posibles errores de SQL y cambia a la escena inicial.
+     *
+     * @param stage el escenario principal de la aplicación
+     * @throws IOException si ocurre un error al cargar los recursos
+     */
     @Override
     public void start(Stage stage) throws IOException {
         VideoClub videoClub = new VideoClub();
@@ -53,6 +44,11 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * Método principal que lanza la aplicación.
+     *
+     * @param args los argumentos de la línea de comandos
+     */
     public static void main(String[] args) {
         launch();
     }
