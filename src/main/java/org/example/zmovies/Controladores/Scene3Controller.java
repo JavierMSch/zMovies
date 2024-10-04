@@ -697,7 +697,7 @@ public class Scene3Controller {
      * Muestra los detalles de una película en un StackPane.
      *
      * @param titulo Título de la película.
-     * @return Un StackPane que contiene los detalles de la película.
+     * @return StackPane que contiene los detalles de la película.
      */
     private StackPane verDetallePelicula(String titulo, String caller) {
         contentPane.getChildren().clear();
