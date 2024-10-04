@@ -77,7 +77,7 @@ public class Scene3Controller {
 
     @FXML
     private void onEliminarPelicula(ActionEvent actionEvent) {
-        EliminarPelicula();
+        eliminarPelicula();
     }
     @FXML
     private void onReporteClick(ActionEvent actionEvent) {
@@ -100,7 +100,7 @@ public class Scene3Controller {
 
                 // Mostrar mensaje de éxito
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Éxito");
+                alert.setTitle("Operación exitosa");
                 alert.setHeaderText(null);
                 alert.setContentText("Reportes generados exitosamente!");
                 alert.showAndWait();
@@ -169,6 +169,11 @@ public class Scene3Controller {
             }
             else {
                 videoClub.agregarGenero(genero);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Operación exitosa");
+                alert.setHeaderText(null);
+                alert.setContentText("Género agregado exitosamente!");
+                alert.showAndWait();
                 defaultPane();
             }
         });
@@ -258,11 +263,14 @@ public class Scene3Controller {
 
         // Crear los elementos visuales
         titleLabel = new Label("Editar Género");
-        titleLabel.getStyleClass().add("opt-title");
+        titleLabel.getStyleClass().add("menu-title");
+
+        formLabel1 = new Label("Nuevo Nombre del Género");
+        formLabel1.getStyleClass().add("opt-title");
 
         formField1 = new TextField();
         formField1.getStyleClass().add("form-field");
-        formField1.setPromptText("Nuevo Nombre del Género");
+        formField1.setPromptText(titulo);
 
         okButton = new Button("OK");
         okButton.getStyleClass().add("ok-button");
@@ -281,7 +289,7 @@ public class Scene3Controller {
 
         vbox.getStyleClass().add("form-layout");
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(titleLabel, formField1, confirmLayout);
+        vbox.getChildren().addAll(titleLabel, formLabel1, formField1, confirmLayout);
         vbox.setPrefWidth(contentPane.getPrefWidth());
         titleLabel.setPrefWidth(vbox.getPrefWidth());
 
@@ -294,12 +302,17 @@ public class Scene3Controller {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Campo vacío");
                 alert.setHeaderText(null);
-                alert.setContentText("El campo Nombre no puede estar vacío.");
+                alert.setContentText("El campo 'Nombre' no puede estar vacío.");
                 alert.showAndWait();
             }
             else{
                 String nuevoNombre = formField1.getText();
                 videoClub.editarGenero(titulo, nuevoNombre);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Operación exitosa");
+                alert.setHeaderText(null);
+                alert.setContentText("Género editado exitosamente!");
+                alert.showAndWait();
                 defaultPane();
             }
         });
@@ -386,6 +399,11 @@ public class Scene3Controller {
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.OK) {
                     videoClub.eliminarGenero(listView.getSelectionModel().getSelectedItem());
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setTitle("Operación exitosa");
+                    alert2.setHeaderText(null);
+                    alert2.setContentText("Género eliminado exitosamente!");
+                    alert2.showAndWait();
                     defaultPane();
                 }
             }
@@ -411,10 +429,11 @@ public class Scene3Controller {
         contentPane.getChildren().clear();
 
         titleLabel = new Label(title);
-        titleLabel.getStyleClass().add("opt-title");
+        titleLabel.getStyleClass().add("menu-title");
+        formLabel1 = new Label(promptTxt);
+        formLabel1.getStyleClass().add("opt-title");
         formField1 = new TextField();
         formField1.getStyleClass().add("form-field");
-        formField1.setPromptText(promptTxt);
         okButton = new Button("OK");
         okButton.getStyleClass().add("ok-button");
         cancelButton = new Button("Cancelar");
@@ -429,7 +448,7 @@ public class Scene3Controller {
 
         formLayout = new VBox(10);
         formLayout.getStyleClass().add("form-layout");
-        formLayout.getChildren().addAll(titleLabel, formField1, confirmLayout);
+        formLayout.getChildren().addAll(titleLabel, formLabel1, formField1, confirmLayout);
 
         formLayout.setPrefWidth(contentPane.getPrefWidth());
         titleLabel.setPrefWidth(formLayout.getPrefWidth());
@@ -446,10 +465,6 @@ public class Scene3Controller {
         String[] precio = {""};
 
         okButton.setOnAction(e -> {
-            // Obtener el valor actual del campo de texto
-            String valorActual = formField1.getText();
-            System.out.println("Valor ingresado: " + valorActual);
-
             // Cambiar el campo según el paso actual
             switch (currentStep[0]) {
                 case "Nombre de la Película":
@@ -457,27 +472,27 @@ public class Scene3Controller {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Campo vacío");
                         alert.setHeaderText(null);
-                        alert.setContentText("El campo Nombre no puede estar vacío.");
+                        alert.setContentText("El campo 'Nombre' no puede estar vacío.");
                         alert.showAndWait();
                         break;
                     }
                     else {
-                        formField1.setPromptText("Genero");
+                        formLabel1.setText("Género");
                         nombre[0] = formField1.getText();
-                        currentStep[0] = "Genero";
+                        currentStep[0] = "Género";
                         break;
                     }
-                case "Genero":
+                case "Género":
                     if (isFieldEmpty(formField1)) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Campo vacío");
                         alert.setHeaderText(null);
-                        alert.setContentText("El campo Genero no puede estar vacío.");
+                        alert.setContentText("El campo 'Género' no puede estar vacío.");
                         alert.showAndWait();
                         break;
                     }
                     else {
-                        formField1.setPromptText("Precio Semanal");
+                        formLabel1.setText("Precio Semanal");
                         genero[0] = formField1.getText();
                         if (!videoClub.existeGenero(genero[0])) {
                             videoClub.agregarGenero(genero[0]);
@@ -490,15 +505,19 @@ public class Scene3Controller {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Campo vacío");
                         alert.setHeaderText(null);
-                        alert.setContentText("El campo Precio no puede estar vacío.");
+                        alert.setContentText("El campo 'Precio Semanal' no puede estar vacío.");
                         alert.showAndWait();
                         break;
                     }
                     else {
-                        System.out.println("Formulario completado.");
                         precio[0] = formField1.getText();
                         if (precio[0].matches("[0-9]+")) {
                             videoClub.agregarPelicula(nombre[0], genero[0], Integer.parseInt(precio[0]));
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Operación exitosa");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Película agregada exitosamente!");
+                            alert.showAndWait();
                             defaultPane();
                             break;
                         }
@@ -506,7 +525,7 @@ public class Scene3Controller {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Error");
                             alert.setHeaderText("Precio no válido");
-                            alert.setContentText("El precio debe ser un número entero.");
+                            alert.setContentText("El precio no puede ser un número negativo.");
                             alert.showAndWait();
                         }
                     }
@@ -688,22 +707,17 @@ public class Scene3Controller {
         String[] precio = {"-1"};
 
         okButton.setOnAction(e -> {
-            // Obtener el valor actual del campo de texto
-            String valorActual = formField1.getText();
-            System.out.println("Valor ingresado: " + valorActual);
-
-
             // Cambiar el campo según el paso actual
             switch (currentStep[0]) {
                 case "Nuevo Titulo":
-                    titleLabel2.setText("Nuevo Genero");
+                    titleLabel2.setText("Nuevo Género");
                     formField1.setPromptText(videoClub.obtenerGeneroPelicula(titulo).toUpperCase());
                     if (!isFieldEmpty(formField1)) {
                         nombre[0] = formField1.getText().toUpperCase();
                     }
-                    currentStep[0] = "Nuevo Genero";
+                    currentStep[0] = "Nuevo Género";
                     break;
-                case "Nuevo Genero":
+                case "Nuevo Género":
                     titleLabel2.setText("Nuevo Precio Semanal");
                     formField1.setPromptText(videoClub.obtenerPrecioPelicula(titulo));
                     if (!isFieldEmpty(formField1)) {
@@ -712,11 +726,15 @@ public class Scene3Controller {
                     currentStep[0] = "Nuevo Precio Semanal";
                     break;
                 case "Nuevo Precio Semanal":
-                    System.out.println("Formulario completado.");
                     if (!isFieldEmpty(formField1)) {
                         precio[0] = formField1.getText();
                     }
                     videoClub.editarPelicula(titulo, nombre[0], genero[0], Integer.parseInt(precio[0]));
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Operación exitosa");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Película editada exitosamente!");
+                    alert.showAndWait();
                     defaultPane();
                     break;
             }
@@ -729,7 +747,7 @@ public class Scene3Controller {
         cancelButton.setOnAction(e -> defaultPane());
     }
 
-    private void EliminarPelicula(){
+    private void eliminarPelicula() {
         contentPane.getChildren().clear();
         verDetallePeliculaButton = new Button("Eliminar Película");
         ObservableList<String> peliculas = FXCollections.observableArrayList(
@@ -776,6 +794,11 @@ public class Scene3Controller {
                     alert.showAndWait();
                     if (alert.getResult().getButtonData().isDefaultButton()) {
                         videoClub.eliminarPelicula(listView.getSelectionModel().getSelectedItem());
+                        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                        alert2.setTitle("Operación exitosa");
+                        alert2.setHeaderText(null);
+                        alert2.setContentText("Película eliminada exitosamente!");
+                        alert2.showAndWait();
                         defaultPane();
                     }
                 });

@@ -19,10 +19,10 @@ public class Cliente {
     /**
      * Constructor que inicializa un nuevo cliente con su RUT, nombre completo, correo electrónico y teléfono.
      *
-     * @param rut el RUT del cliente
-     * @param nombre el nombre completo del cliente
-     * @param correo el correo electrónico del cliente
-     * @param telefono el número de teléfono del cliente
+     * @param rut RUT del cliente
+     * @param nombre Nombre completo del cliente
+     * @param correo Correo electrónico del cliente
+     * @param telefono Número de teléfono del cliente
      */
     public Cliente(String rut, String nombre, String correo, String telefono) {
         this.rut = rut;
@@ -33,18 +33,18 @@ public class Cliente {
     }
 
     /**
-     * Devuelve el historial de rentas del cliente.
+     * Agrega una renta al historial de rentas del cliente.
      *
-     * @return el historial de rentas del cliente
+     * @param renta Renta a agregar al historial
      */
     public void agregarRentaAHistorial(Renta renta) {
         historialRentas.add(renta);
     }
 
     /**
-     * Devuelve el historial de rentas del cliente.
+     * Retorna el nombre del género que más ha rentado el cliente.
      *
-     * @return el historial de rentas del cliente
+     * @return Nombre del género más rentado.
      */
     public String nombreGeneroFavorito() {
         Map<String, Integer> contadorGeneros = new HashMap<>();
@@ -67,7 +67,7 @@ public class Cliente {
     /**
      * Devuelve una representación en cadena del cliente, que incluye su RUT, nombre, correo y teléfono.
      *
-     * @return una cadena con la información del cliente
+     * @return Cadena con la información del cliente
      */
     @Override
     public String toString() {
@@ -79,7 +79,7 @@ public class Cliente {
     /**
      * Obtiene el RUT del cliente.
      *
-     * @return el RUT del cliente
+     * @return RUT del cliente
      */
     public String getRut() {
         return rut;
@@ -88,7 +88,7 @@ public class Cliente {
     /**
      * Establece el RUT del cliente.
      *
-     * @param rut el nuevo RUT del cliente
+     * @param rut Nuevo RUT del cliente
      */
     public void setRut(String rut) {
         this.rut = rut;
@@ -97,7 +97,7 @@ public class Cliente {
     /**
      * Obtiene el nombre completo del cliente.
      *
-     * @return el nombre completo del cliente
+     * @return Nombre completo del cliente
      */
     public String getNombreApellidos() {
         return nombreApellidos;
@@ -106,7 +106,7 @@ public class Cliente {
     /**
      * Establece el nombre completo del cliente.
      *
-     * @param nombreApellidos el nuevo nombre completo del cliente
+     * @param nombreApellidos Nuevo nombre completo del cliente
      */
     public void setNombreApellidos(String nombreApellidos) {
         this.nombreApellidos = nombreApellidos;
@@ -115,7 +115,7 @@ public class Cliente {
     /**
      * Obtiene el correo electrónico del cliente.
      *
-     * @return el correo electrónico del cliente
+     * @return Correo electrónico del cliente
      */
     public String getCorreo() {
         return correo;
@@ -124,7 +124,7 @@ public class Cliente {
     /**
      * Establece el correo electrónico del cliente.
      *
-     * @param correo el nuevo correo electrónico del cliente
+     * @param correo Nuevo correo electrónico del cliente
      */
     public void setCorreo(String correo) {
         this.correo = correo;
@@ -133,7 +133,7 @@ public class Cliente {
     /**
      * Obtiene el número de teléfono del cliente.
      *
-     * @return el número de teléfono del cliente
+     * @return Número de teléfono del cliente
      */
     public String getTelefono() {
         return telefono;
@@ -142,7 +142,7 @@ public class Cliente {
     /**
      * Establece el número de teléfono del cliente.
      *
-     * @param telefono el nuevo número de teléfono del cliente
+     * @param telefono Nuevo número de teléfono del cliente
      */
     public void setTelefono(String telefono) {
         this.telefono = telefono;

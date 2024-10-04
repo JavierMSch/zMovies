@@ -47,19 +47,18 @@ public class Scene4Controller {
         verClientes();
     }
 
-    @FXML
-    protected void onVerRentasClick(ActionEvent event) {
-        System.out.println("Ver Cliente");
-    }
-
     private void agregarCliente(String title, String promptTxt) {
         contentPane.getChildren().clear();
 
         titleLabel = new Label(title);
-        titleLabel.getStyleClass().add("opt-title");
+        titleLabel.getStyleClass().add("menu-title");
+
+        formLabel1 = new Label(promptTxt);
+        formLabel1.getStyleClass().add("opt-title");
+
         formField1 = new TextField();
         formField1.getStyleClass().add("form-field");
-        formField1.setPromptText(promptTxt);
+
         okButton = new Button("OK");
         okButton.getStyleClass().add("ok-button");
         cancelButton = new Button("Cancelar");
@@ -74,7 +73,7 @@ public class Scene4Controller {
 
         formLayout = new VBox(10);
         formLayout.getStyleClass().add("form-layout");
-        formLayout.getChildren().addAll(titleLabel, formField1, confirmLayout);
+        formLayout.getChildren().addAll(titleLabel, formLabel1, formField1, confirmLayout);
 
         formLayout.setPrefWidth(contentPane.getPrefWidth());
         titleLabel.setPrefWidth(formLayout.getPrefWidth());
@@ -103,11 +102,11 @@ public class Scene4Controller {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Campo vacío");
                         alert.setHeaderText(null);
-                        alert.setContentText("El campo Rut no puede estar vacío.");
+                        alert.setContentText("El campo 'Rut del cliente' no puede estar vacío.");
                         alert.showAndWait();
                         break;
                     } else {
-                        formField1.setPromptText("Nombre completo");
+                        formLabel1.setText("Nombre completo");
                         rut[0] = formatoRut(valorActual);  // Se usa el array
                         currentStep[0] = "Nombre completo";
                         break;
@@ -117,40 +116,45 @@ public class Scene4Controller {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Campo vacío");
                         alert.setHeaderText(null);
-                        alert.setContentText("El campo Nombre no puede estar vacío.");
+                        alert.setContentText("El campo 'Nombre completo' no puede estar vacío.");
                         alert.showAndWait();
                         break;
                     } else {
-                        formField1.setPromptText("Correo electronico");
+                        formLabel1.setText("Correo electrónico");
                         nombre[0] = valorActual;  // Se usa el array
-                        currentStep[0] = "Correo electronico";
+                        currentStep[0] = "Correo electrónico";
                         break;
                     }
-                case "Correo electronico":
+                case "Correo electrónico":
                     if (isFieldEmpty(formField1)) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Campo vacío");
                         alert.setHeaderText(null);
-                        alert.setContentText("El campo Correo no puede estar vacío.");
+                        alert.setContentText("El campo 'Correo electrónico' no puede estar vacío.");
                         alert.showAndWait();
                         break;
                     } else {
-                        formField1.setPromptText("Numero telefonico");
+                        formLabel1.setText("Numero telefónico");
                         correo[0] = valorActual;  // Se usa el array
-                        currentStep[0] = "Numero telefonico";
+                        currentStep[0] = "Número telefónico";
                         break;
                     }
-                case "Numero telefonico":
+                case "Número telefónico":
                     if (isFieldEmpty(formField1)) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Campo vacío");
                         alert.setHeaderText(null);
-                        alert.setContentText("El campo Numero no puede estar vacío.");
+                        alert.setContentText("El campo 'Número telefónico' no puede estar vacío.");
                         alert.showAndWait();
                         break;
                     } else {
                         telefono[0] = valorActual;  // Se usa el array
                         videoClub.agregarCliente(rut[0], nombre[0], correo[0], telefono[0]);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Operación exitosa");
+                        alert.setHeaderText(null);
+                        alert.setContentText("El cliente ha sido agregado exitosamente.");
+                        alert.showAndWait();
                         defaultPane(); // Puedes definir esta función para restaurar la vista por defecto.
                         break;
                     }
@@ -197,7 +201,6 @@ public class Scene4Controller {
                 String rutSinGuion = partes[0].trim();
                 String digitoVerificador = partes[1].split(" ")[0].trim(); // Separar con espacio y tomar el primer elemento
                 String rutCompleto = rutSinGuion + "-" + digitoVerificador;
-                System.out.println("Rut sin guion: " + rutCompleto);
                 contentPane.getChildren().clear();
                 vbox.getChildren().clear();
                 vbox.getChildren().add(verDetallesCLiente(rutCompleto));
