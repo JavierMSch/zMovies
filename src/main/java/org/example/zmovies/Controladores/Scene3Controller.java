@@ -50,7 +50,7 @@ public class Scene3Controller {
     /**
      * Establece el VideoClub para el controlador.
      *
-     * @param videoClub El objeto VideoClub a establecer.
+     * @param videoClub Objeto VideoClub a establecer.
      */
     public void setVideoClub(VideoClub videoClub) {
         this.videoClub = videoClub;
@@ -59,7 +59,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para ver películas.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onVerPeliculasClick(ActionEvent actionEvent) {
@@ -69,7 +69,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para editar una película.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onEditarPeliculaClick(ActionEvent actionEvent) {
@@ -79,7 +79,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para volver a la escena anterior.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      * @throws IOException Si ocurre un error al cambiar de escena.
      */
     @FXML
@@ -90,7 +90,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para eliminar una película.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onEliminarPeliculaClick(ActionEvent actionEvent) {
@@ -101,7 +101,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para generar un reporte de películas.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onReporteClick(ActionEvent actionEvent) {
@@ -140,7 +140,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para agregar una nueva película.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onAgregarPeliculaClick(ActionEvent actionEvent) {
@@ -150,7 +150,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para cambiar entre las opciones de "Películas" y "Géneros".
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onGenerosClick(ActionEvent actionEvent) {
@@ -207,8 +207,8 @@ public class Scene3Controller {
     /**
      * Agrega un nuevo género al sistema.
      *
-     * @param title El título del formulario.
-     * @param promptTxt El texto de solicitud para el campo de entrada.
+     * @param title Título del formulario.
+     * @param promptTxt Texto de solicitud para el campo de entrada.
      */
     private void agregarGenero(String title, String promptTxt) {
         contentPane.getChildren().clear();
@@ -313,7 +313,7 @@ public class Scene3Controller {
     /**
      * Muestra un formulario para editar las opciones de un género existente.
      *
-     * @param titulo El título actual del género.
+     * @param titulo Título actual del género.
      */
     private void editarGeneroOpciones(String titulo) {
         contentPane.getChildren().clear();
@@ -485,7 +485,7 @@ public class Scene3Controller {
     /**
      * Muestra una lista de películas disponibles en un género específico.
      *
-     * @param genero El género de las películas a mostrar.
+     * @param genero Género de las películas a mostrar.
      */
     private void verPeliculas(String genero) {
         contentPane.getChildren().clear();
@@ -564,8 +564,8 @@ public class Scene3Controller {
      * Muestra un formulario para agregar una película.
      *
      *
-     * @param title El título de la película.
-     * @param promptTxt El texto de solicitud para el campo de entrada.
+     * @param title Título de la película.
+     * @param promptTxt Texto de solicitud para el campo de entrada.
      */
     private void agregarPelicula(String title, String promptTxt) {
         contentPane.getChildren().clear();
@@ -696,7 +696,7 @@ public class Scene3Controller {
     /**
      * Muestra los detalles de una película en un StackPane.
      *
-     * @param titulo El título de la película.
+     * @param titulo Título de la película.
      * @return Un StackPane que contiene los detalles de la película.
      */
     private StackPane verDetallePelicula(String titulo, String caller) {
@@ -794,8 +794,8 @@ public class Scene3Controller {
     /**
      * Muestra un formulario para editar las opciones de una película existente.
      *
-     * @param titulo El título actual de la película.
-     * @param subtitulo El subtítulo para el formulario.
+     * @param titulo Título actual de la película.
+     * @param subtitulo Subtítulo para el formulario.
      */
     private void editarPeliculaOpciones(String titulo, String subtitulo) {
         contentPane.getChildren().clear();
@@ -1032,7 +1032,7 @@ public class Scene3Controller {
     /**
      * Verifica si un campo de texto está vacío.
      *
-     * @param textField El campo de texto a verificar.
+     * @param textField Campo de texto a verificar.
      * @return true si el campo de texto está vacío, false en caso contrario.
      */
     private boolean isFieldEmpty(TextField textField) {
