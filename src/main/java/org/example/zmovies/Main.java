@@ -36,7 +36,7 @@ public class Main extends Application {
 
         SceneManager.setVideoClub(videoClub);
         SceneManager.setStage(stage);
-        stage.setTitle("VideoClub Manager");
+        stage.setTitle("zMovies - VideoClub");
         Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResourceAsStream("/images/icon.png")));
         stage.getIcons().add(icon);
         SceneManager.switchScene("/fxml/scene0-view.fxml");
