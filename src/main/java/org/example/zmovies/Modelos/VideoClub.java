@@ -18,7 +18,7 @@ public class VideoClub {
     private final GestorPeliculas gestorPeliculas;
     private final GestorRentas gestorRentas;
     private final GestorBaseDatos gestorBaseDatos;
-    // No se deben modificar los gestores, por lo que no se generan getters y setters.
+    // No se deben cambiar los gestores, por lo que no hay setters o getters para ellos.
 
     /**
      * Constructor de la clase VideoClub.
@@ -289,19 +289,6 @@ public class VideoClub {
      */
     public void editarPelicula(String titulo, String nuevoTitulo, String nuevoGenero, int nuevoPrecio) {
         gestorPeliculas.editarPelicula(titulo, nuevoTitulo, nuevoGenero, nuevoPrecio);
-    }
-
-    /**
-     * Verifica si una película tiene rentas activas.
-     * @param titulo Título de la película.
-     * @return true si hay rentas activas, false en caso contrario.
-     */
-    public boolean peliculaTieneRentasActivas(String titulo) {
-        Pelicula pelicula = gestorPeliculas.obtenerPelicula(titulo);
-        if (pelicula != null) {
-            return gestorRentas.peliculaTieneRentasActivas(pelicula);
-        }
-        return false;
     }
 
     /**
