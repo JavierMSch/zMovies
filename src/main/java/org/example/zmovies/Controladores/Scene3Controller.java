@@ -50,7 +50,7 @@ public class Scene3Controller {
     /**
      * Establece el VideoClub para el controlador.
      *
-     * @param videoClub El objeto VideoClub a establecer.
+     * @param videoClub Objeto VideoClub a establecer.
      */
     public void setVideoClub(VideoClub videoClub) {
         this.videoClub = videoClub;
@@ -59,7 +59,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para ver películas.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onVerPeliculasClick(ActionEvent actionEvent) {
@@ -69,7 +69,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para editar una película.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onEditarPeliculaClick(ActionEvent actionEvent) {
@@ -79,7 +79,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para volver a la escena anterior.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      * @throws IOException Si ocurre un error al cambiar de escena.
      */
     @FXML
@@ -90,7 +90,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para eliminar una película.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onEliminarPeliculaClick(ActionEvent actionEvent) {
@@ -101,7 +101,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para generar un reporte de películas.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onReporteClick(ActionEvent actionEvent) {
@@ -140,7 +140,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para agregar una nueva película.
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onAgregarPeliculaClick(ActionEvent actionEvent) {
@@ -150,7 +150,7 @@ public class Scene3Controller {
     /**
      * Maneja el evento de clic para cambiar entre las opciones de "Películas" y "Géneros".
      *
-     * @param actionEvent El evento de acción.
+     * @param actionEvent Evento de acción.
      */
     @FXML
     private void onGenerosClick(ActionEvent actionEvent) {
@@ -207,8 +207,8 @@ public class Scene3Controller {
     /**
      * Agrega un nuevo género al sistema.
      *
-     * @param title El título del formulario.
-     * @param promptTxt El texto de solicitud para el campo de entrada.
+     * @param title Título del formulario.
+     * @param promptTxt Texto de solicitud para el campo de entrada.
      */
     private void agregarGenero(String title, String promptTxt) {
         contentPane.getChildren().clear();
@@ -313,7 +313,7 @@ public class Scene3Controller {
     /**
      * Muestra un formulario para editar las opciones de un género existente.
      *
-     * @param titulo El título actual del género.
+     * @param titulo Título actual del género.
      */
     private void editarGeneroOpciones(String titulo) {
         contentPane.getChildren().clear();
@@ -485,7 +485,7 @@ public class Scene3Controller {
     /**
      * Muestra una lista de películas disponibles en un género específico.
      *
-     * @param genero El género de las películas a mostrar.
+     * @param genero Género de las películas a mostrar.
      */
     private void verPeliculas(String genero) {
         contentPane.getChildren().clear();
@@ -551,7 +551,9 @@ public class Scene3Controller {
             else {
                 contentPane.getChildren().clear();
                 vbox.getChildren().clear();
-                vbox.getChildren().add(verDetallePelicula(listView.getSelectionModel().getSelectedItem()));
+                vbox.getStyleClass().remove("movie-list-layout");
+                vbox.getStyleClass().add("movie-detail-layout");
+                vbox.getChildren().add(verDetallePelicula(listView.getSelectionModel().getSelectedItem(), "verPeliculas"));
                 contentPane.getChildren().add(vbox);
             }
         });
@@ -562,8 +564,8 @@ public class Scene3Controller {
      * Muestra un formulario para agregar una película.
      *
      *
-     * @param title El título de la película.
-     * @param promptTxt El texto de solicitud para el campo de entrada.
+     * @param title Título de la película.
+     * @param promptTxt Texto de solicitud para el campo de entrada.
      */
     private void agregarPelicula(String title, String promptTxt) {
         contentPane.getChildren().clear();
@@ -574,7 +576,7 @@ public class Scene3Controller {
         formLabel1.getStyleClass().add("opt-title");
         formField1 = new TextField();
         formField1.getStyleClass().add("form-field");
-        okButton = new Button("OK");
+        okButton = new Button("Siguiente");
         okButton.getStyleClass().add("ok-button");
         cancelButton = new Button("Cancelar");
         cancelButton.getStyleClass().add("cancel-button");
@@ -605,6 +607,11 @@ public class Scene3Controller {
         String[] precio = {""};
 
         okButton.setOnAction(e -> {
+
+            if (currentStep[0].equals("Género") && !isFieldEmpty(formField1)) {
+                okButton.setText("Agregar");
+            }
+
             // Cambiar el campo según el paso actual
             switch (currentStep[0]) {
                 case "Nombre de la Película":
@@ -689,12 +696,22 @@ public class Scene3Controller {
     /**
      * Muestra los detalles de una película en un StackPane.
      *
-     * @param titulo El título de la película.
-     * @return Un StackPane que contiene los detalles de la película.
+     * @param titulo Título de la película.
+     * @return StackPane que contiene los detalles de la película.
      */
-    private StackPane verDetallePelicula(String titulo) {
-        contentPane.getChildren().clear();  // Limpiar el contentPane
+    private StackPane verDetallePelicula(String titulo, String caller) {
+        contentPane.getChildren().clear();
 
+        VBox vboxC = new VBox(10);
+        // Limpiar el contentPane
+        if (caller.equals("verPeliculas")) {
+            cancelButton = new Button("Volver");
+            cancelButton.getStyleClass().add("cancel-button");
+            cancelButton.setOnAction(e -> returnToCaller(caller));
+            vboxC.getChildren().add(cancelButton);
+            vboxC.getStyleClass().add("movie-detail-layout");
+            vboxC.setAlignment(Pos.CENTER);  // Alinear contenido dentro del VBox
+        }
         // Crear VBox con detalles de la película
         VBox vbox = new VBox(10);
         vbox.getStyleClass().add("movie-detail-layout");
@@ -707,7 +724,7 @@ public class Scene3Controller {
         datos.getStyleClass().add("detail");
 
         // Añadir los Labels al VBox
-        vbox.getChildren().addAll(titleLabel, datos);
+        vbox.getChildren().addAll(titleLabel, datos, vboxC);
 
         // Usar un StackPane para centrar el VBox dentro del contentPane
         StackPane stackPane = new StackPane(vbox);
@@ -760,7 +777,9 @@ public class Scene3Controller {
             else {
                 contentPane.getChildren().clear();
                 vbox.getChildren().clear();
-                vbox.getChildren().add(verDetallePelicula(listView.getSelectionModel().getSelectedItem()));
+                vbox.getStyleClass().remove("movie-list-layout");
+                vbox.getStyleClass().add("movie-detail-layout");
+                vbox.getChildren().add(verDetallePelicula(listView.getSelectionModel().getSelectedItem(), "editarPelicula"));
                 verDetallePeliculaButton = new Button("Editar Película");
                 verDetallePeliculaButton.getStyleClass().add("movie-list-button");
                 vbox.getChildren().add(verDetallePeliculaButton);
@@ -775,8 +794,8 @@ public class Scene3Controller {
     /**
      * Muestra un formulario para editar las opciones de una película existente.
      *
-     * @param titulo El título actual de la película.
-     * @param subtitulo El subtítulo para el formulario.
+     * @param titulo Título actual de la película.
+     * @param subtitulo Subtítulo para el formulario.
      */
     private void editarPeliculaOpciones(String titulo, String subtitulo) {
         contentPane.getChildren().clear();
@@ -902,7 +921,9 @@ public class Scene3Controller {
             else {
                 contentPane.getChildren().clear();
                 vbox.getChildren().clear();
-                vbox.getChildren().add(verDetallePelicula(listView.getSelectionModel().getSelectedItem()));
+                vbox.getStyleClass().remove("movie-list-layout");
+                vbox.getStyleClass().add("movie-detail-layout");
+                vbox.getChildren().add(verDetallePelicula(listView.getSelectionModel().getSelectedItem(), "eliminarPelicula"));
                 verDetallePeliculaButton = new Button("Eliminar Película");
                 verDetallePeliculaButton.getStyleClass().add("movie-list-button");
                 vbox.getChildren().add(verDetallePeliculaButton);
@@ -994,9 +1015,24 @@ public class Scene3Controller {
     }
 
     /**
+     * Vuelve a la función que llamó.
+     */
+    private void returnToCaller(String lastCaller) {
+        if (lastCaller.equals("verPeliculas")) {
+            verPeliculas("");
+        } else if (lastCaller.equals("verGeneros")) {
+            verGeneros();
+        } else if (lastCaller.equals("editarPelicula")) {
+            editarPelicula();
+        } else if (lastCaller.equals("eliminarPelicula")) {
+            eliminarPelicula();
+        }
+    }
+
+    /**
      * Verifica si un campo de texto está vacío.
      *
-     * @param textField El campo de texto a verificar.
+     * @param textField Campo de texto a verificar.
      * @return true si el campo de texto está vacío, false en caso contrario.
      */
     private boolean isFieldEmpty(TextField textField) {

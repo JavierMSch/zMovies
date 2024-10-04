@@ -36,7 +36,7 @@ public class Scene4Controller {
 
     /**
      * Llama a la función para agregar un cliente en respuesta a un clic en el botón.
-     * @param event
+     * @param event Evento de clic en el botón.
      */
     @FXML
     protected void onAgregarClienteClick(ActionEvent event) {
@@ -45,7 +45,7 @@ public class Scene4Controller {
 
     /**
      * Llama a la función para mostrar la lista de clientes en respuesta a un clic en el botón.
-     * @param event
+     * @param event Evento de clic en el botón.
      */
     @FXML
     protected void onVerClienteClick(ActionEvent event) {
@@ -54,7 +54,7 @@ public class Scene4Controller {
 
     /**
      * Maneja el evento de clic en el botón de volver.
-     * @param event
+     * @param event Evento de clic en el botón.
      * @throws IOException
      */
     @FXML
@@ -64,8 +64,8 @@ public class Scene4Controller {
 
     /**
      * Muestra un formulario para agregar un cliente.
-     * @param title
-     * @param promptTxt
+     * @param title Título del formulario.
+     * @param promptTxt Texto de la etiqueta del campo de texto.
      */
     private void agregarCliente(String title, String promptTxt) {
         contentPane.getChildren().clear();
@@ -240,7 +240,7 @@ public class Scene4Controller {
 
     /**
      * Muestra los detalles de un cliente en un StackPane.
-     * @param rut
+     * @param rut Rut del cliente.
      * @return
      */
     private StackPane verDetallesCLiente(String rut){
@@ -266,8 +266,8 @@ public class Scene4Controller {
 
     /**
      * Maneja el evento de doble clic en un ListView.
-     * @param listView
-     * @param submitButton
+     * @param listView ListView actual.
+     * @param submitButton Botón a presionar al hacer doble clic.
      */
     private void handleDoubleClicked(ListView<String> listView, Button submitButton) {
         listView.setOnMouseClicked(event -> {
@@ -279,8 +279,8 @@ public class Scene4Controller {
 
     /**
      * Maneja el evento de presionar la tecla Enter en un campo de texto.
-     * @param currentField
-     * @param nextControl
+     * @param currentField Campo de texto actual.
+     * @param nextControl Control al que se moverá el foco.
      */
     private void handleEnterKey(TextField currentField, Control nextControl) {
         currentField.setOnKeyPressed(event -> {
@@ -296,7 +296,7 @@ public class Scene4Controller {
 
     /**
      * Formatea un RUT en el formato XXX.XXX.XXX-X.
-     * @param input
+     * @param input RUT a formatear.
      * @return
      */
     private String formatoRut(String input) {
