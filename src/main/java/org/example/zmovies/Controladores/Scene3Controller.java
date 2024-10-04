@@ -13,7 +13,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.zmovies.Exceptions.ReportePlanillaException;
 import org.example.zmovies.Exceptions.ReporteTextoException;
