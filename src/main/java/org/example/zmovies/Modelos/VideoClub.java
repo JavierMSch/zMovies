@@ -276,8 +276,8 @@ public class VideoClub {
     /**
      * Obtiene detalles de un cliente.
      *
-     * @param rut
-     * @return
+     * @param rut RUT del cliente.
+     * @return Detalles del cliente.
      */
     public String detallesCliente(String rut) {
         return gestorClientes.obtenerDetallesCliente(rut);
