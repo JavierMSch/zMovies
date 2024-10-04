@@ -16,7 +16,7 @@ public class Main extends Application {
      * Inicia la aplicación JavaFX.
      * Configura el `VideoClub`, maneja posibles errores de SQL y cambia a la escena inicial.
      *
-     * @param stage el escenario principal de la aplicación
+     * @param stage Escenario principal de la aplicación
      * @throws IOException si ocurre un error al cargar los recursos
      */
     @Override
@@ -47,7 +47,7 @@ public class Main extends Application {
     /**
      * Método principal que lanza la aplicación.
      *
-     * @param args los argumentos de la línea de comandos
+     * @param args Argumentos de la línea de comandos
      */
     public static void main(String[] args) {
         launch();

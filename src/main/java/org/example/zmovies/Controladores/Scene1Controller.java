@@ -39,7 +39,7 @@ public class Scene1Controller {
     /**
      * Establece la instancia de VideoClub que se utilizará en este controlador.
      *
-     * @param videoClub la instancia de VideoClub a asignar
+     * @param videoClub Instancia de VideoClub a asignar
      */
     public void setVideoClub(VideoClub videoClub) {
         this.videoClub = videoClub;
@@ -49,7 +49,7 @@ public class Scene1Controller {
      * Maneja el evento de hacer click en el botón "Rentar".
      * Actualiza el panel con los campos necesarios para rentar una película.
      *
-     * @param event el evento de acción generado por el click
+     * @param event Evento de acción generado por el click
      */
     @FXML
     private void onRentarClick(ActionEvent event) {
@@ -82,7 +82,7 @@ public class Scene1Controller {
      * Maneja el evento de hacer click en el botón "Devolver".
      * Actualiza el panel con los campos necesarios para devolver una película.
      *
-     * @param event el evento de acción generado por el click
+     * @param event Evento de acción generado por el click
      */
     @FXML
     private void onDevolverClick(ActionEvent event) {
@@ -115,7 +115,7 @@ public class Scene1Controller {
      * Maneja el evento de hacer click en el botón "Recomendar".
      * Actualiza el panel con los campos necesarios para recomendar una película.
      *
-     * @param event el evento de acción generado por el click
+     * @param event Evento de acción generado por el click
      */
     @FXML
     private void onRecomendarClick(ActionEvent event) {
@@ -148,7 +148,7 @@ public class Scene1Controller {
      * Maneja el evento de hacer click en el botón "No Devueltas".
      * Actualiza el panel con las rentas no devueltas.
      *
-     * @param event el evento de acción generado por el click
+     * @param event Evento de acción generado por el click
      */
     @FXML
     private void onNoDevueltasClick(ActionEvent event) {
@@ -159,7 +159,7 @@ public class Scene1Controller {
      * Maneja el evento de hacer click en el botón "Pelicula Mas Rentada".
      * Actualiza el panel con la lista de géneros y el botón para ver la película más rentada de cada género.
      *
-     * @param event el evento de acción generado por el click
+     * @param event Evento de acción generado por el click
      */
     @FXML
     private void onPeliculaMasRentadaClick(ActionEvent event) {
@@ -170,7 +170,7 @@ public class Scene1Controller {
      * Maneja el evento de hacer click en el botón "Volver".
      * Cambia la escena a la escena del menú principal.
      *
-     * @param event el evento de acción generado por el click
+     * @param event Evento de acción generado por el click
      * @throws IOException si hay un error al cambiar la escena
      */
     @FXML
@@ -195,7 +195,7 @@ public class Scene1Controller {
     /**
      * Actualiza el panel con los campos necesarios para agregar un nuevo cliente al sistema. Se agrega el cliente al sistema y se procede a rentar una película.
      *
-     * @param rut el RUT del cliente
+     * @param rut RUT del cliente
      */
     private void handleNuevoCliente(String rut) {
         String title = "El cliente no existe. Se agregarán los datos del cliente.";
@@ -221,7 +221,7 @@ public class Scene1Controller {
     /**
      * Actualiza el panel con los campos necesarios para rentar una película al cliente. Se muestra el formulario para rentar una película al cliente y verifica que se llenen los campos necesarios.
      *
-     * @param rut el RUT del cliente
+     * @param rut RUT del cliente
      */
     private void handlePeliculaRenta(String rut) {
         String title = "Cliente: " + videoClub.obtenerNombreCliente(rut);
@@ -248,7 +248,7 @@ public class Scene1Controller {
      * Verifica si la película existe en el sistema y procede con la renta.
      * Muestra mensajes de éxito o error según corresponda.
      *
-     * @param rut el RUT del cliente
+     * @param rut RUT del cliente
      */
     private void handleRenta(String rut) {
         String movieName = formField1.getText().toUpperCase();
@@ -305,7 +305,7 @@ public class Scene1Controller {
      * Actualiza el panel con la lista de películas no devueltas y permite seleccionar una para devolver.
      * Muestra mensajes de confirmación y éxito según corresponda.
      *
-     * @param rut el RUT del cliente
+     * @param rut RUT del cliente
      */
     private void handleDevolucion(String rut) {
         String pendientes = videoClub.obtenerListaRentasPendientes(rut);
@@ -487,7 +487,7 @@ public class Scene1Controller {
      * Muestra un formulario para ingresar el RUT del cliente en el panel de contenido.
      * Limpia el contenido actual del panel y lo actualiza con el formulario de RUT.
      *
-     * @param title el título a mostrar en el panel
+     * @param title Título a mostrar en el panel
      */
     private void mostrarRutForm(String title) {
         // Limpia el contenido actual del panel
@@ -540,8 +540,8 @@ public class Scene1Controller {
      * Muestra un formulario con los campos especificados en el panel de contenido.
      * Limpia el contenido actual del panel y lo actualiza con el formulario.
      *
-     * @param title el título a mostrar en el panel
-     * @param labels un arreglo de etiquetas que contienen los textos de los campos del formulario
+     * @param title Título a mostrar en el panel
+     * @param labels Arreglo de etiquetas que contienen los textos de los campos del formulario
      */
     private void mostrarFormulario(String title, String[] labels) {
         // Limpia el contenido actual del panel
@@ -624,9 +624,9 @@ public class Scene1Controller {
      * Muestra las películas no devueltas en el panel de contenido.
      * Limpia el contenido actual del panel y lo actualiza con la lista de películas no devueltas.
      *
-     * @param cliente el nombre del cliente (puede ser null)
-     * @param title el título a mostrar en el panel
-     * @param data los datos de las películas no devueltas
+     * @param cliente Nombre del cliente (puede ser null)
+     * @param title Título a mostrar en el panel
+     * @param data Datos de las películas no devueltas
      */
     private void mostrarNoDevueltas(String cliente, String title, String data) {
         // Limpia el contenido actual del panel
@@ -707,8 +707,8 @@ public class Scene1Controller {
      * Muestra la película más rentada por género en el panel de contenido.
      * Limpia el contenido actual del panel y lo actualiza con la lista de géneros y los detalles de la película más rentada.
      *
-     * @param title el título a mostrar en el panel
-     * @param detailLabels un arreglo de etiquetas que contienen los detalles de la película más rentada
+     * @param title Título a mostrar en el panel
+     * @param detailLabels Arreglo de etiquetas que contienen los detalles de la película más rentada
      */
     private void mostrarMasRentada(String title, Label[] detailLabels) {
         // Limpia el contenido actual del panel
@@ -781,7 +781,7 @@ public class Scene1Controller {
      * Muestra los detalles de una renta en el panel de contenido.
      * Limpia el contenido actual del panel y lo actualiza con los detalles de la renta.
      *
-     * @param labels un arreglo de etiquetas que contienen los detalles de la renta
+     * @param labels Arreglo de etiquetas que contienen los detalles de la renta
      */
     private void mostrarDetalleRenta(Label[] labels) {
         // Limpia el contenido actual del panel
@@ -825,8 +825,8 @@ public class Scene1Controller {
     /**
      * Formatea un RUT (Rol Único Tributario) a un formato estándar.
      *
-     * @param input el RUT a formatear
-     * @return el RUT formateado
+     * @param input RUT a formatear
+     * @return RUT formateado
      */
     private String formatoRut(String input) {
         input = input.replaceAll("\\D", "");
@@ -847,7 +847,7 @@ public class Scene1Controller {
     /**
      * Verifica si un campo de texto está vacío.
      *
-     * @param textField el campo de texto a verificar
+     * @param textField Campo de texto a verificar
      * @return true si el campo de texto está vacío, false en caso contrario
      */
     private boolean isFieldEmpty(TextField textField) {
@@ -857,8 +857,8 @@ public class Scene1Controller {
     /**
      * Asigna un evento al TextField para que al presionar la tecla Enter se cambie el foco al Control recibido.
      *
-     * @param currentField el TextField actual
-     * @param nextControl el Control al que se cambiará el foco
+     * @param currentField TextField actual
+     * @param nextControl Control al que se cambiará el foco
      */
     private void handleEnterKey(TextField currentField, Control nextControl) {
         currentField.setOnKeyPressed(event -> {
@@ -875,8 +875,8 @@ public class Scene1Controller {
     /**
      * Asigna un evento al ListView para que al hacer doble click en un item se ejecute el evento del botón recibido.
      *
-     * @param listView el ListView en el que se hará doble click
-     * @param submitButton el Button que se ejecutará al hacer doble click
+     * @param listView ListView en el que se hará doble click
+     * @param submitButton Button que se ejecutará al hacer doble click
      */
     private void handleDoubleClicked(ListView<String> listView, Button submitButton) {
         listView.setOnMouseClicked(event -> {

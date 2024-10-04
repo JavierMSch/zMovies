@@ -19,7 +19,7 @@ public class Scene0Controller {
     /**
      * Establece la instancia de VideoClub que se utilizará en este controlador.
      *
-     * @param videoClub la instancia de VideoClub a asignar
+     * @param videoClub Instancia de VideoClub a asignar
      */
     public void setVideoClub(VideoClub videoClub) {
         this.videoClub = videoClub;
@@ -28,7 +28,7 @@ public class Scene0Controller {
     /**
      * Maneja el evento de hacer clic en el botón "Atender Cliente". Cambia a la escena de atención al cliente.
      *
-     * @param event el evento de acción generado por el click
+     * @param event Evento de acción generado por el click
      * @throws IOException si hay un error al cambiar la escena
      */
     @FXML
@@ -39,7 +39,7 @@ public class Scene0Controller {
     /**
      * Maneja el evento de hacer clic en el botón "Administrador". Cambia a la escena de administración.
      *
-     * @param event el evento de acción generado por el click
+     * @param event Evento de acción generado por el click
      * @throws IOException si hay un error al cambiar la escena
      */
     @FXML
@@ -50,7 +50,7 @@ public class Scene0Controller {
     /**
      * Maneja el evento de hacer clic en el botón "Salir". Finaliza la aplicación de forma segura.
      *
-     * @param event el evento de acción generado por el click
+     * @param event Evento de acción generado por el click
      */
     @FXML
     private void onSalirClick(ActionEvent event) {
