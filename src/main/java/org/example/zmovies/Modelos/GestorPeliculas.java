@@ -397,12 +397,14 @@ public class GestorPeliculas {
 
             int numeroFila = 1;
             for (Pelicula pelicula: listaPeliculas) {
-                Row fila = planilla.createRow(numeroFila);
+                if (pelicula.isActiva()) {
+                    Row fila = planilla.createRow(numeroFila);
 
-                fila.createCell(0).setCellValue(pelicula.getTitulo());
-                fila.createCell(1).setCellValue(pelicula.getGenero());
-                fila.createCell(2).setCellValue(pelicula.getPrecioSemanal());
-                numeroFila++;
+                    fila.createCell(0).setCellValue(pelicula.getTitulo());
+                    fila.createCell(1).setCellValue(pelicula.getGenero());
+                    fila.createCell(2).setCellValue(pelicula.getPrecioSemanal());
+                    numeroFila++;
+                }
             }
 
             String nombreArchivo = ruta + File.separator + "reportePeliculas.xlsx";
