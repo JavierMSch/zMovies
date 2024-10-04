@@ -177,7 +177,7 @@ public class GestorPeliculas {
         Pelicula pelicula = obtenerPeliculaActivaOInactiva(titulo);
         if (pelicula != null) {
             pelicula.setActiva(true);
-            pelicula.setGenero(nombreGenero);
+            pelicula.setGenero(nombreGenero.toUpperCase());
             pelicula.setPrecioSemanal(precioSemanal);
         } else {
             pelicula = new Pelicula(titulo.toUpperCase(), nombreGenero.toUpperCase(), precioSemanal);
