@@ -71,7 +71,7 @@ Button:hover {
     -fx-font-weight: bold;
 }
 
-.form-title {
+.form-title, .disclaimer {
     -fx-text-fill: black;
 }
 
