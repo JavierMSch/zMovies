@@ -28,7 +28,7 @@ public class VideoClub {
         gestorPeliculas = new GestorPeliculas();
         gestorRentas = new GestorRentas();
 
-        URL dbUrl = VideoClub.class.getResource("/sql/videoclub.sqlite");
+        URL dbUrl = VideoClub.class.getResource("/videoclub.sqlite");
         if (dbUrl != null) {
             // Reemplaza "file:" con "jdbc:sqlite:"
             String jdbcUrl = dbUrl.toString().replace("file:", "jdbc:sqlite:");
