@@ -364,21 +364,21 @@ public class Scene1Controller {
         String rut = formatoRut(formField1.getText());
         String recomendacion = videoClub.recomendarPelicula(rut);
         boolean existeCliente = videoClub.existeCliente(rut);
+        Alert alert;
         if (existeCliente && recomendacion != null) {
-            mostrarDefault();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Recomendación");
             alert.setHeaderText(null);
             alert.setContentText("Se recomienda la película '" + recomendacion + "' de acuerdo a las rentas previas del cliente.");
             alert.showAndWait();
         } else {
-            mostrarDefault();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Operación fallida");
             alert.setHeaderText(null);
             alert.setContentText("No se pudo recomendar una película para el cliente.");
             alert.showAndWait();
         }
+        mostrarDefault();
     }
 
     /**
@@ -434,7 +434,7 @@ public class Scene1Controller {
         Label titleLabel = new Label("Título: N/A");
         Label costLabel = new Label("Costo Semanal: N/A");
         Label[] labels = {genreLabel, titleLabel, costLabel};
-        mostrarMasRentada("Película más rentada para género: ", labels);
+        mostrarMasRentada(labels);
 
         handleDoubleClicked(listView, okButton);
 
@@ -707,15 +707,14 @@ public class Scene1Controller {
      * Muestra la película más rentada por género en el panel de contenido.
      * Limpia el contenido actual del panel y lo actualiza con la lista de géneros y los detalles de la película más rentada.
      *
-     * @param title el título a mostrar en el panel
      * @param detailLabels un arreglo de etiquetas que contienen los detalles de la película más rentada
      */
-    private void mostrarMasRentada(String title, Label[] detailLabels) {
+    private void mostrarMasRentada(Label[] detailLabels) {
         // Limpia el contenido actual del panel
         contentPane.getChildren().clear();
 
         // Configura el título del panel
-        titleLabel = new Label(title);
+        titleLabel = new Label("Película más rentada para género: ");
         titleLabel.getStyleClass().add("opt-title");
         titleLabel.paddingProperty().setValue(new javafx.geometry.Insets(20, 0, 20, 0));
 

@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class Genero {
     private String nombre;
-    private Map<String, Pelicula> peliculasTitulo;
+    private final Map<String, Pelicula> peliculasTitulo;
 
     /**
      * Constructor que inicializa un nuevo género con su nombre.

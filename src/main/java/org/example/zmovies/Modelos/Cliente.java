@@ -14,7 +14,7 @@ public class Cliente {
     private String nombreApellidos;
     private String correo;
     private String telefono;
-    private List<Renta> historialRentas;
+    private final List<Renta> historialRentas;
 
     /**
      * Constructor que inicializa un nuevo cliente con su RUT, nombre completo, correo electrónico y teléfono.

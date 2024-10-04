@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Clase que se encarga de administrar las rentas de películas.
  */
 public class GestorRentas {
-    private List<Renta> listaRentas; // lista de rentas
+    private final List<Renta> listaRentas; // lista de rentas
     private int idSiguiente; // id de la próxima renta a agregar
 
     /**

@@ -2,12 +2,9 @@ package org.example.zmovies.Controladores;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * El controlador de la escena inicial del video club. Permite navegar hacia la pantalla de atención al cliente

@@ -9,7 +9,7 @@ import java.util.Map;
  * Clase GestorClientes se encarga de administrar los clientes dentro del sistema.
  */
 public class GestorClientes {
-    private Map<String, Cliente> mapaClientes; // Mapa que contiene a los clientes, la clave es el rut del cliente.
+    private final Map<String, Cliente> mapaClientes; // Mapa que contiene a los clientes, la clave es el rut del cliente.
 
     /**
      * Constructor de la clase GestorClientes.
