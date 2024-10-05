@@ -69,7 +69,7 @@
                   </Button>
                </children>
             </VBox>
-            <Button alignment="CENTER" layoutX="138.0" layoutY="624.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onVolverClick" prefHeight="54.0" prefWidth="150.0" styleClass="btn-list" text="Volver">
+            <Button alignment="CENTER" layoutX="138.0" layoutY="624.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSalirClick" prefHeight="54.0" prefWidth="150.0" styleClass="btn-list" text="Volver">
                <font>
                   <Font name="Verdana" size="13.0" />
                </font>
