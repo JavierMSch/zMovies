@@ -39,7 +39,7 @@ public class Scene4Controller {
      * @param event Evento de clic en el botón.
      */
     @FXML
-    protected void onAgregarClienteClick(ActionEvent event) {
+    private void onAgregarClienteClick(ActionEvent event) {
         agregarCliente("Agregar Cliente", "Rut del cliente");
     }
 
@@ -48,7 +48,7 @@ public class Scene4Controller {
      * @param event Evento de clic en el botón.
      */
     @FXML
-    protected void onVerClienteClick(ActionEvent event) {
+    private void onVerClienteClick(ActionEvent event) {
         verClientes();
     }
 
@@ -58,7 +58,7 @@ public class Scene4Controller {
      * @throws IOException
      */
     @FXML
-    protected void onVolverClick(ActionEvent event) throws IOException {
+    private void onVolverClick(ActionEvent event) throws IOException {
         SceneManager.switchScene("/fxml/scene2-view.fxml");
     }
 
