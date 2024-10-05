@@ -318,7 +318,15 @@ public class Scene4Controller {
      * @return
      */
     private String formatoRut(String input) {
+        if (input == null) {
+            return "";
+        }
+        String lastChar = "";
+        if (input.endsWith("k") || input.endsWith("K")) {
+            lastChar = "K";
+        }
         input = input.replaceAll("\\D", "");
+        input += lastChar;
 
         if (input.length() < 8 || input.length() > 10) {
             return input;

@@ -452,8 +452,8 @@ public class Scene3Controller {
             else if(listView.getSelectionModel().getSelectedItem().equals("SIN GENERO")){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setHeaderText("Operación no Permitida");
-                alert.setContentText("No es posible eliminar SIN GENERO ya que es un genero especial");
+                alert.setHeaderText("Operación No Permitida");
+                alert.setContentText("No es posible eliminar SIN GÉNERO ya que es un género especial.");
                 alert.showAndWait();
             }
             else {
