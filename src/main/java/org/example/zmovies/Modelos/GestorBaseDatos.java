@@ -81,6 +81,8 @@ public class GestorBaseDatos {
         cursor.execute(sqlGeneros);
         cursor.execute(sqlPeliculas);
         cursor.execute(sqlRentas);
+
+        conn.close();
     }
 
     /**
@@ -100,6 +102,8 @@ public class GestorBaseDatos {
         }
         // Se ejecutan las instrucciones
         cursor.executeBatch();
+
+        conn.close();
     }
 
     /**
@@ -123,6 +127,8 @@ public class GestorBaseDatos {
         }
         // Se ejecutan las instrucciones
         cursor.executeBatch();
+
+        conn.close();
     }
 
     /**
@@ -146,6 +152,8 @@ public class GestorBaseDatos {
         }
         // Se ejecutan las instrucciones
         cursor.executeBatch();
+
+        conn.close();
     }
 
     /**
@@ -173,6 +181,8 @@ public class GestorBaseDatos {
         }
         // Se ejecutan las instrucciones
         cursor.executeBatch();
+
+        conn.close();
     }
 
     /**
@@ -191,6 +201,8 @@ public class GestorBaseDatos {
         cursor.execute(sqlGeneros);
         cursor.execute(sqlPeliculas);
         cursor.execute(sqlRentas);
+
+        conn.close();
     }
 
     /**
@@ -221,6 +233,8 @@ public class GestorBaseDatos {
         while (set.next()) {
             gestorPeliculas.agregarGenero(set.getString("nombre"));
         }
+
+        conn.close();
     }
 
     /**
@@ -242,6 +256,8 @@ public class GestorBaseDatos {
 
             gestorPeliculas.agregarPelicula(titulo, nombreGenero, precio, activa);
         }
+
+        conn.close();
     }
 
     /**
@@ -263,6 +279,8 @@ public class GestorBaseDatos {
 
             gestorClientes.agregarCliente(rut, nombre, correo, telefono);
         }
+
+        conn.close();
     }
 
     /**
@@ -301,6 +319,8 @@ public class GestorBaseDatos {
             // Actualiza el ID siguiente del gestor de rentas
             gestorRentas.actualizarIdSiguiente();
         }
+
+        conn.close();
     }
 
     // Getters y Setters
