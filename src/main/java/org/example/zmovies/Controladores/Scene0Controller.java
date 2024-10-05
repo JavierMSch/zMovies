@@ -7,7 +7,7 @@ import org.example.zmovies.Modelos.VideoClub;
 import java.io.IOException;
 
 /**
- * El controlador de la escena inicial del video club. Permite navegar hacia la pantalla de atención al cliente
+ * El controlador de la escena inicial del videoclub. Permite navegar hacia la pantalla de atención al cliente
  * o la pantalla de administración, y salir de la aplicación.
  */
 public class Scene0Controller {

@@ -21,8 +21,10 @@ import java.util.List;
  * Controlador de la escena para opciones de películas y géneros.
  */
 public class Scene3Controller extends Controller {
-    public Button btnCambiarOpciones;
-    public Button btnVerPeliculas;
+    @FXML
+    private Button btnCambiarOpciones;
+    @FXML
+    private Button btnVerPeliculas;
     @FXML
     private Button btnEditarPelicula;
     @FXML
@@ -64,7 +66,7 @@ public class Scene3Controller extends Controller {
     }
 
     /**
-     * Maneja el evento de clic para volver a la escena anterior.
+     * Maneja el evento de click para volver a la escena anterior.
      *
      * @param actionEvent Evento de acción.
      * @throws IOException Si ocurre un error al cambiar de escena.

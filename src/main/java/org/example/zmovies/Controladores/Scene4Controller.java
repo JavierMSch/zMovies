@@ -44,7 +44,7 @@ public class Scene4Controller extends Controller {
 
     /**
      * Maneja el evento de clic en el botón de volver.
-     * @param event Evento de clic en el botón.
+     * @param event Evento de click en el botón.
      * @throws IOException Excepción de E/S.
      */
     @Override

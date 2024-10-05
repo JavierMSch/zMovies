@@ -13,16 +13,16 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Clase que maneja las escenas de la aplicación
+ * Clase que maneja las escenas de la aplicación.
  */
 public class SceneManager {
     private static Stage primaryStage;
     private static VideoClub videoClub;
 
     /**
-     * Asigna un Stage a la clase
+     * Asigna un Stage a la clase.
      *
-     * @param stage Stage a asignar
+     * @param stage Stage a asignar.
      */
     public static void setStage(Stage stage) {
         primaryStage = stage;
@@ -37,19 +37,19 @@ public class SceneManager {
     }
 
     /**
-     * Asigna un VideoClub a la clase
+     * Asigna un VideoClub a la clase.
      *
-     * @param videoClub VideoClub a asignar
+     * @param videoClub VideoClub a asignar.
      */
     public static void setVideoClub(VideoClub videoClub) {
         SceneManager.videoClub = videoClub;
     }
 
     /**
-     * Cambia la escena del primaryStage
+     * Cambia la escena del primaryStage.
      *
-     * @param fxmlFile Ruta del archivo FXML de la escena
-     * @throws IOException Si no se puede cargar la escena
+     * @param fxmlFile Ruta del archivo FXML de la escena.
+     * @throws IOException Si no se puede cargar la escena.
      */
     public static void switchScene(String fxmlFile) throws IOException {
         FXMLLoader root = new FXMLLoader(SceneManager.class.getResource(fxmlFile));
@@ -72,9 +72,9 @@ public class SceneManager {
     }
 
     /**
-     * Muestra una alerta de confirmación antes de cerrar la aplicación
+     * Muestra una alerta de confirmación antes de cerrar la aplicación.
      *
-     * @param videoClub VideoClub para guardar los datos antes de cerrar
+     * @param videoClub VideoClub para guardar los datos antes de cerrar.
      */
     public static void handleQuit(VideoClub videoClub) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -99,7 +99,7 @@ public class SceneManager {
     }
 
     /**
-     * Cierra el primaryStage
+     * Cierra el primaryStage.
      */
     private static void closeStage() {
         primaryStage.close();

@@ -194,6 +194,7 @@ public class GestorPeliculas {
 
     /**
      * Agrega una película con un estado activo o inactivo.
+     * Si el género no existe, se crea.
      *
      * @param titulo        El título de la película.
      * @param nombreGenero  El nombre del género.
@@ -203,6 +204,10 @@ public class GestorPeliculas {
      */
     public boolean agregarPelicula(String titulo, String nombreGenero, int precioSemanal, boolean activa) {
         Pelicula pelicula = new Pelicula(titulo.toUpperCase(), nombreGenero.toUpperCase(), precioSemanal, activa);
+        if (!existeGenero(nombreGenero)) {
+            agregarGenero(nombreGenero);
+        }
+
         // Se hace la verificación antes de buscar el género, ya que si la película fue eliminada
         // puede ocurrir que el género al que pertenecía se eliminó luego.
         if (pelicula.isActiva()) {

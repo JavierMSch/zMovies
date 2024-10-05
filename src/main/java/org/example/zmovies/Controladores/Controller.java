@@ -21,10 +21,23 @@ import java.util.Objects;
  * Proporciona métodos y propiedades comunes a todos los controladores.
  */
 public abstract class Controller {
+    /**
+     * Instancia de VideoClub que se utilizará en el controlador.
+     */
     protected VideoClub videoClub;
+
+    /**
+     * Panel de contenido según la escena.
+     */
     @FXML
     protected Pane contentPane;
 
+    /**
+     * Maneja el evento de hacer click en salir o volver.
+     *
+     * @param event Evento de acción que desencadenó el método
+     * @throws IOException si ocurre un error al cargar la nueva escena
+     */
     protected abstract void onSalirClick(ActionEvent event) throws IOException;
 
     /**
