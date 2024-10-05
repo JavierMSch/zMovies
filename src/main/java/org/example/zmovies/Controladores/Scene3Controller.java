@@ -20,6 +20,7 @@ import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class Scene3Controller {
@@ -162,9 +163,20 @@ public class Scene3Controller {
      */
     private void verGeneros() {
         contentPane.getChildren().clear();
+
         ObservableList<String> generos = FXCollections.observableArrayList(
-                videoClub.obtenerListaGeneros()
+                videoClub.obtenerListaStringGeneros()
         );
+
+        if (generos.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sin Géneros");
+            alert.setHeaderText(null);
+            alert.setContentText("No hay géneros en el sistema.");
+            alert.showAndWait();
+            return;
+        }
+
         ListView<String> listView = new ListView<>(generos);
         listView.getStyleClass().add("movie-list");
         VBox vbox = new VBox(10);
@@ -272,9 +284,20 @@ public class Scene3Controller {
     private void editarGenero() {
         contentPane.getChildren().clear();
         verDetallePeliculaButton = new Button("Editar Género");
+
         ObservableList<String> generos = FXCollections.observableArrayList(
-                videoClub.obtenerListaGeneros()
+                videoClub.obtenerListaStringGeneros()
         );
+
+        if (generos.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sin Géneros");
+            alert.setHeaderText(null);
+            alert.setContentText("No hay géneros en el sistema.");
+            alert.showAndWait();
+            return;
+        }
+
         ListView<String> listView = new ListView<>(generos);
         listView.getStyleClass().add("movie-list");
 
@@ -386,8 +409,18 @@ public class Scene3Controller {
         verDetallePeliculaButton = new Button("Eliminar Género");
 
         ObservableList<String> generos = FXCollections.observableArrayList(
-                videoClub.obtenerListaGeneros()
+                videoClub.obtenerListaStringGeneros()
         );
+
+        if (generos.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sin Géneros");
+            alert.setHeaderText(null);
+            alert.setContentText("No hay géneros en el sistema.");
+            alert.showAndWait();
+            return;
+        }
+
         ListView<String> listView = new ListView<>(generos);
         listView.getStyleClass().add("movie-list");
 
@@ -496,15 +529,22 @@ public class Scene3Controller {
         textLabel = new Label("Seleccione una película para ver detalles");
         textLabel.getStyleClass().add("disclaimer");
 
-        ObservableList<String> peliculas = FXCollections.observableArrayList();
+        ObservableList<String> peliculas;
 
         if (genero.isEmpty()) {
-            peliculas = FXCollections.observableArrayList(
-                    videoClub.obtenerListaPeliculas()
-            );
+            List<String> posiblesPeliculas = videoClub.obtenerListaPeliculasString();
+            if (posiblesPeliculas == null || posiblesPeliculas.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Sin Películas");
+                alert.setHeaderText(null);
+                alert.setContentText("No hay películas en el sistema.");
+                alert.showAndWait();
+                return;
+            }
+            peliculas = FXCollections.observableArrayList(posiblesPeliculas);
         }
         else{
-            if (videoClub.obtenerListaPeliculas(genero) == null || videoClub.obtenerListaPeliculas(genero).isEmpty()) {
+            if (videoClub.obtenerStringPeliculasGenero(genero) == null || videoClub.obtenerStringPeliculasGenero(genero).isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Sin Películas");
                 alert.setHeaderText(null);
@@ -515,7 +555,7 @@ public class Scene3Controller {
             }
             else {
                 peliculas = FXCollections.observableArrayList(
-                        videoClub.obtenerListaPeliculas(genero).lines().toList()
+                        videoClub.obtenerStringPeliculasGenero(genero).lines().toList()
                 );
             }
         }
@@ -746,8 +786,17 @@ public class Scene3Controller {
         titleLabel.getStyleClass().add("menu-title");
 
         ObservableList<String> peliculas = FXCollections.observableArrayList(
-                videoClub.obtenerListaPeliculas()
+                videoClub.obtenerListaPeliculasString()
         );
+
+        if (peliculas.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sin Películas");
+            alert.setHeaderText(null);
+            alert.setContentText("No hay películas en el sistema.");
+            alert.showAndWait();
+            return;
+        }
 
         ListView<String> listView = new ListView<>(peliculas);
         listView.getStyleClass().add("movie-list");
@@ -889,9 +938,20 @@ public class Scene3Controller {
     private void eliminarPelicula(){
         contentPane.getChildren().clear();
         verDetallePeliculaButton = new Button("Eliminar Película");
+
         ObservableList<String> peliculas = FXCollections.observableArrayList(
-                videoClub.obtenerListaPeliculas()
+                videoClub.obtenerListaPeliculasString()
         );
+
+        if (peliculas.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sin Películas");
+            alert.setHeaderText(null);
+            alert.setContentText("No hay películas en el sistema.");
+            alert.showAndWait();
+            return;
+        }
+
         ListView<String> listView = new ListView<>(peliculas);
         listView.getStyleClass().add("movie-list");
         VBox vbox = new VBox(10);

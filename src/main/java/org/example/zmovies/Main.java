@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
+/**
+ * Clase principal de la aplicación.
+ * Inicia la aplicación JavaFX y maneja la configuración inicial.
+ */
 public class Main extends Application {
     /**
      * Inicia la aplicación JavaFX.
@@ -45,7 +49,7 @@ public class Main extends Application {
     }
 
     /**
-     * Método principal que lanza la aplicación.
+     * Lanza la aplicación.
      *
      * @param args Argumentos de la línea de comandos
      */
@@ -53,3 +57,33 @@ public class Main extends Application {
         launch();
     }
 }
+
+
+
+// Main alternativo con interfaz de usuario por consola (versión avance)
+// Para usarla, comentar la versión con ventanas (excepto el package) y descomentar la versión con consola
+
+//import java.util.Scanner;
+//import org.example.zmovies.Modelos.*;
+//import org.example.zmovies.Vistas.*;
+//
+///**
+// * Clase principal de la aplicación.
+// * Inicia la aplicación con una interfaz de usuario por consola.
+// */
+//public class Main {
+//    /**
+//     * Inicia la aplicación con una interfaz de usuario por consola.
+//     *
+//     * @param args Argumentos de la línea de comandos
+//     */
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        VideoClub videoClub = new VideoClub();
+//        InterfazUsuarioConsola ui = new InterfazUsuarioConsola(scanner, videoClub);
+//
+//        ui.start();
+//
+//        scanner.close();
+//    }
+//}

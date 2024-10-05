@@ -196,11 +196,20 @@ public class Scene4Controller {
     private void verClientes(){
         contentPane.getChildren().clear();
         verDetalleClienteButton = new Button("Ver Detalle Cliente");
-        ObservableList<String> peliculas = FXCollections.observableArrayList(
+        ObservableList<String> clientes = FXCollections.observableArrayList(
                 videoClub.obtenerListaRutNombreClientes()
         );
 
-        ListView<String> listView = new ListView<>(peliculas);
+        if (clientes.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No hay clientes");
+            alert.setHeaderText(null);
+            alert.setContentText("No hay clientes registrados en el sistema.");
+            alert.showAndWait();
+            return;
+        }
+
+        ListView<String> listView = new ListView<>(clientes);
         listView.getStyleClass().add("movie-list");
 
         VBox vbox = new VBox(10);

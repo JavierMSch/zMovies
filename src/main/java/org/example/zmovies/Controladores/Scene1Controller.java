@@ -53,6 +53,7 @@ public class Scene1Controller {
      */
     @FXML
     private void onRentarClick(ActionEvent event) {
+        mostrarDefault();
         mostrarRutForm("Rentar Película");
 
         formField1.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -86,6 +87,7 @@ public class Scene1Controller {
      */
     @FXML
     private void onDevolverClick(ActionEvent event) {
+        mostrarDefault();
         mostrarRutForm("Devolver Película");
 
         formField1.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -119,6 +121,7 @@ public class Scene1Controller {
      */
     @FXML
     private void onRecomendarClick(ActionEvent event) {
+        mostrarDefault();
         mostrarRutForm("Recomendar Película");
 
         formField1.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -152,6 +155,7 @@ public class Scene1Controller {
      */
     @FXML
     private void onNoDevueltasClick(ActionEvent event) {
+        mostrarDefault();
         handleNoDevueltas();
     }
 
@@ -163,6 +167,7 @@ public class Scene1Controller {
      */
     @FXML
     private void onPeliculaMasRentadaClick(ActionEvent event) {
+        mostrarDefault();
         handleMasRentada();
     }
 
@@ -443,7 +448,21 @@ public class Scene1Controller {
         Label titleLabel = new Label("Título: N/A");
         Label costLabel = new Label("Costo Semanal: N/A");
         Label[] labels = {genreLabel, titleLabel, costLabel};
-        mostrarMasRentada(labels);
+
+        // Obtiene los géneros del videoclub
+        String data = videoClub.obtenerNombresGeneros();
+
+        if (data.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No hay géneros en el sistema.");
+            alert.showAndWait();
+            mostrarDefault();
+            return;
+        }
+
+        mostrarMasRentada(labels, data);
 
         handleDoubleClicked(listView, okButton);
 
@@ -718,7 +737,7 @@ public class Scene1Controller {
      *
      * @param detailLabels Arreglo de etiquetas que contienen los detalles de la película más rentada
      */
-    private void mostrarMasRentada(Label[] detailLabels) {
+    private void mostrarMasRentada(Label[] detailLabels, String data) {
         // Limpia el contenido actual del panel
         contentPane.getChildren().clear();
 
@@ -727,8 +746,6 @@ public class Scene1Controller {
         titleLabel.getStyleClass().add("opt-title");
         titleLabel.paddingProperty().setValue(new javafx.geometry.Insets(20, 0, 20, 0));
 
-        // Obtiene los géneros del video club
-        String data = videoClub.obtenerNombresGeneros();
         if (data != null) {
             // Separa los géneros en una lista
             List<String> items = data.lines().toList();

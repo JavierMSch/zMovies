@@ -29,7 +29,7 @@ public class VideoClub {
         gestorPeliculas = new GestorPeliculas();
         gestorRentas = new GestorRentas();
 
-        URL dbUrl = VideoClub.class.getResource("/videoclub.sqlite");
+        URL dbUrl = VideoClub.class.getResource("/sql/videoclub.sqlite");
         if (dbUrl != null) {
             // Reemplaza "file:" con "jdbc:sqlite:"
             String jdbcUrl = dbUrl.toString().replace("file:", "jdbc:sqlite:");
@@ -74,8 +74,8 @@ public class VideoClub {
      *
      * @return Lista de String de películas.
      */
-    public List<String> obtenerListaPeliculas() {
-        return gestorPeliculas.obtenerStringListaPeliculas();
+    public List<String> obtenerListaPeliculasString() {
+        return gestorPeliculas.obtenerListaPeliculasString();
     }
 
     /**
@@ -84,8 +84,17 @@ public class VideoClub {
      * @param nombreGenero Nombre del género.
      * @return Lista de String de películas de un género.
      */
-    public String obtenerListaPeliculas(String nombreGenero) {
-        return gestorPeliculas.obtenerStringListaPeliculas(nombreGenero);
+    public String obtenerStringPeliculasGenero(String nombreGenero) {
+        return gestorPeliculas.obtenerStringPeliculasGenero(nombreGenero);
+    }
+
+    /**
+     * Obtiene una lista en formato String de las películas.
+     *
+     * @return Lista en formato String de las películas.
+     */
+    public String obtenerStringPeliculas() {
+        return gestorPeliculas.obtenerStringPeliculas();
     }
 
     /**
@@ -93,8 +102,8 @@ public class VideoClub {
      *
      * @return Lista de String de géneros.
      */
-    public  List<String> obtenerListaGeneros() {
-        return gestorPeliculas.obtenerStringListaGeneros();
+    public List<String> obtenerListaStringGeneros() {
+        return gestorPeliculas.obtenerListaStringGeneros();
     }
 
     /**
@@ -144,6 +153,16 @@ public class VideoClub {
     }
 
     /**
+     * Verifica si un género existe.
+     *
+     * @param genero Nombre del género.
+     * @return true si el género existe, false en caso contrario.
+     */
+    public boolean existeGenero(String genero) {
+        return gestorPeliculas.existeGenero(genero);
+    }
+
+    /**
      * Obtiene el precio de una película.
      *
      * @param titulo Título de la película.
@@ -151,6 +170,17 @@ public class VideoClub {
      */
     public int precioPelicula(String titulo) {
         return gestorPeliculas.precioPelicula(titulo);
+    }
+
+    /**
+     * Obtiene el precio de una película en base a las semanas de renta.
+     *
+     * @param titulo Título de la película.
+     * @param semanas Semanas de renta.
+     * @return Precio de la película.
+     */
+    public int precioPelicula(String titulo, int semanas) {
+        return gestorPeliculas.precioPelicula(titulo, semanas);
     }
 
     /**
