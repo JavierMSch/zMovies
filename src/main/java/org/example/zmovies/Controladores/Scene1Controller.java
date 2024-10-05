@@ -257,9 +257,8 @@ public class Scene1Controller {
      */
     private void handleRenta(String rut) {
         String movieName = formField1.getText().toUpperCase();
-        int weeks = Integer.parseInt(formField2.getText());
+        String weeksInput = formField2.getText();
         boolean existePelicula = videoClub.existePelicula(movieName);
-
         if (isFieldEmpty(formField1) || isFieldEmpty(formField2)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Campo vacío");
@@ -268,13 +267,22 @@ public class Scene1Controller {
             alert.showAndWait();
         } else {
             if (existePelicula) {
-                videoClub.rentarPelicula(rut, movieName, weeks);
-                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Operación exitosa");
-                successAlert.setHeaderText(null);
-                successAlert.setContentText("La película '" + movieName + "' fue rentada con éxito.");
-                successAlert.showAndWait();
-                mostrarDefault();
+                if (weeksInput.matches("[1-9]\\d*") || weeksInput.matches("0[1-9]\\d*")) {
+                    int weeks = Integer.parseInt(weeksInput);
+                    videoClub.rentarPelicula(rut, movieName, weeks);
+                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                    successAlert.setTitle("Operación exitosa");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("La película '" + movieName + "' fue rentada con éxito.");
+                    successAlert.showAndWait();
+                    mostrarDefault();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("El número de semanas debe ser un número entero positivo.");
+                    alert.showAndWait();
+                }
             } else {
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setTitle("Operación fallida");
@@ -483,11 +491,7 @@ public class Scene1Controller {
                 String[] items = movieDetails.split(" - ");
                 labels[0].setText("Género: " + items[0]);
                 labels[1].setText("Título: " + items[1]);
-                if (items[2].equals("N/A")) {
-                    labels[2].setText("Costo Semanal: " + items[2]);
-                } else {
-                    labels[2].setText("Costo Semanal: " + items[2]);
-                }
+                labels[2].setText("Costo Semanal: " + items[2]);
             }
         });
     }
@@ -680,7 +684,7 @@ public class Scene1Controller {
                 }
             }
             // Configura el botón OK
-            okButton = new Button("Ver Detalles");
+            okButton = new Button("Devolver Película");
             okButton.getStyleClass().add("ok-button");
 
             // Configura las etiquetas del título y del formulario
@@ -699,7 +703,7 @@ public class Scene1Controller {
             horizontalLayout.getStyleClass().add("confirm-layout");
             horizontalLayout.setAlignment(Pos.CENTER);
             horizontalLayout.getChildren().addAll(cancelButton, spacer, okButton);
-            spacer.setMinWidth(contentPane.getPrefWidth() * 0.6);
+            spacer.setMinWidth(contentPane.getPrefWidth() * 0.4);
 
             // Añade los componentes al diseño del formulario
             verticalLayout.getChildren().addAll(titleLabel, textLabel1, listView, horizontalLayout);
@@ -715,7 +719,7 @@ public class Scene1Controller {
                 }
             }
             // Configura el botón OK
-            okButton = new Button("Devolver Película");
+            okButton = new Button("Ver Detalles");
             okButton.getStyleClass().add("ok-button");
             // Configura la etiqueta del título
             titleLabel = new Label(title);
@@ -857,7 +861,15 @@ public class Scene1Controller {
      * @return RUT formateado
      */
     private String formatoRut(String input) {
+        if (input == null) {
+            return "";
+        }
+        String lastChar = "";
+        if (input.endsWith("k") || input.endsWith("K")) {
+            lastChar = "K";
+        }
         input = input.replaceAll("\\D", "");
+        input += lastChar;
 
         if (input.length() < 8 || input.length() > 10) {
             return input;
