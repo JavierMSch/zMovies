@@ -78,6 +78,13 @@ public class Scene4Controller {
 
         formField1 = new TextField();
         formField1.getStyleClass().add("form-field");
+        formField1.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                String input = formField1.getText();
+                String rutFormateado = formatoRut(input);
+                formField1.setText(rutFormateado);
+            }
+        });
 
         okButton = new Button("OK");
         okButton.getStyleClass().add("ok-button");
@@ -196,11 +203,20 @@ public class Scene4Controller {
     private void verClientes(){
         contentPane.getChildren().clear();
         verDetalleClienteButton = new Button("Ver Detalle Cliente");
-        ObservableList<String> peliculas = FXCollections.observableArrayList(
+        ObservableList<String> clientes = FXCollections.observableArrayList(
                 videoClub.obtenerListaRutNombreClientes()
         );
 
-        ListView<String> listView = new ListView<>(peliculas);
+        if (clientes.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No hay clientes");
+            alert.setHeaderText(null);
+            alert.setContentText("No hay clientes registrados en el sistema.");
+            alert.showAndWait();
+            return;
+        }
+
+        ListView<String> listView = new ListView<>(clientes);
         listView.getStyleClass().add("movie-list");
 
         VBox vbox = new VBox(10);
@@ -230,6 +246,8 @@ public class Scene4Controller {
                 String rutCompleto = rutSinGuion + "-" + digitoVerificador;
                 contentPane.getChildren().clear();
                 vbox.getChildren().clear();
+                vbox.getStyleClass().remove("movie-list-layout");
+                vbox.getStyleClass().add("movie-detail-layout");
                 vbox.getChildren().add(verDetallesCLiente(rutCompleto));
                 contentPane.getChildren().add(vbox);
             }
@@ -332,8 +350,8 @@ public class Scene4Controller {
 
         Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResourceAsStream("/images/icon.png")));
         ImageView iconItem = new ImageView(icon);
-        iconItem.setFitWidth(75);
-        iconItem.setFitHeight(75);
+        iconItem.setFitWidth(150);
+        iconItem.setFitHeight(150);
         iconItem.setPreserveRatio(true);
         double centerX = (contentPane.getWidth() - iconItem.getFitWidth()) / 2;
         double centerY = (contentPane.getHeight() - iconItem.getFitHeight()) / 2;

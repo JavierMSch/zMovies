@@ -35,7 +35,7 @@ public class GestorPeliculas {
      *
      * @return Lista de títulos de películas activas o null si no hay.
      */
-    public List<String> obtenerStringListaPeliculas() {
+    public List<String> obtenerListaPeliculasString() {
         List<String> listaTitulos = new ArrayList<>();
 
         // Se recorre la lista de películas y se añaden los títulos de las activas.
@@ -45,9 +45,6 @@ public class GestorPeliculas {
             }
         }
 
-        if (listaTitulos.isEmpty()) {
-            return null;
-        }
         return listaTitulos;
     }
 
@@ -57,7 +54,7 @@ public class GestorPeliculas {
      * @param nombreGenero Nombre del género.
      * @return Lista de películas del género o null si no hay.
      */
-    public String obtenerStringListaPeliculas(String nombreGenero) {
+    public String obtenerStringPeliculasGenero(String nombreGenero) {
         Genero genero = obtenerGenero(nombreGenero);
         if (genero == null) {
             return null;
@@ -66,21 +63,21 @@ public class GestorPeliculas {
     }
 
     /**
-     * Obtiene una lista de los nombres de los géneros.
+     * Obtiene una lista de los títulos de las películas activas.
      *
-     * @return Lista de nombres de géneros o null si no hay.
+     * @return Lista de películas activas o null si no hay.
      */
-    public List<String> obtenerStringListaGeneros() {
-        List<String> listaNombreGeneros = new ArrayList<>();
-
-        for (Genero genero: generosPeliculas) {
-            listaNombreGeneros.add(genero.getNombre());
+    public String obtenerStringPeliculas() {
+        StringBuilder cadena = new StringBuilder();
+        for (Pelicula pelicula: listaPeliculas) {
+            if (pelicula.isActiva()) {
+                cadena.append(pelicula.getTitulo()).append("\n");
+            }
         }
-
-        if (listaNombreGeneros.isEmpty()) {
+        if (cadena.isEmpty()) {
             return null;
         }
-        return listaNombreGeneros;
+        return cadena.toString();
     }
 
     /**
@@ -245,6 +242,20 @@ public class GestorPeliculas {
             return -1;
         }
         return obtenerPelicula(titulo).getPrecioSemanal();
+    }
+
+    /**
+     * Obtiene el precio semanal de una película por un número de semanas.
+     *
+     * @param titulo El título de la película.
+     * @param semanas El número de semanas.
+     * @return El precio total o -1 si no existe.
+     */
+    public int precioPelicula(String titulo, int semanas) {
+        if (!existePelicula(titulo)) {
+            return -1;
+        }
+        return obtenerPelicula(titulo).calcularPrecio(semanas);
     }
 
     /**

@@ -68,7 +68,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>2.0.16</version>
-            <scope>test</scope>
         </dependency>
 
 
@@ -91,7 +90,7 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
+                        <!-- Configuración por defecto para ejecutar con: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>org.example.zmovies/org.example.zmovies.Main</mainClass>

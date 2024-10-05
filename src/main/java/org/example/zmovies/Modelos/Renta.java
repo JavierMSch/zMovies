@@ -91,7 +91,7 @@ public class Renta {
      */
     @Override
     public String toString() {
-        return "ID: " + id + " - RUT: " + cliente.getRut() + " - Película: " + pelicula.getTitulo() + " - Monto Boleta: $" + monto + " - Fecha Renta: " + fecha + " - Fecha devolución: " + fechaDevolucion;
+        return "ID: " + id + " - RUT: " + cliente.getRut() + " - Película: " + pelicula.getTitulo() + " - Monto Boleta: $" + monto + " - Fecha Renta: " + fecha + " - Fecha Devolución: " + fechaDevolucion;
     }
 
     // Getters y setters
