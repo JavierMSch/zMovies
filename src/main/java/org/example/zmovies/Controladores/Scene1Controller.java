@@ -230,7 +230,7 @@ public class Scene1Controller {
      */
     private void handlePeliculaRenta(String rut) {
         String title = "Cliente: " + videoClub.obtenerNombreCliente(rut);
-        String[] labels = {"Nombre pelicula:", "ej.: El Padrino", "Semanas renta:", "ej.: 2"};
+        String[] labels = {"Nombre película:", "ej.: El Padrino", "Semanas renta:", "ej.: 2"};
         mostrarFormulario(title, labels);
 
         okButton.setOnAction(e -> {
@@ -486,7 +486,7 @@ public class Scene1Controller {
                 if (items[2].equals("N/A")) {
                     labels[2].setText("Costo Semanal: " + items[2]);
                 } else {
-                    labels[2].setText("Costo Semanal: " + items[2] + "$");
+                    labels[2].setText("Costo Semanal: " + items[2]);
                 }
             }
         });
@@ -668,10 +668,6 @@ public class Scene1Controller {
         verticalLayout.getStyleClass().add("form-layout");
         verticalLayout.setAlignment(Pos.CENTER);
 
-        // Configura el botón OK
-        okButton = new Button("OK");
-        okButton.getStyleClass().add("ok-button");
-
         if (cliente != null) {
             if (data != null) {
                 // Divide los datos en una lista de pendientes
@@ -683,6 +679,10 @@ public class Scene1Controller {
                     listView.getItems().add(formattedItem);
                 }
             }
+            // Configura el botón OK
+            okButton = new Button("Ver Detalles");
+            okButton.getStyleClass().add("ok-button");
+
             // Configura las etiquetas del título y del formulario
             titleLabel = new Label(cliente);
             textLabel1 = new Label(title);
@@ -714,6 +714,9 @@ public class Scene1Controller {
                     listView.getItems().add(formattedItem);
                 }
             }
+            // Configura el botón OK
+            okButton = new Button("Devolver Película");
+            okButton.getStyleClass().add("ok-button");
             // Configura la etiqueta del título
             titleLabel = new Label(title);
             verticalLayout.getChildren().addAll(titleLabel, listView, okButton);

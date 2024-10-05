@@ -185,7 +185,7 @@ public class Scene3Controller {
         titulos.setAlignment(Pos.CENTER);
         vbox.getStyleClass().add("movie-list-layout");
 
-        titleLabel = new Label("Generos");
+        titleLabel = new Label("Géneros");
         titleLabel.getStyleClass().add("opt-title");
         textLabel = new Label("Seleccione un género para ver las películas");
         textLabel.getStyleClass().add("disclaimer");

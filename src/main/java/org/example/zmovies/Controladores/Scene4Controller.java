@@ -78,6 +78,13 @@ public class Scene4Controller {
 
         formField1 = new TextField();
         formField1.getStyleClass().add("form-field");
+        formField1.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                String input = formField1.getText();
+                String rutFormateado = formatoRut(input);
+                formField1.setText(rutFormateado);
+            }
+        });
 
         okButton = new Button("OK");
         okButton.getStyleClass().add("ok-button");
@@ -239,6 +246,8 @@ public class Scene4Controller {
                 String rutCompleto = rutSinGuion + "-" + digitoVerificador;
                 contentPane.getChildren().clear();
                 vbox.getChildren().clear();
+                vbox.getStyleClass().remove("movie-list-layout");
+                vbox.getStyleClass().add("movie-detail-layout");
                 vbox.getChildren().add(verDetallesCLiente(rutCompleto));
                 contentPane.getChildren().add(vbox);
             }
@@ -341,8 +350,8 @@ public class Scene4Controller {
 
         Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResourceAsStream("/images/icon.png")));
         ImageView iconItem = new ImageView(icon);
-        iconItem.setFitWidth(75);
-        iconItem.setFitHeight(75);
+        iconItem.setFitWidth(150);
+        iconItem.setFitHeight(150);
         iconItem.setPreserveRatio(true);
         double centerX = (contentPane.getWidth() - iconItem.getFitWidth()) / 2;
         double centerY = (contentPane.getHeight() - iconItem.getFitHeight()) / 2;
