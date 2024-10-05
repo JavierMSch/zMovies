@@ -73,16 +73,16 @@ public class GestorBaseDatos {
                 );
         """;
 
-        Connection conn = getConnection();
-        Statement cursor = conn.createStatement();
-
-        // Se ejecutan las instrucciones SQL
-        cursor.execute(sqlClientes);
-        cursor.execute(sqlGeneros);
-        cursor.execute(sqlPeliculas);
-        cursor.execute(sqlRentas);
-
-        conn.close();
+        try (Connection conn = getConnection();
+             Statement cursor = conn.createStatement()) {
+            // Se ejecutan las instrucciones SQL
+            cursor.execute(sqlClientes);
+            cursor.execute(sqlGeneros);
+            cursor.execute(sqlPeliculas);
+            cursor.execute(sqlRentas);
+        } catch (SQLException e) {
+            throw new SQLException("Error al inicializar las tablas en la base de datos.", e);
+        }
     }
 
     /**
@@ -93,17 +93,18 @@ public class GestorBaseDatos {
     public void insertarGeneros(List<String> generos) throws SQLException {
         String sql = "INSERT INTO genero (nombre) VALUES (?)";
 
-        Connection conn = getConnection();
-        PreparedStatement cursor = conn.prepareStatement(sql);
-        for (String genero : generos) {
-            cursor.setString(1, genero);
-            // Se añade la instrucción a la lista de instrucciones
-            cursor.addBatch();
+        try (Connection conn = getConnection();
+             PreparedStatement cursor = conn.prepareStatement(sql)) {
+            for (String genero : generos) {
+                cursor.setString(1, genero);
+                // Se añade la instrucción a la lista de instrucciones
+                cursor.addBatch();
+            }
+            // Se ejecutan las instrucciones
+            cursor.executeBatch();
+        } catch (SQLException e) {
+            throw new SQLException("Error al insertar los géneros en la base de datos.", e);
         }
-        // Se ejecutan las instrucciones
-        cursor.executeBatch();
-
-        conn.close();
     }
 
     /**
@@ -114,21 +115,22 @@ public class GestorBaseDatos {
     public void insertarPeliculas(List<String> peliculas) throws SQLException {
         String sql = "INSERT INTO pelicula (titulo, nombre_genero, precio_semanal, activa) VALUES (?, ?, ?, ?)";
 
-        Connection conn = getConnection();
-        PreparedStatement cursor = conn.prepareStatement(sql);
-        for (String pelicula : peliculas) {
-            String[] datos = pelicula.split(",");
-            cursor.setString(1, datos[0]);
-            cursor.setString(2, datos[1]);
-            cursor.setInt(3, Integer.parseInt(datos[2]));
-            cursor.setInt(4, Integer.parseInt(datos[3]));
-            // Se añade la instrucción a la lista de instrucciones
-            cursor.addBatch();
+        try (Connection conn = getConnection();
+             PreparedStatement cursor = conn.prepareStatement(sql)) {
+            for (String pelicula : peliculas) {
+                String[] datos = pelicula.split(",");
+                cursor.setString(1, datos[0]);
+                cursor.setString(2, datos[1]);
+                cursor.setInt(3, Integer.parseInt(datos[2]));
+                cursor.setInt(4, Integer.parseInt(datos[3]));
+                // Se añade la instrucción a la lista de instrucciones
+                cursor.addBatch();
+            }
+            // Se ejecutan las instrucciones
+            cursor.executeBatch();
+        } catch (SQLException e) {
+            throw new SQLException("Error al insertar las películas en la base de datos.", e);
         }
-        // Se ejecutan las instrucciones
-        cursor.executeBatch();
-
-        conn.close();
     }
 
     /**
@@ -139,21 +141,22 @@ public class GestorBaseDatos {
     public void insertarClientes(List<String> clientes) throws SQLException {
         String sql = "INSERT INTO cliente (rut, nombre, correo, telefono) VALUES (?, ?, ?, ?)";
 
-        Connection conn = getConnection();
-        PreparedStatement cursor = conn.prepareStatement(sql);
-        for (String cliente : clientes) {
-            String[] datos = cliente.split(",");
-            cursor.setString(1, datos[0]);
-            cursor.setString(2, datos[1]);
-            cursor.setString(3, datos[2]);
-            cursor.setString(4, datos[3]);
-            // Se añade la instrucción a la lista de instrucciones
-            cursor.addBatch();
+        try (Connection conn = getConnection();
+             PreparedStatement cursor = conn.prepareStatement(sql)) {
+            for (String cliente : clientes) {
+                String[] datos = cliente.split(",");
+                cursor.setString(1, datos[0]);
+                cursor.setString(2, datos[1]);
+                cursor.setString(3, datos[2]);
+                cursor.setString(4, datos[3]);
+                // Se añade la instrucción a la lista de instrucciones
+                cursor.addBatch();
+            }
+            // Se ejecutan las instrucciones
+            cursor.executeBatch();
+        } catch (SQLException e) {
+            throw new SQLException("Error al insertar los clientes en la base de datos.", e);
         }
-        // Se ejecutan las instrucciones
-        cursor.executeBatch();
-
-        conn.close();
     }
 
     /**
@@ -164,25 +167,26 @@ public class GestorBaseDatos {
     public void insertarRentas(List<String> rentas) throws SQLException {
         String sql = "INSERT INTO renta (id, rut_cliente, titulo_pelicula, semanas, fecha_renta, fecha_devolucion, monto, devuelta) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        Connection conn = getConnection();
-        PreparedStatement cursor = conn.prepareStatement(sql);
-        for (String renta : rentas) {
-            String[] datos = renta.split(",");
-            cursor.setInt(1, Integer.parseInt(datos[0]));
-            cursor.setString(2, datos[1]);
-            cursor.setString(3, datos[2]);
-            cursor.setInt(4, Integer.parseInt(datos[3]));
-            cursor.setString(5, datos[4]);
-            cursor.setString(6, datos[5]);
-            cursor.setInt(7, Integer.parseInt(datos[6]));
-            cursor.setInt(8, Integer.parseInt(datos[7]));
-            // Se añade la instrucción a la lista de instrucciones
-            cursor.addBatch();
+        try (Connection conn = getConnection();
+             PreparedStatement cursor = conn.prepareStatement(sql)) {
+            for (String renta : rentas) {
+                String[] datos = renta.split(",");
+                cursor.setInt(1, Integer.parseInt(datos[0]));
+                cursor.setString(2, datos[1]);
+                cursor.setString(3, datos[2]);
+                cursor.setInt(4, Integer.parseInt(datos[3]));
+                cursor.setString(5, datos[4]);
+                cursor.setString(6, datos[5]);
+                cursor.setInt(7, Integer.parseInt(datos[6]));
+                cursor.setInt(8, Integer.parseInt(datos[7]));
+                // Se añade la instrucción a la lista de instrucciones
+                cursor.addBatch();
+            }
+            // Se ejecutan las instrucciones
+            cursor.executeBatch();
+        } catch (SQLException e) {
+            throw new SQLException("Error al insertar las rentas en la base de datos.", e);
         }
-        // Se ejecutan las instrucciones
-        cursor.executeBatch();
-
-        conn.close();
     }
 
     /**
@@ -195,14 +199,15 @@ public class GestorBaseDatos {
         String sqlPeliculas = "DELETE FROM pelicula";
         String sqlRentas = "DELETE FROM renta";
 
-        Connection conn = getConnection();
-        Statement cursor = conn.createStatement();
-        cursor.execute(sqlClientes);
-        cursor.execute(sqlGeneros);
-        cursor.execute(sqlPeliculas);
-        cursor.execute(sqlRentas);
-
-        conn.close();
+        try (Connection conn = getConnection();
+             Statement cursor = conn.createStatement()) {
+            cursor.execute(sqlClientes);
+            cursor.execute(sqlGeneros);
+            cursor.execute(sqlPeliculas);
+            cursor.execute(sqlRentas);
+        } catch (SQLException e) {
+            throw new SQLException("Error al eliminar los datos de las tablas en la base de datos.", e);
+        }
     }
 
     /**
@@ -227,14 +232,15 @@ public class GestorBaseDatos {
     private void cargarGeneros(GestorPeliculas gestorPeliculas) throws SQLException {
         String sql = "SELECT * FROM genero";
 
-        Connection conn = getConnection();
-        Statement cursor = conn.createStatement();
-        ResultSet set = cursor.executeQuery(sql);
-        while (set.next()) {
-            gestorPeliculas.agregarGenero(set.getString("nombre"));
+        try (Connection conn = getConnection();
+             Statement cursor = conn.createStatement();
+             ResultSet set = cursor.executeQuery(sql)) {
+            while (set.next()) {
+                gestorPeliculas.agregarGenero(set.getString("nombre"));
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error al cargar los géneros de la base de datos.", e);
         }
-
-        conn.close();
     }
 
     /**
@@ -245,19 +251,20 @@ public class GestorBaseDatos {
     private void cargarPeliculas(GestorPeliculas gestorPeliculas) throws SQLException {
         String sql = "SELECT * FROM pelicula";
 
-        Connection conn = getConnection();
-        Statement cursor = conn.createStatement();
-        ResultSet set = cursor.executeQuery(sql);
-        while (set.next()) {
-            String titulo = set.getString("titulo");
-            String nombreGenero = set.getString("nombre_genero");
-            int precio = set.getInt("precio_semanal");
-            boolean activa = set.getBoolean("activa");
+        try (Connection conn = getConnection();
+             Statement cursor = conn.createStatement();
+             ResultSet set = cursor.executeQuery(sql)) {
+            while (set.next()) {
+                String titulo = set.getString("titulo");
+                String nombreGenero = set.getString("nombre_genero");
+                int precio = set.getInt("precio_semanal");
+                boolean activa = set.getBoolean("activa");
 
-            gestorPeliculas.agregarPelicula(titulo, nombreGenero, precio, activa);
+                gestorPeliculas.agregarPelicula(titulo, nombreGenero, precio, activa);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error al cargar las películas de la base de datos.", e);
         }
-
-        conn.close();
     }
 
     /**
@@ -268,19 +275,20 @@ public class GestorBaseDatos {
     private void cargarClientes(GestorClientes gestorClientes) throws SQLException {
         String sql = "SELECT * FROM cliente";
 
-        Connection conn = getConnection();
-        Statement cursor = conn.createStatement();
-        ResultSet set = cursor.executeQuery(sql);
-        while (set.next()) {
-            String rut = set.getString("rut");
-            String nombre = set.getString("nombre");
-            String correo = set.getString("correo");
-            String telefono = set.getString("telefono");
+        try (Connection conn = getConnection();
+             Statement cursor = conn.createStatement();
+             ResultSet set = cursor.executeQuery(sql)) {
+            while (set.next()) {
+                String rut = set.getString("rut");
+                String nombre = set.getString("nombre");
+                String correo = set.getString("correo");
+                String telefono = set.getString("telefono");
 
-            gestorClientes.agregarCliente(rut, nombre, correo, telefono);
+                gestorClientes.agregarCliente(rut, nombre, correo, telefono);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error al cargar los clientes de la base de datos.", e);
         }
-
-        conn.close();
     }
 
     /**
@@ -293,34 +301,35 @@ public class GestorBaseDatos {
     private void cargarRentas(GestorRentas gestorRentas, GestorPeliculas gestorPeliculas, GestorClientes gestorClientes) throws SQLException {
         String sql = "SELECT * FROM renta";
 
-        Connection conn = getConnection();
-        Statement cursor = conn.createStatement();
-        ResultSet set = cursor.executeQuery(sql);
-        while (set.next()) {
-            int id = set.getInt("id");
-            String rut = set.getString("rut_cliente");
-            String titulo = set.getString("titulo_pelicula");
-            int semanas = set.getInt("semanas");
-            LocalDate fechaRenta = LocalDate.parse(set.getString("fecha_renta"));
-            LocalDate fechaDev = LocalDate.parse(set.getString("fecha_devolucion"));
-            int monto = set.getInt("monto");
-            boolean devuelta = set.getBoolean("devuelta");
+        try (Connection conn = getConnection();
+             Statement cursor = conn.createStatement();
+             ResultSet set = cursor.executeQuery(sql)) {
+            while (set.next()) {
+                int id = set.getInt("id");
+                String rut = set.getString("rut_cliente");
+                String titulo = set.getString("titulo_pelicula");
+                int semanas = set.getInt("semanas");
+                LocalDate fechaRenta = LocalDate.parse(set.getString("fecha_renta"));
+                LocalDate fechaDev = LocalDate.parse(set.getString("fecha_devolucion"));
+                int monto = set.getInt("monto");
+                boolean devuelta = set.getBoolean("devuelta");
 
-            Cliente cliente = gestorClientes.obtenerCliente(rut);
-            Pelicula pelicula = gestorPeliculas.obtenerPeliculaActivaOInactiva(titulo);
+                Cliente cliente = gestorClientes.obtenerCliente(rut);
+                Pelicula pelicula = gestorPeliculas.obtenerPeliculaActivaOInactiva(titulo);
 
-            Renta renta = new Renta(id, cliente, pelicula, semanas, fechaRenta, fechaDev, monto, devuelta);
+                Renta renta = new Renta(id, cliente, pelicula, semanas, fechaRenta, fechaDev, monto, devuelta);
 
-            // Agrega la renta al gestor de rentas
-            gestorRentas.agregarRenta(renta);
-            // Agrega la renta al historial del cliente
-            gestorClientes.agregarRenta(rut, renta);
+                // Agrega la renta al gestor de rentas
+                gestorRentas.agregarRenta(renta);
+                // Agrega la renta al historial del cliente
+                gestorClientes.agregarRenta(rut, renta);
 
-            // Actualiza el ID siguiente del gestor de rentas
-            gestorRentas.actualizarIdSiguiente();
+                // Actualiza el ID siguiente del gestor de rentas
+                gestorRentas.actualizarIdSiguiente();
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error al cargar las rentas de la base de datos.", e);
         }
-
-        conn.close();
     }
 
     // Getters y Setters
