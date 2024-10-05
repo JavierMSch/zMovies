@@ -8,7 +8,6 @@ import org.example.zmovies.Controladores.SceneManager;
 import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -38,7 +37,7 @@ public class Main extends Application {
             SceneManager.switchScene("/fxml/scene0-view.fxml");
 
             stage.show();
-        } catch (SQLException | UnsupportedEncodingException e) {
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error al iniciar la base de datos");
@@ -66,7 +65,6 @@ public class Main extends Application {
 //import java.util.Scanner;
 //import org.example.zmovies.Modelos.*;
 //import org.example.zmovies.Vistas.*;
-//import java.io.UnsupportedEncodingException;
 //
 ///**
 // * Clase principal de la aplicación.

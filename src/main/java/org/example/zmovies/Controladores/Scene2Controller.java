@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 
 /**
- * Controlador de la escena de administración del video club.
+ * Controlador de la escena de administración del videoclub.
  * Permite navegar a las vistas de administración de películas y administración de clientes, y volver a la vista inicial.
  */
 public class Scene2Controller {

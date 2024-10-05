@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * El controlador de la escena de atención al cliente del video club. Permite rentar, devolver y recomendar películas,
+ * El controlador de la escena de atención al cliente del videoclub. Permite rentar, devolver y recomendar películas,
  * ver las películas no devueltas y la película más rentada de cada género.
  */
 public class Scene1Controller extends Controller {
