@@ -25,6 +25,7 @@ public class VideoClub {
     /**
      * Constructor de la clase VideoClub.
      * Inicializa los gestores y la conexión a la base de datos.
+     * @throws UnsupportedEncodingException Si ocurre un error al decodificar la URL de la base de datos.
      */
     public VideoClub() throws UnsupportedEncodingException {
         gestorClientes = new GestorClientes();
