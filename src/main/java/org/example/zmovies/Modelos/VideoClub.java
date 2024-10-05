@@ -399,5 +399,8 @@ public class VideoClub {
      */
     public void cargarDatos() throws SQLException {
             gestorBaseDatos.cargarDatos(gestorPeliculas, gestorClientes, gestorRentas);
+            if (!existeGenero("SIN GENERO")) {
+                agregarGenero("SIN GENERO");
+            }
     }
 }
