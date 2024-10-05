@@ -3,7 +3,9 @@ package org.example.zmovies.Modelos;
 import org.example.zmovies.Exceptions.ReportePlanillaException;
 import org.example.zmovies.Exceptions.ReporteTextoException;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,16 +25,18 @@ public class VideoClub {
     /**
      * Constructor de la clase VideoClub.
      * Inicializa los gestores y la conexión a la base de datos.
+     * @throws UnsupportedEncodingException Si ocurre un error al decodificar la URL de la base de datos.
      */
-    public VideoClub() {
+    public VideoClub() throws UnsupportedEncodingException {
         gestorClientes = new GestorClientes();
         gestorPeliculas = new GestorPeliculas();
         gestorRentas = new GestorRentas();
 
         URL dbUrl = VideoClub.class.getResource("/sql/videoclub.sqlite");
         if (dbUrl != null) {
-            // Reemplaza "file:" con "jdbc:sqlite:"
-            String jdbcUrl = dbUrl.toString().replace("file:", "jdbc:sqlite:");
+            // Decodificar la URL para manejar espacios y crear la ruta
+            String decodedUrl = URLDecoder.decode(dbUrl.getPath(), "UTF-8");
+            String jdbcUrl = "jdbc:sqlite:" + decodedUrl;  // Usar directamente la ruta decodificada
             gestorBaseDatos = new GestorBaseDatos(jdbcUrl);
         } else {
             gestorBaseDatos = new GestorBaseDatos("jdbc:sqlite:videoclub.sqlite");

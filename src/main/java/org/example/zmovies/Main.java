@@ -8,6 +8,7 @@ import org.example.zmovies.Controladores.SceneManager;
 import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -25,27 +26,26 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        VideoClub videoClub = new VideoClub();
         try {
+            VideoClub videoClub = new VideoClub();
             videoClub.start();
-        } catch (SQLException e) {
+
+            SceneManager.setVideoClub(videoClub);
+            SceneManager.setStage(stage);
+            stage.setTitle("zMovies - VideoClub");
+            Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResourceAsStream("/images/icon.png")));
+            stage.getIcons().add(icon);
+            SceneManager.switchScene("/fxml/scene0-view.fxml");
+
+            stage.show();
+        } catch (SQLException | UnsupportedEncodingException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error al iniciar la base de datos");
             alert.setContentText("No se pudo iniciar la base de datos y se cerrará el programa. Por favor, consulte con los desarrolladores.");
             alert.showAndWait();
             e.printStackTrace();
-            return;
         }
-
-        SceneManager.setVideoClub(videoClub);
-        SceneManager.setStage(stage);
-        stage.setTitle("zMovies - VideoClub");
-        Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResourceAsStream("/images/icon.png")));
-        stage.getIcons().add(icon);
-        SceneManager.switchScene("/fxml/scene0-view.fxml");
-
-        stage.show();
     }
 
     /**
@@ -66,6 +66,7 @@ public class Main extends Application {
 //import java.util.Scanner;
 //import org.example.zmovies.Modelos.*;
 //import org.example.zmovies.Vistas.*;
+//import java.io.UnsupportedEncodingException;
 //
 ///**
 // * Clase principal de la aplicación.
@@ -79,11 +80,16 @@ public class Main extends Application {
 //     */
 //    public static void main(String[] args) {
 //        Scanner scanner = new Scanner(System.in);
-//        VideoClub videoClub = new VideoClub();
-//        InterfazUsuarioConsola ui = new InterfazUsuarioConsola(scanner, videoClub);
+//        try {
+//              VideoClub videoClub = new VideoClub();
+//              InterfazUsuarioConsola ui = new InterfazUsuarioConsola(scanner, videoClub);
 //
-//        ui.start();
+//              ui.start();
 //
-//        scanner.close();
+//              scanner.close();
+//        } catch (UnsupportedEncodingException e) {
+//            System.err.println("Error al iniciar la base de datos");
+//            e.printStackTrace();
+//        }
 //    }
 //}
