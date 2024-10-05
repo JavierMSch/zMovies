@@ -16,6 +16,9 @@ import org.example.zmovies.Modelos.VideoClub;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Controlador de la escena de administración de clientes.
+ */
 public class Scene4Controller {
     private VideoClub videoClub;
     @FXML
@@ -30,6 +33,11 @@ public class Scene4Controller {
     private HBox confirmLayout;
     private VBox formLayout;
 
+    /**
+     * Establece la instancia de VideoClub que se utilizará en este controlador.
+     *
+     * @param videoClub Instancia de VideoClub a asignar
+     */
     public void setVideoClub(VideoClub videoClub) {
         this.videoClub = videoClub;
     }
@@ -55,7 +63,7 @@ public class Scene4Controller {
     /**
      * Maneja el evento de clic en el botón de volver.
      * @param event Evento de clic en el botón.
-     * @throws IOException
+     * @throws IOException Excepción de E/S.
      */
     @FXML
     protected void onVolverClick(ActionEvent event) throws IOException {
