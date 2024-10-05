@@ -1,5 +1,5 @@
 /**
- * Módulo principal de la aplicación ZMovies
+ * Módulo principal de la aplicación zMovies
  * <p>
  * Este módulo contiene la configuración de los módulos que se requieren para la ejecución de la aplicación ZMovies.
  * <p>
