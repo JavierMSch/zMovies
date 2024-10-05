@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zmovies.Controladores.Scene2Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zmovies.Controladores.Scene2Controller">
    <children>
       <Pane prefHeight="300.0" prefWidth="1280.0" styleClass="background-piece">
          <children>
@@ -39,9 +39,9 @@
             <Image url="@../images/film.png" />
          </image>
       </ImageView>
-      <Button layoutX="219.0" layoutY="416.0" mnemonicParsing="false" onAction="#onPeliculasClick" styleClass="menu-btn" text="Peliculas y Géneros" />
-      <Button layoutX="739.0" layoutY="413.0" mnemonicParsing="false" onAction="#onClientesClick" styleClass="menu-btn" text="Clientes" />
-      <Button layoutX="588.0" layoutY="577.0" mnemonicParsing="false" onAction="#onVolverClick" styleClass="menu-btn" text="Volver" />
+      <Button layoutX="219.0" layoutY="420.0" mnemonicParsing="false" onAction="#onPeliculasClick" styleClass="menu-btn" text="Peliculas y Géneros" />
+      <Button layoutX="742.0" layoutY="418.0" mnemonicParsing="false" onAction="#onClientesClick" prefHeight="62.0" prefWidth="338.5" styleClass="menu-btn" text="Gestión Clientes" />
+      <Button layoutX="585.0" layoutY="574.0" mnemonicParsing="false" onAction="#onVolverClick" styleClass="menu-btn" text="Volver" />
 
    </children>
 </AnchorPane>
