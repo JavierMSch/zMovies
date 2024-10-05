@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Controlador de la escena para opciones de películas y géneros.
+ */
 public class Scene3Controller {
     private VideoClub videoClub;
     public Button btnCambiarOpciones;
@@ -718,7 +721,7 @@ public class Scene3Controller {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Error");
                             alert.setHeaderText("Precio no válido");
-                            alert.setContentText("El precio no puede ser un número negativo.");
+                            alert.setContentText("El precio debe ser un valor numérico no negativo.");
                             alert.showAndWait();
                         }
                     }
@@ -912,7 +915,17 @@ public class Scene3Controller {
                     break;
                 case "Nuevo Precio Semanal":
                     if (!isFieldEmpty(formField1)) {
-                        precio[0] = formField1.getText();
+                        if (precio[0].matches("[0-9]+")) {
+                            precio[0] = formField1.getText();
+                        }
+                        else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Precio no válido");
+                            alert.setContentText("El precio debe ser un valor numérico no negativo.");
+                            alert.showAndWait();
+                            break;
+                        }
                     }
                     videoClub.editarPelicula(titulo, nombre[0], genero[0], Integer.parseInt(precio[0]));
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
