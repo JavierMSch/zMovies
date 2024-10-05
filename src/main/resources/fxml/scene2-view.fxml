@@ -40,7 +40,7 @@
          </image>
       </ImageView>
       <Button layoutX="219.0" layoutY="416.0" mnemonicParsing="false" onAction="#onPeliculasClick" styleClass="menu-btn" text="Peliculas y Géneros" />
-      <Button layoutX="739.0" layoutY="413.0" mnemonicParsing="false" onAction="#onClientesClick" styleClass="menu-btn" text="Clientes y Rentas" />
+      <Button layoutX="739.0" layoutY="413.0" mnemonicParsing="false" onAction="#onClientesClick" styleClass="menu-btn" text="Clientes" />
       <Button layoutX="588.0" layoutY="577.0" mnemonicParsing="false" onAction="#onVolverClick" styleClass="menu-btn" text="Volver" />
 
    </children>
