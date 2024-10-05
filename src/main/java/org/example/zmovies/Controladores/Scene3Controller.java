@@ -7,27 +7,20 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.example.zmovies.Exceptions.ReportePlanillaException;
 import org.example.zmovies.Exceptions.ReporteTextoException;
-import org.example.zmovies.Modelos.VideoClub;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Controlador de la escena para opciones de películas y géneros.
  */
-public class Scene3Controller {
-    private VideoClub videoClub;
+public class Scene3Controller extends Controller {
     public Button btnCambiarOpciones;
     public Button btnVerPeliculas;
     @FXML
@@ -40,8 +33,7 @@ public class Scene3Controller {
     private Button verDetallePeliculaButton;
     private Button okButton;
     private Button cancelButton;
-    @FXML
-    private Pane contentPane;
+
     private Label titleLabel;
     private Label titleLabel2;
     private Label textLabel;
@@ -50,15 +42,6 @@ public class Scene3Controller {
     private HBox confirmLayout;
     private VBox formLayout;
     private boolean isGeneroMode = false;  // Estado inicial, comienza en modo "Películas"
-
-    /**
-     * Establece el VideoClub para el controlador.
-     *
-     * @param videoClub Objeto VideoClub a establecer.
-     */
-    public void setVideoClub(VideoClub videoClub) {
-        this.videoClub = videoClub;
-    }
 
     /**
      * Maneja el evento de clic para ver películas.
@@ -86,8 +69,9 @@ public class Scene3Controller {
      * @param actionEvent Evento de acción.
      * @throws IOException Si ocurre un error al cambiar de escena.
      */
+    @Override
     @FXML
-    private void onVolverClick(ActionEvent actionEvent) throws IOException {
+    protected void onSalirClick(ActionEvent actionEvent) throws IOException {
         SceneManager.switchScene("/fxml/scene2-view.fxml");
     }
 
@@ -148,7 +132,7 @@ public class Scene3Controller {
      */
     @FXML
     private void onAgregarPeliculaClick(ActionEvent actionEvent) {
-        agregarPelicula("Agregar Película", "Nombre de la Película");
+        agregarPelicula();
     }
 
     /**
@@ -221,18 +205,15 @@ public class Scene3Controller {
 
     /**
      * Agrega un nuevo género al sistema.
-     *
-     * @param title Título del formulario.
-     * @param promptTxt Texto de solicitud para el campo de entrada.
      */
-    private void agregarGenero(String title, String promptTxt) {
+    private void agregarGenero() {
         contentPane.getChildren().clear();
 
-        titleLabel = new Label(title);
+        titleLabel = new Label("Agregar Género");
         titleLabel.getStyleClass().add("opt-title");
         formField1 = new TextField();
         formField1.getStyleClass().add("form-field");
-        formField1.setPromptText(promptTxt);
+        formField1.setPromptText("Nombre del Género");
         okButton = new Button("OK");
         okButton.getStyleClass().add("ok-button");
         cancelButton = new Button("Cancelar");
@@ -274,11 +255,11 @@ public class Scene3Controller {
                 alert.setHeaderText(null);
                 alert.setContentText("Género agregado exitosamente!");
                 alert.showAndWait();
-                defaultPane();
+                mostrarDefault();
             }
         });
 
-        cancelButton.setOnAction(e -> defaultPane());
+        cancelButton.setOnAction(e -> mostrarDefault());
     }
 
     /**
@@ -396,12 +377,12 @@ public class Scene3Controller {
                 alert.setHeaderText(null);
                 alert.setContentText("Género editado exitosamente!");
                 alert.showAndWait();
-                defaultPane();
+                mostrarDefault();
             }
         });
 
         // Acción para cancelar
-        cancelButton.setOnAction(e -> defaultPane());
+        cancelButton.setOnAction(e -> mostrarDefault());
     }
 
     /**
@@ -471,7 +452,7 @@ public class Scene3Controller {
                     alert2.setHeaderText(null);
                     alert2.setContentText("Género eliminado exitosamente!");
                     alert2.showAndWait();
-                    defaultPane();
+                    mostrarDefault();
                 }
             }
         });
@@ -481,10 +462,11 @@ public class Scene3Controller {
      * Cambia las opciones entre el modo de "Películas" y "Géneros".
      */
     private void cambiarOpciones() {
+        mostrarDefault();
         if (!isGeneroMode) {
             // Cambiar al modo de Géneros
             btnAgregarPelicula.setOnAction(e -> {
-                agregarGenero("Agregar Género", "Nombre del Género");
+                agregarGenero();
                 // Lógica para agregar género
             });
 
@@ -605,17 +587,13 @@ public class Scene3Controller {
 
     /**
      * Muestra un formulario para agregar una película.
-     *
-     *
-     * @param title Título de la película.
-     * @param promptTxt Texto de solicitud para el campo de entrada.
      */
-    private void agregarPelicula(String title, String promptTxt) {
+    private void agregarPelicula() {
         contentPane.getChildren().clear();
 
-        titleLabel = new Label(title);
+        titleLabel = new Label("Agregar Película");
         titleLabel.getStyleClass().add("menu-title");
-        formLabel1 = new Label(promptTxt);
+        formLabel1 = new Label("Nombre de la Película");
         formLabel1.getStyleClass().add("opt-title");
         formField1 = new TextField();
         formField1.getStyleClass().add("form-field");
@@ -714,7 +692,7 @@ public class Scene3Controller {
                             alert.setHeaderText(null);
                             alert.setContentText("Película agregada exitosamente!");
                             alert.showAndWait();
-                            defaultPane();
+                            mostrarDefault();
                             break;
                         }
                         else {
@@ -732,7 +710,7 @@ public class Scene3Controller {
         });
 
         // Acción para cancelar
-        cancelButton.setOnAction(e -> defaultPane());
+        cancelButton.setOnAction(e -> mostrarDefault());
 
     }
 
@@ -836,9 +814,7 @@ public class Scene3Controller {
                 verDetallePeliculaButton.getStyleClass().add("movie-list-button");
                 vbox.getChildren().add(verDetallePeliculaButton);
                 contentPane.getChildren().add(vbox);
-                verDetallePeliculaButton.setOnAction(e2 -> {
-                    editarPeliculaOpciones(listView.getSelectionModel().getSelectedItem(), "Titulo Actual");
-                });
+                verDetallePeliculaButton.setOnAction(e2 -> editarPeliculaOpciones(listView.getSelectionModel().getSelectedItem()));
             }
         });
     }
@@ -847,9 +823,8 @@ public class Scene3Controller {
      * Muestra un formulario para editar las opciones de una película existente.
      *
      * @param titulo Título actual de la película.
-     * @param subtitulo Subtítulo para el formulario.
      */
-    private void editarPeliculaOpciones(String titulo, String subtitulo) {
+    private void editarPeliculaOpciones(String titulo) {
         contentPane.getChildren().clear();
 
         // Crear los elementos visuales
@@ -892,7 +867,7 @@ public class Scene3Controller {
         final String[] currentStep = {"Nuevo Titulo"};
         String[] nombre = {""};
         String[] genero = {""};
-        String[] precio = {"-1"};
+        String[] precio = {""};
 
         okButton.setOnAction(e -> {
             // Cambiar el campo según el paso actual
@@ -915,7 +890,7 @@ public class Scene3Controller {
                     break;
                 case "Nuevo Precio Semanal":
                     if (!isFieldEmpty(formField1)) {
-                        if (precio[0].matches("[0-9]+")) {
+                        if (formField1.getText().matches("[0-9]\\d*")) {
                             precio[0] = formField1.getText();
                         }
                         else {
@@ -933,7 +908,7 @@ public class Scene3Controller {
                     alert.setHeaderText(null);
                     alert.setContentText("Película editada exitosamente!");
                     alert.showAndWait();
-                    defaultPane();
+                    mostrarDefault();
                     break;
             }
 
@@ -942,7 +917,7 @@ public class Scene3Controller {
         });
 
         // Acción para cancelar
-        cancelButton.setOnAction(e -> defaultPane());
+        cancelButton.setOnAction(e -> mostrarDefault());
     }
 
     /**
@@ -1013,7 +988,7 @@ public class Scene3Controller {
                         alert2.setHeaderText(null);
                         alert2.setContentText("Película eliminada exitosamente!");
                         alert2.showAndWait();
-                        defaultPane();
+                        mostrarDefault();
                     }
                 });
             }
@@ -1040,76 +1015,15 @@ public class Scene3Controller {
     }
 
     /**
-     * Manejar doble clic en un elemento de la lista
-     * @param listView
-     * @param submitButton
-     */
-    private void handleDoubleClicked(ListView<String> listView, Button submitButton) {
-        listView.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                submitButton.fire();
-            }
-        });
-    }
-
-    /**
-     * Metodo para manejar la tecla Enter en un campo de texto
-     * @param currentField
-     * @param nextControl
-     */
-    private void handleEnterKey(TextField currentField, Control nextControl) {
-        currentField.setOnKeyPressed(event -> {
-            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
-                if (nextControl instanceof TextField) {
-                    nextControl.requestFocus();
-                } else if (nextControl instanceof Button) {
-                    ((Button) nextControl).fire();
-                }
-            }
-        });
-    }
-
-    /**
-     * Metodo para mostrar la pantalla por defecto
-     */
-    private void defaultPane() {
-        contentPane.getChildren().clear();
-
-        Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResourceAsStream("/images/icon.png")));
-        ImageView iconItem = new ImageView(icon);
-        iconItem.setFitWidth(150);
-        iconItem.setFitHeight(150);
-        iconItem.setPreserveRatio(true);
-        double centerX = (contentPane.getWidth() - iconItem.getFitWidth()) / 2;
-        double centerY = (contentPane.getHeight() - iconItem.getFitHeight()) / 2;
-        iconItem.setLayoutX(centerX);
-        iconItem.setLayoutY(centerY);
-        contentPane.getChildren().add(iconItem);
-    }
-
-    /**
      * Vuelve a la función que llamó.
      */
     private void returnToCaller(String lastCaller) {
-        if (lastCaller.equals("verPeliculas")) {
-            verPeliculas("");
-        } else if (lastCaller.equals("verGeneros")) {
-            verGeneros();
-        } else if (lastCaller.equals("editarPelicula")) {
-            editarPelicula();
-        } else if (lastCaller.equals("eliminarPelicula")) {
-            eliminarPelicula();
+        switch (lastCaller) {
+            case "verPeliculas" -> verPeliculas("");
+            case "verGeneros" -> verGeneros();
+            case "editarPelicula" -> editarPelicula();
+            case "eliminarPelicula" -> eliminarPelicula();
         }
-    }
-
-    /**
-     * Verifica si un campo de texto está vacío.
-     *
-     * @param textField Campo de texto a verificar.
-     * @return true si el campo de texto está vacío, false en caso contrario.
-     */
-    private boolean isFieldEmpty(TextField textField) {
-        return textField.getText() == null || textField.getText().trim().isEmpty();
     }
 }
 

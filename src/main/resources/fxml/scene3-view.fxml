@@ -54,7 +54,7 @@
                   <Button fx:id="btnEditarPelicula" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditarPeliculaClick" prefHeight="50.0" prefWidth="323.0" styleClass="btn-list" text="Editar Película" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="39.0" layoutY="629.0" mnemonicParsing="false" onAction="#onVolverClick" prefHeight="54.0" prefWidth="150.0" styleClass="btn-list" text="Volver" textAlignment="CENTER" wrapText="true" />
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="39.0" layoutY="629.0" mnemonicParsing="false" onAction="#onSalirClick" prefHeight="54.0" prefWidth="150.0" styleClass="btn-list" text="Volver" textAlignment="CENTER" wrapText="true" />
             <Button fx:id="btnCambiarOpciones" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="66.0" mnemonicParsing="false" onAction="#onGenerosClick" prefHeight="54.0" prefWidth="282.0" styleClass="switch-button" text="Cambiar a Generos" textAlignment="CENTER" wrapText="true" />
             <Button alignment="CENTER" contentDisplay="CENTER" layoutX="225.0" layoutY="629.0" mnemonicParsing="false" onAction="#onReporteClick" prefHeight="54.0" prefWidth="150.0" styleClass="btn-list" text="Reporte" textAlignment="CENTER" wrapText="true" />
          </children>
