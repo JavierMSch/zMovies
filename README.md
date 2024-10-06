@@ -16,7 +16,7 @@ Puede leer la documentacion del proyecto abriendo en un navegador el archivo ind
 <br>
 
 # Instrucciones de ejecución 
-Una vez descargado y descomprimido el proyecto, debe abrir la carpeta <b><i>zMovies-main</i></b> con un IDE que soporte Java, como IntelliJ, Eclipse o NetBeans.
+Una vez descargado y descomprimido el proyecto, debe abrir la carpeta <b><i>zMovies</i></b> con un IDE que soporte Java, como IntelliJ, Eclipse o NetBeans.
 Siga los pasos para ejecutarlo según corresponda.
 <br>
 ## IntelliJ
