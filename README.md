@@ -11,7 +11,7 @@ Además es posible gestionar rentas y devoluciones de películas, generar report
 <br>
 
 # Documentación
-Puede leer la documentacion del proyecto [aquí](https://github.com/JavierMSch/zMovies/blob/main/javadoc/index.html).
+Puede leer la documentacion del proyecto abriendonoslo el archivo index.html dentro del directorio javadoc en un navegador.
 <br>
 <br>
 
